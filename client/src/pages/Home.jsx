@@ -1,10 +1,28 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header'
+import "../styles/Home.css"
 const Home = () =>{
+  const navigate = useNavigate(); 
+
+  const handleTryItClick = () => {
+    navigate('./main'); 
+  };
   return (
     <div>
-      <Header />
-      <div>Home</div>
+      <Header/>
+      <div>
+        <div className="Home-container"> {/* Add a container for styling */}
+          <div className="Home-content">
+            <h1 className="Home-title">Study Friend</h1>
+            <p className="Home-subtitle">AI-Powered Study Tool</p>
+            <button className="Home-tryit-button" onClick={handleTryItClick}>
+              Try It Now
+            </button>
+          </div>
+        </div>
+      </div>
+      
     </div>
   )
 }
