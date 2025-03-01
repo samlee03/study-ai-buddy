@@ -12,7 +12,7 @@ const Home = () =>{
     <div>
       <Header/>
       <div>
-        <div className="Home-container"> {/* Add a container for styling */}
+        <div className="Home-container">
           <div className="Home-content">
             <h1 className="Home-title">Study Friend</h1>
             <p className="Home-subtitle">AI-Powered Study Tool</p>
