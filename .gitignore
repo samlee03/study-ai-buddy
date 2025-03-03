@@ -1,9 +1,0 @@
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-venv/
-env/
-*.sqlite3
-migrations/
-.env

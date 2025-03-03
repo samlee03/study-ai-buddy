@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 const Test = () => {
   const [data, setData] = useState();
   useEffect(() => {
-    fetch("http://localhost:5000/test")  // Use the relative path
+    fetch("http://localhost:5000/api/test")  // Use the relative path
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => console.error('Error fetching data:', error));
