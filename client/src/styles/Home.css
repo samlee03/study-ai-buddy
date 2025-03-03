@@ -1,22 +1,24 @@
-.Home-container {
+.Page-container {
     display: flex;
     justify-content: center; 
     align-items: center; 
-    min-height: calc(100vh - 50px); 
+    min-height: calc(100vh - 90px); 
     text-align: center; 
     background-color: rgb(235, 235, 235);
 }
 
 .Home-title {
-    font-size: 3em; 
+    font-size: 3em;
     margin-bottom: 10px;
     color: rgb(0, 0, 0);
+    font-family: Noto Sans, sans-serif;
 }
 
 .Home-subtitle {
-    font-size: 1.5em; 
+    font-size: 1.5em;
     margin-bottom: 20px;
     color: rgb(85, 85, 85);
+    font-family: Gill Sans, sans-serif;
 }
 
 .Home-tryit-button {
