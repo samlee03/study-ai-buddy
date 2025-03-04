@@ -1,4 +1,6 @@
 from flask import Blueprint, request, jsonify
+from pypdf import PdfReader
+
 
 # Define Blueprint
 main = Blueprint("main", __name__)
@@ -26,3 +28,12 @@ def test():
             }
         ]
     }
+
+# @main.route("/readpdf")
+# def readPdf():
+#     reader = PdfReader("../../tests/assets/test.pdf")
+#     page = reader.pages[0]
+#     return {
+#         "text": page.extract_text()
+#         # "text": "test"
+#     }

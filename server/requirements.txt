@@ -4,3 +4,4 @@ Flask-JWT-Extended
 Flask-CORS
 Flask-Bcrypt
 python-dotenv 
+pypdf
