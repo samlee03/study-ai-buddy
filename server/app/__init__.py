@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
 from app.config import Config  # Import configurations
 from app.routes import main
@@ -20,6 +20,6 @@ def create_app():
     db.init_app(app)
     jwt.init_app(app)
     bcrypt.init_app(app)
-    CORS(app)  # Allow frontend to communicate with backend
+    CORS(app, supports_credentials=True)  # Allow frontend to communicate with backend
 
     return app
