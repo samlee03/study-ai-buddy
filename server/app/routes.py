@@ -1,10 +1,11 @@
 from flask import Blueprint, request, jsonify
-from pypdf import PdfReader
+# from pypdf import 
+from pdfminer.high_level import extract_text
 
+# from ...tests.assets import Assets
 
 # Define Blueprint
 main = Blueprint("main", __name__)
-
 @main.route("/api/echo", methods=["POST"])
 def echo():
     data = request.json  # Get JSON data from request
@@ -29,11 +30,13 @@ def test():
         ]
     }
 
-# @main.route("/readpdf")
-# def readPdf():
-#     reader = PdfReader("../../tests/assets/test.pdf")
-#     page = reader.pages[0]
+
+# @main.route("/readpdf", methods=["POST"])
+# def readpdf():
+#     form = request.files
+
 #     return {
-#         "text": page.extract_text()
-#         # "text": "test"
+#         # "test": extract_text('./../tests/assets/pdfminer_test.pdf')
+#         # "test": extract_text(form["files"])
+#         "text": "some text here"
 #     }

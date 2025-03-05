@@ -5,3 +5,4 @@ Flask-CORS
 Flask-Bcrypt
 python-dotenv 
 pypdf
+pdfminer.six
