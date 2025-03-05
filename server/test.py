@@ -22,22 +22,22 @@ def test():
         ]
     }
 
-
+# https://www.youtube.com/watch?v=pWd6Enu2Pjs -- source for fileuploading
 @app.route("/api/readpdf", methods=["POST"])
 def readpdf():
     file = request.files["file"] # OK
     filename = secure_filename(file.filename)
     filepath = os.path.join("uploads", filename)
-    print(filepath)
+    if not os.path.exists('uploads'):
+        os.makedirs('uploads')
     file.save(filepath)
-    # print(extract_text(filepath))
-    print("Good")
-    # os.remove(filepath)
+    text = (extract_text(filepath))
+    os.remove(filepath)
 
     return {
         # "test": extract_text('./../tests/assets/pdfminer_test.pdf')
         # "text": extract_text(request.files["file"])
-        "text": "some text here for now"
+        "text": text
     }
 
 
