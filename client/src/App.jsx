@@ -9,6 +9,7 @@ import SignupPage from './pages/SignupPage';
 import UploadPage from './pages/UploadPage';
 import Main from './pages/MainPage';
 import Test from './pages/Test';
+import FlashcardTest from './pages/FlashcardTest';
 
 const Shortcuts = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Shortcuts = () => {
       <p onClick={() => navigate("/upload")}>Upload Page</p>
       <p onClick={() => navigate("/main")}>Main Page</p>
       <p onClick={() => navigate('/test')}>Test</p>
+      <p onClick={() => navigate('/FlashcardTest')}>FlashcardTest</p>
     </div>
   )
 }
@@ -37,6 +39,7 @@ function App() {
           <Route path="upload" element={<UploadPage />} />
           <Route path="main" element={<Main />} />
           <Route path="test" element={<Test />} />
+          <Route path="FlashcardTest" element={<FlashcardTest />} />
         </Routes>
       </BrowserRouter>
     </>
