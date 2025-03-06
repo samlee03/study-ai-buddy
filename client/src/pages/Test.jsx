@@ -42,7 +42,6 @@ const Questions = () => {
 
 const FileUpload = () => {
   const [file, setFile] = useState();
-  const [response, setResponse] = useState();
   const [text, setText] = useState();
   const handleFileChange = (e) => {
     if (e.target.files) {
@@ -68,13 +67,11 @@ const FileUpload = () => {
     } catch (error) {
       console.error("Error:", error);
     }
-    console.log("sent?");
   }
   return (
     <>
       <button onClick={handleExtractText}>Extract Text</button>
       <input type="file" onChange={handleFileChange} />
-      
       <p>{text}</p>
     </>
   )
