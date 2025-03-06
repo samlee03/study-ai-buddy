@@ -9,20 +9,25 @@ def test():
     return {
         "questions": [
             {
-                "question": "what is 1+1",
-                "options": ["1", "2", "3"]
+                "question": "What is 1+1?",
+                "options": ["1", "2", "3"],
+                "answer" : "2"
             },
             {
-                "question": "what is 2+1",
-                "options": ["1", "2", "3"]
+                "question": "What is 2+1?",
+                "options": ["1", "2", "3"],
+                "answer" : "3"
+                
             },
             {
-                "question": "what is 1+1",
-                "options": ["1", "2", "3"]
+                "question": "What is 2+2?",
+                "options": ["1", "2", "4"],
+                "answer" : "4"
             },
             {
-                "question": "what is 2+1",
-                "options": ["1", "2", "3"]
+                "question": "What is 2+1?",
+                "options": ["1", "2", "3"],
+                "answer" : "3"
             }
         ]
     }

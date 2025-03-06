@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import Flashcard from '../components/Flashcard'; 
 import '../styles/FlashcardTest.css';
 
-
 const FlashcardTest = () => {
   const [data, setData] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -38,8 +37,21 @@ const FlashcardTest = () => {
         <div className="flashcard-container">
           {data.questions.length > 0 && (
             <Flashcard
-              question={data.questions[currentIndex].question}
-              answer={data.questions[currentIndex].options.join(', ')}
+              key = {currentIndex}
+              question={
+                <>
+                  <strong>{data.questions[currentIndex].question}</strong> 
+                  <br />
+                  <br />
+                  {data.questions[currentIndex].options.map((option, index) => (
+                    <span key={index}>
+                      {String.fromCharCode(65 + index)}) {option}
+                      <br />
+                    </span>
+                  ))}
+                </>
+              }
+              answer= {data.questions[currentIndex].answer}
             />
           )}
         </div>

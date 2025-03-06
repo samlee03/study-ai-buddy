@@ -5,7 +5,7 @@ const Flashcard = ({ question, answer }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleFlip = () => {
-    setIsFlipped(prev => !prev);
+    setIsFlipped(!isFlipped);
   };
 
   return (

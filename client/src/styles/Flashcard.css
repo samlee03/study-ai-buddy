@@ -1,6 +1,6 @@
 .flashcard {
-    width: 200px;
-    height: 300px;
+    width: 500px;
+    height: 400px;
     perspective: 1000px;
     margin: 20px;
     display: inline-block;
@@ -28,8 +28,9 @@
     backface-visibility: hidden;
     border-radius: 15px; 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
     padding: 20px;
     border: 1px solid #ccc;
   }
