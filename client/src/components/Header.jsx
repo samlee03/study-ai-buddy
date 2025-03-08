@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import "../styles/Header.css"
-import logo from "../components/StudyBuddyIcon.png"
+import logo from "../assets/StudyBuddyIcon.png"
 const Header = () => {
     let navigate = useNavigate();
     const LogoClick = () => {
