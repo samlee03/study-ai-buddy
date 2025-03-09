@@ -1,0 +1,37 @@
+.All{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.NewUploadContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: left;
+    width: 100%;
+}
+
+.RecentUploadContainer {
+    display: grid; 
+    gap: 10px; 
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-items: start; 
+    align-items: start; 
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+
+hr.divider {
+    border: 0;
+    border-top: 1px solid #ddd; 
+    margin: 15px 0; 
+}
