@@ -3,8 +3,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 200px; 
-    height: 300px; 
+    width: 300px; 
+    height: 500px; 
     cursor: pointer;
     border-radius: 15px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
@@ -23,32 +23,35 @@
 }
 
 .UploadContent-Recent {
-    flex: 1;
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     gap: 5px;
 }
 
 .UploadTitle-Recent {
-    font-size: 2rem;
+    font-size: 24px;
+    color : black;
 }
 
 .UploadSubtitle-Recent {
     font-size: 1rem;
+    color : gray
 }
 
-button {
+.Button-RecentUpload {
     padding: 8px 12px;
     border: none;
-    background-color: #373737;
+    background-color: #000000;
     color: white;
     border-radius: 5px;
     cursor: pointer;
-    width: auto; 
+    width: auto;
+    height: 40px;
     display: inline-block;
-    align-self: flex-start; 
 }
 
-button:hover {
+.Button-RecentUpload:hover {
     background-color: #a4a4a4;
 }

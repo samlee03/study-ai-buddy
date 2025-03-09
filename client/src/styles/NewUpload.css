@@ -28,11 +28,13 @@
 }
 
 .UploadTitle-New {
-    font-size: 2rem;
+    font-size: 24px;
+    color : black;
 }
 
 .UploadSubtitle-New {
     font-size: 1rem;
+    color : gray;
 }
 
 .Upload-button {
@@ -46,7 +48,7 @@
 }
 
 .Upload-button:hover {
-    background-color: #0056b3;
+    background-color: #939393;
 }
 
 @keyframes slideIn {

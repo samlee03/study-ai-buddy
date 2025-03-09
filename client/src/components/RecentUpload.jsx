@@ -12,7 +12,7 @@ const RecentUpload = ({title, subtitle, image}) => {
                 <p className='UploadSubtitle-Recent'>
                     {subtitle}
                 </p>
-                <button>Button</button>
+                <button className='Button-RecentUpload'>View</button>
             </div>
         </div>
     )
