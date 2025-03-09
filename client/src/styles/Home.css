@@ -10,6 +10,8 @@
     min-height: calc(100vh - 90px);
     text-align: center;
     background-image: url("../assets/BackgroundPattern.png");
+    background-color: #CFECF7;
+    animation: scrolling-background linear 30s infinite;
 }
 
 .Home-block{
@@ -58,4 +60,14 @@
     30% { transform: rotate(-15deg); } 
     40% { transform: rotate(0deg); } 
     100% { transform: rotate(0deg); } 
+}
+
+@keyframes scrolling-background {
+    0% {
+        background-position:0px 0px;
+    }
+
+    100% {
+        background-position: 400px 400px;
+    }
 }
