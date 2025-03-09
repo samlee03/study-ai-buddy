@@ -9,6 +9,7 @@
     padding: 15px;
     gap: 20px; 
     margin-bottom: 15px;
+    animation: slideIn 1s ease-out;
 }
 
 .UploadImage-New {
@@ -48,4 +49,13 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%); 
+    }
+    to {
+        transform: translateX(0); 
+    }
 }

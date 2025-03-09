@@ -17,7 +17,7 @@ const Home = () =>{
             <h1 className="Home-title">Study Buddy</h1>
             <p className="Home-subtitle">An AI-Powered Study Tool</p>
             <button className="Home-tryit-button" onClick={handleTryItClick}>
-              Try It Now
+              Try It Now!
             </button>
           </div>
         </div>

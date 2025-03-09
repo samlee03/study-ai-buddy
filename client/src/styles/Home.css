@@ -30,8 +30,18 @@
     color: rgb(56, 56, 56);
     cursor: pointer;
     margin-top: 20px;
+    animation: shake 5s ease-in-out infinite;
 }
 
 .Home-tryit-button:hover {
     background-color: #7b7b7b; 
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); } 
+    10% { transform: rotate(-15deg); } 
+    20% { transform: rotate(15deg); } 
+    30% { transform: rotate(-15deg); } 
+    40% { transform: rotate(0deg); } 
+    100% { transform: rotate(0deg); } 
 }
