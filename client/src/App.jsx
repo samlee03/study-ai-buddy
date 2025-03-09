@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Home from './pages/Home'
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import ForgotPassword from './pages/ForgotPassword';
 import UploadPage from './pages/UploadPage';
 import Main from './pages/MainPage';
 import Test from './pages/Test';
@@ -36,6 +37,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
+          <Route path="forgot" element={<ForgotPassword />} />
           <Route path="upload" element={<UploadPage />} />
           <Route path="main" element={<Main />} />
           <Route path="test" element={<Test />} />

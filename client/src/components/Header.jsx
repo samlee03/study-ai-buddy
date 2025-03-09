@@ -15,7 +15,7 @@ const Header = () => {
     };
   return (
       <div className="Header">
-          <div onClick={LogoClick} classname="Logo-container"><img style={{ height: "75px" }} classname="Logo-img" src={logo} alt="Study Buddy"></img></div>
+          <div onClick={LogoClick} className="Logo-container"><img style={{ height: "75px" }} className="Logo-img" src={logo} alt="Study Buddy"></img></div>
       <div className="Header-buttons">
         <button className="Sign-in-button" onClick = {handleSignInClick}>Sign In</button>
         <button className="Register-button" onClick = {handleRegisterClick}>Register</button>

@@ -12,7 +12,7 @@ const NewUpload = ({title, subtitle, image}) => {
                 <p className='UploadSubtitle-New'>
                     {subtitle}
                 </p>
-                <button>Button</button>
+                <button className="Upload-button">Upload</button>
             </div>
         </div>
     )

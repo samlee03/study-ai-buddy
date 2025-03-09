@@ -1,4 +1,5 @@
 import React from 'react'
+import Header from '../components/Header'
 import NewUpload from '../components/NewUpload'; 
 import RecentUpload from '../components/RecentUpload'; 
 import '../styles/MainPage.css';
@@ -6,7 +7,10 @@ import logo from "../assets/StudyBuddyIcon.png"
 
 const MainPage = () => {
     return (
-        <div className='All'>
+        <div>
+            <Header />
+        <div className="Page-container">
+        <div className='Upload-page'>
             <h2>New Upload</h2>
             <div className='NewUploadContainer'>
                 <NewUpload 
@@ -59,6 +63,8 @@ const MainPage = () => {
                     image = {logo}
                 />
             </div>   
+                </div>
+            </div>
         </div>
     )
 }
