@@ -14,7 +14,7 @@ CORS(app)
 
 @app.route("/test/gemini")
 def test_gemini():
-    instructions = "Analyze the topic and ONLY return an array of questions with keys, question and options, revolving this topic. No other supplementary text needed"
+    instructions = "Analyze the topic and ONLY return an array of questions with keys, question and options, revolving this topic. No other supplementary text needed."
     
     client = genai.Client(api_key=os.getenv("API_KEY"))
     response = client.models.generate_content(
@@ -23,7 +23,7 @@ def test_gemini():
     data = response.text.strip('```json\n').strip('\n```')
     questions = json.loads(data)
     return{
-        "output": questions
+        "questions": questions
     }
 
 @app.route("/api/test")
@@ -53,10 +53,21 @@ def readpdf():
     text = (extract_text(filepath))
     os.remove(filepath)
 
+    # Create Flashcards with Gemini API
+    instructions = "Return ONLY an array of pairs, with keys 'front' and 'back' of the vocabulary I list next. No supplementary text needed. The text is: "
+    client = genai.Client(api_key=os.getenv("API_KEY"))
+    response = client.models.generate_content(
+        model="gemini-2.0-flash", contents=(instructions + text)
+    )
+    data = response.text.strip('```json\n').strip('\n```')
+    vocabs = json.loads(data)
+    
+    # print(vocabs)
     return {
         # "test": extract_text('./../tests/assets/pdfminer_test.pdf')
         # "text": extract_text(request.files["file"])
-        "text": text
+        # "text": text,
+        "text": vocabs
     }
 
 

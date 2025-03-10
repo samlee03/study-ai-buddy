@@ -42,7 +42,10 @@ const Questions = () => {
 
 const FileUpload = () => {
   const [file, setFile] = useState();
-  const [text, setText] = useState();
+  const [text, setText] = useState([]);
+  useEffect(() => {
+    console.log(text)
+  }, [text])
   const handleFileChange = (e) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
@@ -72,7 +75,14 @@ const FileUpload = () => {
     <>
       <button onClick={handleExtractText}>Extract Text</button>
       <input type="file" onChange={handleFileChange} />
-      <p>{text}</p>
+      {/* <p>{text}</p> */}
+      {text.map((e, i) => {
+          return <div key={i}>
+            <p><strong>{e.front}</strong></p>
+            <p>{e.back}</p>
+          </div>
+        })
+      }
     </>
   )
 }
