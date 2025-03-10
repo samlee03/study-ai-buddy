@@ -3,9 +3,28 @@ from flask_cors import CORS, cross_origin
 from pdfminer.high_level import extract_text
 from werkzeug.utils import secure_filename
 import os
+from google import genai
+from dotenv import load_dotenv
+import json
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
+
+@app.route("/test/gemini")
+def test_gemini():
+    instructions = "Analyze the topic and ONLY return an array of questions with keys, question and options, revolving this topic. No other supplementary text needed"
+    
+    client = genai.Client(api_key=os.getenv("API_KEY"))
+    response = client.models.generate_content(
+        model="gemini-2.0-flash", contents=(instructions + "simplifying fractions")
+    )
+    data = response.text.strip('```json\n').strip('\n```')
+    questions = json.loads(data)
+    return{
+        "output": questions
+    }
 
 @app.route("/api/test")
 def test():
