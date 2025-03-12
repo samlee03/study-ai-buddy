@@ -8,10 +8,10 @@ const Header = () => {
         navigate('/');
     };
     const handleSignInClick = () => {
-      navigate('./Login'); 
+      navigate('/Login'); 
     };
     const handleRegisterClick = () => {
-      navigate('./Login'); 
+      navigate('/Signup'); 
     };
   return (
       <div className="Header">
