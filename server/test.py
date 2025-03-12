@@ -49,6 +49,7 @@ def readpdf():
     filepath = os.path.join("uploads", filename)
     if not os.path.exists('uploads'):
         os.makedirs('uploads')
+    # content = file.read(filepath) # Better implementation to read it off memory rather than downloading it
     file.save(filepath)
     text = (extract_text(filepath))
     os.remove(filepath)
