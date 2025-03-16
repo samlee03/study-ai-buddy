@@ -4,7 +4,57 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/api/test")
+@app.route("/")
+def home():
+    return "Welcome to the Flask API!"
+
+@app.route("/api/uploadType")
+def uploadType():
+    return {
+        "UploadTypes" : [
+            {
+                "title" : "Vocabulary",
+                "subtitle" : "Learn new words and improve your language skills."
+            },
+            {
+                "title" : "Math",
+                "subtitle" : "Practice math problems and improve calculations."
+            },
+            {
+                "title" : "History",
+                "subtitle" : "Some history subtitles"
+            }
+        ]
+    }
+
+@app.route("/api/tempUploads")
+def tempUploads():
+    return {
+        "tempUploads": [
+            {
+                "title": "Question format",
+                "subtitle": "Description",
+                "type": "question"
+            },
+            {
+                "title": "Normal format",
+                "subtitle": "Description",
+                "type": "normal"
+            },
+            {
+                "title": "Question format",
+                "subtitle": "Description",
+                "type": "question"
+            },
+            {
+                "title": "Normal format",
+                "subtitle": "Description",
+                "type": "normal"
+            },
+        ]
+    }
+
+@app.route("/api/questions")
 def test():
     return {
         "questions": [
@@ -32,7 +82,7 @@ def test():
         ]
     }
 
-@app.route("/api/flashcard")
+@app.route("/api/flashcards")
 def flashcard():
     return {
         "flashcards": [
@@ -46,7 +96,6 @@ def flashcard():
             }
         ]
     }
-
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,23 +1,46 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Flashcard from '../components/Flashcard'; 
 import '../styles/FlashcardTest.css';
 
 const FlashcardTest = () => {
+  const location = useLocation(); 
+  const flashcardType = location.state?.type || 'normal';
   const [data, setData] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
   
   useEffect(() => {
-    fetch("http://localhost:5000/api/test")  // Use the relative path
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+    let apiUrl = "http://localhost:5000/api/flashcards"; // Default API
+
+    if (flashcardType === "question") {
+      apiUrl = "http://localhost:5000/api/questions";
+    } else if (flashcardType === "short-answer") {
+      apiUrl = "http://localhost:5000/api/short-answer-flashcards";
+    }
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error("Error fetching data:", error));
+    
+  }, [flashcardType]);
+
   if (!data) {
     return <p>Loading...</p>; 
   }
+
+  const getLength = () => {
+    if (flashcardType === "question" && data?.questions) {
+      return data.questions.length;
+    } else if (flashcardType === "normal" && data?.flashcards) {
+      return data.flashcards.length;
+    } else {
+      return 0;
+    }
+  };
+
   const nextCard = () => {
-    if (data && currentIndex < data.questions.length - 1) {
+    if (data && currentIndex < getLength() - 1) {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -35,12 +58,12 @@ const FlashcardTest = () => {
         <p>Loading...</p> 
       ) : (
         <div className="flashcard-container">
-          {data.questions.length > 0 && (
+          {flashcardType === "question" && getLength() > 0 && (
             <Flashcard
-              key = {currentIndex}
+              key={currentIndex}
               question={
                 <>
-                  <strong>{data.questions[currentIndex].question}</strong> 
+                  <strong>{data.questions[currentIndex].question}</strong>
                   <br />
                   <br />
                   {data.questions[currentIndex].options.map((option, index) => (
@@ -51,7 +74,25 @@ const FlashcardTest = () => {
                   ))}
                 </>
               }
-              answer= {data.questions[currentIndex].answer}
+              answer={
+                <>
+                  {data.questions[currentIndex].options.map((option, index) => {
+                    if (option === data.questions[currentIndex].answer) {
+                      return (
+                        <span key={index}>
+                          {String.fromCharCode(65 + index)}) {option}
+                        </span>
+                      );
+                    }})}
+                </>
+              }
+            />
+          )}
+          {flashcardType === "normal" && getLength() > 0 && (
+            <Flashcard
+              key={currentIndex}
+              question={<strong>{data.flashcards[currentIndex].front}</strong>}
+              answer={data.flashcards[currentIndex].back}
             />
           )}
         </div>
@@ -62,10 +103,10 @@ const FlashcardTest = () => {
         </button>
 
         <div className="flashcard-count">
-          {currentIndex + 1} / {data.questions.length}
+          {currentIndex + 1} / {getLength()}
         </div>
 
-        <button onClick={nextCard} disabled={currentIndex === data.questions.length - 1}>
+        <button onClick={nextCard} disabled={currentIndex === getLength() - 1}>
           Next
         </button>
       </div>
