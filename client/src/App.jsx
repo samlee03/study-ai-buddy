@@ -12,27 +12,27 @@ import Main from './pages/MainPage';
 import Test from './pages/Test';
 import FlashcardTest from './pages/FlashcardTest';
 
-const Shortcuts = () => {
-  const navigate = useNavigate();
-  return (
-    <div className="shortcuts">
-      <h2>navbar(for testing)</h2>
-      <p onClick={() => navigate("/")}>Home Page</p>
-      <p onClick={() => navigate("/login")}>Login Page</p>
-      <p onClick={() => navigate("/signup")}>Signup Page</p>
-      <p onClick={() => navigate("/upload")}>Upload Page</p>
-      <p onClick={() => navigate("/main")}>Main Page</p>
-      <p onClick={() => navigate('/test')}>Test</p>
-      <p onClick={() => navigate('/FlashcardTest')}>FlashcardTest</p>
-    </div>
-  )
-}
+// const Shortcuts = () => {
+//   const navigate = useNavigate();
+//   return (
+//     <div className="shortcuts">
+//       <h2>navbar(for testing)</h2>
+//       <p onClick={() => navigate("/")}>Home Page</p>
+//       <p onClick={() => navigate("/login")}>Login Page</p>
+//       <p onClick={() => navigate("/signup")}>Signup Page</p>
+//       <p onClick={() => navigate("/upload")}>Upload Page</p>
+//       <p onClick={() => navigate("/main")}>Main Page</p>
+//       <p onClick={() => navigate('/test')}>Test</p>
+//       <p onClick={() => navigate('/FlashcardTest')}>FlashcardTest</p>
+//     </div>
+//   )
+// }
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Shortcuts/>
+        {/* <Shortcuts/> */}
         <Routes>
           <Route index element={<Home />} />
           <Route path="login" element={<LoginPage />} />

@@ -6,7 +6,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     const handleTryItClick = () => {
-        navigate('./main');
+        navigate('/main');
     };
     return (
         <div>

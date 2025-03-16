@@ -1,24 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Header.css"
 import logo from "../assets/StudyBuddyIcon.png"
+import silhouette from "../assets/Silhouette.jpg"
 const Header = () => {
     let navigate = useNavigate();
+    
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
+
+    const handleSignInClick = () => {
+        navigate('/Login');
+        setDropdownOpen(false);
+    };
+
     const LogoClick = () => {
         navigate('/');
     };
-    const handleSignInClick = () => {
-      navigate('/Login'); 
+
+    const handleMainClick = () => {
+      navigate('/main');
     };
-    const handleRegisterClick = () => {
-      navigate('/Signup'); 
+
+    const handleTestClick = () => {
+      navigate('/test');
     };
   return (
-      <div className="Header">
-          <div onClick={LogoClick} className="Logo-container"><img style={{ height: "75px" }} className="Logo-img" src={logo} alt="Study Buddy"></img></div>
-      <div className="Header-buttons">
-        <button className="Sign-in-button" onClick = {handleSignInClick}>Sign In</button>
-        <button className="Register-button" onClick = {handleRegisterClick}>Register</button>
+    <div className="Header">
+      <div onClick={LogoClick} className="Logo-container">
+        <img style={{ height: "75px" }} className="Logo-img" src={logo} alt="Study Buddy"></img>
+      </div>
+      <div className="Nav-container">
+        <button className="Header-Button" onClick={handleTestClick}>Test</button>
+        <button className="Header-Button" onClick={handleMainClick}>Dashboard</button>
+        <div className="Profile-container">
+          <img 
+            src={silhouette} 
+            alt="Profile" 
+            className="Profile-img" 
+            onClick={toggleDropdown}
+            style={{ height: "50px", cursor: "pointer", borderRadius: "50%" }}
+          />
+          {dropdownOpen && (
+            <div className="Dropdown-menu">
+                <button className="Dropdown-button" onClick={handleSignInClick}>Sign In</button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
