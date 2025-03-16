@@ -41,6 +41,22 @@ def test():
         ]
     }
 
+@app.route("/api/flashcard")
+def flashcard():
+    return {
+        "flashcards": [
+            {
+                "back": "A flat, elevated area of land that has been lifted up by natural forces. It is usually higher than the surrounding area and has steep sides.",
+                "front": "Plateau"
+            },
+            {
+                "back": "A piece of land that is surrounded by water on three sides but is still connected to the mainland.",
+                "front": "Peninsula"
+            }
+        ]
+    }
+
+
 # https://www.youtube.com/watch?v=pWd6Enu2Pjs -- source for fileuploading
 @app.route("/api/readpdf", methods=["POST"])
 def readpdf():
