@@ -7,3 +7,4 @@ python-dotenv
 pypdf
 pdfminer.six
 google-genai
+pymongo

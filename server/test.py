@@ -6,11 +6,18 @@ import os
 from google import genai
 from dotenv import load_dotenv
 import json
+from pymongo import MongoClient
+
+
 
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
+
+
+uri = os.getenv("MONGO_URI")
+client = MongoClient(uri)
 
 @app.route("/test/gemini")
 def test_gemini():
@@ -87,6 +94,21 @@ def readpdf():
         "text": vocabs
     }
 
+@app.route("/db/user")
+def user():
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+
+    query = { "name": "dummy" }
+    user = users.find_one(query)
+    username = user.get("name")
+    email = user.get("email")
+    
+    client.close()
+    return {
+        "user": username,
+        "email": email
+    }
 
 if __name__ == '__main__':
     app.run(debug=True)
