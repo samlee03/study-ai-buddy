@@ -1,8 +1,12 @@
 import React from 'react'
-
+import Header from '../components/Header'
 const UploadPage = () => {
   return (
-    <div>UploadPage</div>
+    <div>
+      <Header/>
+      UploadPage
+
+    </div>
   )
 }
 

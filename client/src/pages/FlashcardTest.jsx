@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Flashcard from '../components/Flashcard'; 
+import Header from '../components/Header'
 import '../styles/FlashcardTest.css';
 
 const FlashcardTest = () => {
@@ -53,6 +54,7 @@ const FlashcardTest = () => {
 
   return (
     <div className="test-container">
+      <Header />
       <h2>Flashcards</h2>
       {typeof data === 'undefined' ? (
         <p>Loading...</p> 
