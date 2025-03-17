@@ -1,0 +1,51 @@
+.Upload-block {
+    display: flex;
+    background-color: white;
+    border-radius: 20px;
+    min-height: 900px;
+    min-width: 1000px;
+}
+
+.Upload-title{
+    text-align:center;
+    width:100%;
+    margin:auto;
+    position:absolute;
+    height:auto;
+    top:135px;
+    left:0px;
+}
+
+.Upload-header
+{
+    font-size:32pt;
+}
+
+.Second-block{
+    display:flex;
+    min-height:600px;
+    width:900px;
+    margin-top:100px;
+}
+
+.Drop-area{
+    width:400px;
+    height:350px;
+    display:inline-block;
+    background-color:pink;
+    position:relative;
+    border-style: dashed;
+    border-color: dimgray;
+    margin:auto;
+}
+
+
+.Drop-list {
+    width: 450px;
+    height:300px;
+    min-height:500px;
+    display: inline-block;
+    background-color:blue;
+    position:relative;
+    left:20px;
+}
