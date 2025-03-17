@@ -110,5 +110,17 @@ def user():
         "email": email
     }
 
+@app.route("/db/get_uploads")
+def get_uploads():
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    query = {"name": "dummy"}
+    user = users.find_one(query)
+    uploads = user.get("saved_uploads")
+    client.close()
+    return {
+        "uploads": uploads
+    }
+
 if __name__ == '__main__':
     app.run(debug=True)
