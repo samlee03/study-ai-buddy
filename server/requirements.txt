@@ -8,3 +8,5 @@ pypdf
 pdfminer.six
 google-genai
 pymongo
+pdfplumber
+bcrypt

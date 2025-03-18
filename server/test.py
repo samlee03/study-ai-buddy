@@ -7,8 +7,9 @@ from google import genai
 from dotenv import load_dotenv
 import json
 from pymongo import MongoClient
-
-
+import pdfplumber
+import io
+import bcrypt
 
 load_dotenv()
 
@@ -64,18 +65,17 @@ def flashcard():
     }
 
 
-# https://www.youtube.com/watch?v=pWd6Enu2Pjs -- source for fileuploading
-@app.route("/api/readpdf", methods=["POST"])
-def readpdf():
-    file = request.files["file"] # OK
-    filename = secure_filename(file.filename)
-    filepath = os.path.join("uploads", filename)
-    if not os.path.exists('uploads'):
-        os.makedirs('uploads')
-    # content = file.read(filepath) # Better implementation to read it off memory rather than downloading it
-    file.save(filepath)
-    text = (extract_text(filepath))
-    os.remove(filepath)
+# Returns array of flashcard objects {front: .., back: ..}
+@app.route("/api/get_flashcard", methods=["POST"])
+def get_flashcard():
+    # File Processing in Memory
+    file = request.files["file"]
+    content = file.read()
+    text = ""
+
+    with pdfplumber.open(io.BytesIO(content)) as pdf:
+        for page in pdf.pages:
+            text += page.extract_text()
 
     # Create Flashcards with Gemini API
     instructions = "Return ONLY an array of pairs, with keys 'front' and 'back' of the vocabulary I list next. No supplementary text needed. The text is: "
@@ -86,30 +86,52 @@ def readpdf():
     data = response.text.strip('```json\n').strip('\n```')
     vocabs = json.loads(data)
     
-    # print(vocabs)
     return {
-        # "test": extract_text('./../tests/assets/pdfminer_test.pdf')
-        # "text": extract_text(request.files["file"])
-        # "text": text,
         "text": vocabs
     }
 
-@app.route("/db/user")
+@app.route("/db/register_user", methods=["POST"])
 def user():
+
+    data = request.get_json()
+    username = data.get("username")
+    email = data.get("email")
+    password = data.get("password").encode('utf-8')
+    salt = bcrypt.gensalt()
+    pw_hash = bcrypt.hashpw(password, salt)
+
+
     database = client.get_database("users-db")
     users = database.get_collection("users")
 
-    query = { "name": "dummy" }
+    # email = "test@email.com"
+    query = { "email": email }
     user = users.find_one(query)
-    username = user.get("name")
-    email = user.get("email")
-    
-    client.close()
-    return {
-        "user": username,
-        "email": email
-    }
+    print(email)
+    if user:
+        status = "An account with this email is already in use"
+    else:
+        query = { "username" : username}
+        user = users.find_one(query)
+        if user:
+            status = "An account with this username is already in use"
+        else:
+            print("created user")
+            users.insert_one(
+                {
+                    "username": data.get('username'),
+                    "email": data.get('email'),
+                    "password": pw_hash,
+                    "saved_uploads": []
+                }
+            )
+            status = "Created user"
 
+    return jsonify({
+        "status": status
+    })
+
+# Grabs Upload from MongoDB
 @app.route("/db/get_uploads")
 def get_uploads():
     database = client.get_database("users-db")

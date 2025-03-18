@@ -61,7 +61,7 @@ const FileUpload = () => {
     const formData = new FormData()
     formData.append('file', file)
     try {
-      const response = await fetch('/api/readpdf', {
+      const response = await fetch('/api/get_flashcard', {
         method: 'POST',
         body: formData,
       });
