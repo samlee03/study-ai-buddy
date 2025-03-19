@@ -3,9 +3,9 @@ import Header from '../components/Header'
 import "../styles/SignupPage.css"
 
 const SignupPage = () => {
-    const [username, setUsername] = useState("1")
-    const [email, setEmail] = useState("dummy@email.com")
-    const [password, setPassword] = useState("1")
+    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const handleSubmit = async () => {
         let body = {

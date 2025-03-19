@@ -131,6 +131,27 @@ def user():
         "status": status
     })
 
+@app.route("/db/login")
+def login():
+    
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    username = "dummy1"
+    password = "test123"
+    query = { "username": username }
+    # Check for pw
+    
+    user = users.find_one(query)
+    if user and bcrypt.checkpw(password.encode("utf-8"), user.get("password")):
+        return {
+            "status": "Logged in"
+        } 
+    else:
+        return {
+            "status": "Wrong password"
+        }
+
+
 # Grabs Upload from MongoDB
 @app.route("/db/get_uploads")
 def get_uploads():
