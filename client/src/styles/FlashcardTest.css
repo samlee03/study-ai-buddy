@@ -1,7 +1,7 @@
 
 .test-container {
   text-align: center;
-  background-color: var(--primary);
+  background-color: var(--background);
   height: 100vh;
   width: 100%;
   margin: 0;
@@ -18,6 +18,7 @@ h2 {
   align-items: center;
   font-size: 2rem;
   margin-top: 20px;
+  color: var(--text);
 }
 
 .navigation {
@@ -28,6 +29,7 @@ h2 {
   width: 60%;
   margin-left: auto;
   margin-right: auto;
+  color: var(--text);
 }
 
 button, .flashcard-count {
@@ -38,19 +40,20 @@ button, .flashcard-count {
 button {
   padding: 10px 20px;
   font-size: 1rem;
-  background-color: var(--buttonBackground);
   color: var(--buttonText);
-  border: 1px solid var(--border);
-  border-radius: 5px;
+  border: none;
   cursor: pointer;
+  font-weight: bold;
+  background-color: transparent;
 }
 
 button:disabled {
-  background-color: var(--buttonDisable);
+  opacity: 0.1; 
+  pointer-events: none;
+  background-color: transparent;
   cursor: not-allowed;
 }
 
 .flashcard-count {
   font-size: 1.2rem;
-  font-weight: bold;
 }

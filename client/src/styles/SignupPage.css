@@ -16,6 +16,11 @@ input[value="Sign Up"] {
 
 .Page-container {
 	background-color: var(--background);
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 90px);
+    text-align: center;
 }
 
 .Form-block {

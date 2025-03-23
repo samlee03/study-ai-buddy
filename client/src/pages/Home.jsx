@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header'
 import "../styles/Home.css"
 import { useTheme } from '../components/ThemeContext';
+import RobotHome from "../assets/RobotHome.svg";
+
 const Home = () => {
     const { theme} = useTheme();
     const navigate = useNavigate();
@@ -27,7 +29,7 @@ const Home = () => {
         >
             <Header />
             <div>
-                <div className="Page-container">
+                <div className="Page-container-Home">
                     <div className="Home-block">
                         <div className="Home-content">
                             <h1 className="Home-title">Study Buddy</h1>
@@ -36,6 +38,14 @@ const Home = () => {
                                 Try It Now!
                             </button>
                         </div>
+                    </div>
+                    <div className="Home-image">
+                        <img 
+                            src={RobotHome} 
+                            alt="Robot"
+                            srcSet={`${RobotHome} 100w, ${RobotHome} 200w, ${RobotHome} 300w`} 
+                            sizes="(max-width: 500px) 100px, (max-width: 800px) 150px, 200px"
+                        />
                     </div>
                 </div>
             </div>

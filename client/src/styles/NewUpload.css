@@ -8,6 +8,7 @@
     padding: 15px;
     gap: 20px; 
     margin-bottom: 15px;
+    background-color: var(--primary);
 }
 
 .UploadImage-New {

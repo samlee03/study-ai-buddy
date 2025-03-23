@@ -117,7 +117,7 @@ const FlashcardTest = () => {
       )}
       <div className="navigation">
         <button onClick={prevCard} disabled={currentIndex === 0}>
-          Previous
+          {'<'}
         </button>
 
         <div className="flashcard-count">
@@ -125,7 +125,7 @@ const FlashcardTest = () => {
         </div>
 
         <button onClick={nextCard} disabled={currentIndex === getLength() - 1}>
-          Next
+          {'>'}
         </button>
       </div>
     </div>
