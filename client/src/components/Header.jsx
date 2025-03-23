@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import "../styles/Header.css"
 import { useTheme } from './ThemeContext';
 import logo from "../assets/RobotHead.svg"
 import silhouette from "../assets/Silhouette.jpg"
 const Header = () => {
     const { theme} = useTheme();
+    const location = useLocation();
     let navigate = useNavigate();
     
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -30,6 +31,11 @@ const Header = () => {
     const handleTestClick = () => {
       navigate('/test');
     };
+
+    const getButtonClass = (path) => {
+      return location.pathname === path ? 'Header-Button active' : 'Header-Button';
+    };
+
   return (
     <div style={{
       '--background': theme.headerBackground,
@@ -43,10 +49,13 @@ const Header = () => {
         <img style={{ height: "50px", cursor: "pointer"}} className="Logo-img" src={logo} alt="Study Buddy"></img>
       </div>
       <div className="Nav-container">
-        <button className="Header-Button" onClick={handleTestClick}>
+        <button className={getButtonClass('/')} onClick={LogoClick}>
+          Home
+        </button>
+        <button className={getButtonClass('/test')} onClick={handleTestClick}>
           Test
         </button>
-        <button className="Header-Button" onClick={handleMainClick}>
+        <button className={getButtonClass('/main')} onClick={handleMainClick}>
           Dashboard
         </button>
         <div className="Profile-container">

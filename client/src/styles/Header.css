@@ -60,3 +60,7 @@
 .Header-Button:hover {
     background: var(--buttonHover);
 }
+
+.Header-Button.active{
+    text-decoration: underline;
+}
