@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Header.css"
 import { useTheme } from './ThemeContext';
-import logo from "../assets/StudyBuddyIcon.png"
+import logo from "../assets/RobotHead.svg"
 import silhouette from "../assets/Silhouette.jpg"
 const Header = () => {
     const { theme} = useTheme();
@@ -40,7 +40,7 @@ const Header = () => {
       }}
       className="Header">
       <div onClick={LogoClick} className="Logo-container">
-        <img style={{ height: "75px" }} className="Logo-img" src={logo} alt="Study Buddy"></img>
+        <img style={{ height: "50px", cursor: "pointer"}} className="Logo-img" src={logo} alt="Study Buddy"></img>
       </div>
       <div className="Nav-container">
         <button className="Header-Button" onClick={handleTestClick}>

@@ -42,7 +42,7 @@
 }
 
 .Home-tryit-button {
-    padding: 12px 30px;
+    padding: 12px 20px;
     font-size: 1.2em;
     border: 1px solid var(--border);
     border-radius: 5px;
@@ -50,6 +50,9 @@
     color: var(--buttonText);
     cursor: pointer;
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px; 
 }
 
 .Home-tryit-button:hover {
@@ -61,3 +64,7 @@
     margin-right: auto;
 }
 
+.button-image {
+    width: 30px; 
+    height: 30px;
+}

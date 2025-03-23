@@ -4,7 +4,7 @@ import NewUpload from '../components/NewUpload';
 import RecentUpload from '../components/RecentUpload'; 
 import '../styles/MainPage.css';
 import { useTheme } from '../components/ThemeContext';
-import logo from "../assets/StudyBuddyIcon.png"
+import logo from "../assets/RobotHead.svg"
 
 const MainPage = () => {
     const { theme} = useTheme();

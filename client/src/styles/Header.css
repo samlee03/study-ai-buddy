@@ -5,6 +5,7 @@
     padding: 5px 20px; 
     background-color: var(--background); 
     border: 1px solid var(--border);
+    height: 75px;
 }
 
 .Logo-container:hover{

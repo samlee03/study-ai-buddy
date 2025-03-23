@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import "../styles/Home.css"
 import { useTheme } from '../components/ThemeContext';
 import RobotHome from "../assets/RobotHome.svg";
+import RobotHead from "../assets/RobotHeadForward.svg"
 
 const Home = () => {
     const { theme} = useTheme();
@@ -35,6 +36,7 @@ const Home = () => {
                             <h1 className="Home-title">Study Buddy</h1>
                             <p className="Home-subtitle">An AI-Powered Study Tool</p>
                             <button className="Home-tryit-button" onClick={handleTryItClick}>
+                                <img src={RobotHead} alt="Try It" className="button-image" />
                                 Try It Now!
                             </button>
                         </div>

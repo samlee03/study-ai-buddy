@@ -27,13 +27,14 @@ h2 {
 
 .RecentUploadContainer {
     display: grid; 
-    gap: 10px; 
+    gap: 20px; 
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     justify-items: start; 
     align-items: start; 
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    margin-bottom: 40px;
 }
 
 

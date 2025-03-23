@@ -40,7 +40,7 @@ button, .flashcard-count {
 button {
   padding: 10px 20px;
   font-size: 1rem;
-  color: var(--buttonText);
+  color: var(--text);
   border: none;
   cursor: pointer;
   font-weight: bold;

@@ -78,38 +78,18 @@ const FlashcardTest = () => {
         <div className="flashcard-container">
           {flashcardType === "question" && getLength() > 0 && (
             <Flashcard
+              type="mc"
               key={currentIndex}
-              question={
-                <>
-                  <strong>{data.questions[currentIndex].question}</strong>
-                  <br />
-                  <br />
-                  {data.questions[currentIndex].options.map((option, index) => (
-                    <span key={index}>
-                      {String.fromCharCode(65 + index)}) {option}
-                      <br />
-                    </span>
-                  ))}
-                </>
-              }
-              answer={
-                <>
-                  {data.questions[currentIndex].options.map((option, index) => {
-                    if (option === data.questions[currentIndex].answer) {
-                      return (
-                        <span key={index}>
-                          {String.fromCharCode(65 + index)}) {option}
-                        </span>
-                      );
-                    }})}
-                </>
-              }
+              question= {data.questions[currentIndex].question}
+              options= {data.questions[currentIndex].options}
+              correctAnswer= {data.questions[currentIndex].answer}
             />
           )}
           {flashcardType === "normal" && getLength() > 0 && (
             <Flashcard
+              type = "normal"
               key={currentIndex}
-              question={<strong>{data.flashcards[currentIndex].front}</strong>}
+              question={data.flashcards[currentIndex].front}
               answer={data.flashcards[currentIndex].back}
             />
           )}
