@@ -160,13 +160,18 @@ def user():
         "status": status
     })
 
-@app.route("/db/login")
+@app.route("/db/login", methods=["POST"])
 def login():
     
+    data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
+
     database = client.get_database("users-db")
     users = database.get_collection("users")
-    username = "dummy"
-    password = "test123"
+
+    # username = "dummy1"
+    # password = "test123"
     query = { "username": username }
     # Check for pw
     
@@ -182,7 +187,8 @@ def login():
         response.set_cookie(
             "token",
             token,
-            httponly = True
+            httponly = True,
+            max_age = 30
         )
         return response
     else:

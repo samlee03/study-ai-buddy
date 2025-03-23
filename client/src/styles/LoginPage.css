@@ -49,3 +49,8 @@ input[type="email"] {
 .Form-container {
     margin: auto;
 }
+
+.sign-in-status{
+    color: red;
+    font-size: .5rem;
+}
