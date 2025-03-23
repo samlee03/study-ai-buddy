@@ -9,14 +9,23 @@
     align-items: center;
     min-height: calc(100vh - 90px);
     text-align: center;
-    background-image: url("../assets/BackgroundPattern.png");
-    background-color: #CFECF7;
-    animation: scrolling-background linear 30s infinite;
+    /* background-image: url("../assets/BackgroundPattern.png"); */
+    /* background-image: url("../assets/Robot.png");
+    background-size: cover; 
+    background-position: center center; 
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; */
+    background-color: var(--background);
+    /* animation: scrolling-background linear 30s infinite; */
 }
 
 .Home-block{
     display:flex;
-    background-color: white;
+    background-color: var(--primary);
+    border: 2px solid var(--border);
     border-radius: 20px;
     height: 400px;
     width: 600px;
@@ -28,31 +37,31 @@
 .Home-title {
     font-size: 3em;
     margin-bottom: 10px;
-    color: rgb(0, 0, 0);
+    color: var(--title);
 }
 
 .Home-subtitle {
     font-size: 1.5em;
     margin-bottom: 20px;
-    color: rgb(85, 85, 85);
+    color: var(--subtitle);
 }
 
 .Home-tryit-button {
     padding: 12px 30px;
     font-size: 1.2em;
-    border: 1px solid rgb(76, 76, 76);
+    border: 1px solid var(--border);
     border-radius: 5px;
-    background-color: #d5d5d5;
-    color: rgb(56, 56, 56);
+    background-color: var(--buttonBackground);
+    color: var(--text);
     cursor: pointer;
     margin-top: 20px;
 }
 
 .Home-tryit-button:hover {
-    background-color: #7b7b7b; 
+    background-color: var(--buttonHover); 
 }
 
-@keyframes scrolling-background {
+/* @keyframes scrolling-background {
     0% {
         background-position:0px 0px;
     }
@@ -60,4 +69,4 @@
     100% {
         background-position: 400px 400px;
     }
-}
+} */

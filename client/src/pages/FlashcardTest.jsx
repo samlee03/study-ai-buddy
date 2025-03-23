@@ -3,8 +3,10 @@ import { useLocation } from 'react-router-dom';
 import Flashcard from '../components/Flashcard'; 
 import Header from '../components/Header'
 import '../styles/FlashcardTest.css';
+import { useTheme } from '../components/ThemeContext';
 
 const FlashcardTest = () => {
+  const { theme} = useTheme();
   const location = useLocation(); 
   const flashcardType = location.state?.type || 'normal';
   const [data, setData] = useState();
@@ -53,7 +55,21 @@ const FlashcardTest = () => {
   };
 
   return (
-    <div className="test-container">
+    <div 
+    style={{
+      '--primary' : theme.primary,
+      '--secondary' : theme.secondary,
+      '--background': theme.background,
+      '--title': theme.title,
+      '--subtitle': theme.subtitle,
+      '--text': theme.textColor,
+      '--border': theme.border,
+      '--buttonBackground' : theme.buttonBackground,
+      '--buttonHover' : theme.buttonHover,
+      '--buttonText' : theme.buttonText,
+      '--buttonDisable' : theme.buttonDisable,
+    }}
+    className="test-container">
       <Header />
       <h2>Flashcards</h2>
       {typeof data === 'undefined' ? (
