@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect, make_response
 from flask_cors import CORS, cross_origin
 from pdfminer.high_level import extract_text
 from werkzeug.utils import secure_filename
@@ -11,6 +11,10 @@ import pdfplumber
 import io
 import bcrypt
 
+from datetime import datetime, timedelta
+from functools import wraps
+import jwt
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -19,6 +23,31 @@ CORS(app)
 
 uri = os.getenv("MONGO_URI")
 client = MongoClient(uri)
+
+
+def token_required(function):
+    @wraps(function)
+    def decorated(*args, **kwargs):
+        token = request.cookies.get('token')
+        if not token:
+            print("THERE WAS NO TOKEN")
+            return jsonify({
+                "message": "there was no token"
+            })
+        
+        # Verify Token
+        try:
+            payload = jwt.decode(token, os.getenv("JWT_SECRET_KEY"), algorithms="HS256")
+        except:
+            response = make_response(redirect('login'))
+            response.delete_cookie('token')
+            return jsonify({
+                "message": "there was an invalid token",
+                "token": token
+            })
+        request.username = payload['username']
+        return function(*args, **kwargs)
+    return decorated
 
 @app.route("/test/gemini")
 def test_gemini():
@@ -136,16 +165,26 @@ def login():
     
     database = client.get_database("users-db")
     users = database.get_collection("users")
-    username = "dummy1"
+    username = "dummy"
     password = "test123"
     query = { "username": username }
     # Check for pw
     
     user = users.find_one(query)
     if user and bcrypt.checkpw(password.encode("utf-8"), user.get("password")):
-        return {
-            "status": "Logged in"
-        } 
+        # Generate Token
+        token = jwt.encode({
+            "exp": (datetime.now() + timedelta(seconds=20)).timestamp(),
+            "username": username
+        }, os.getenv("JWT_SECRET_KEY"), algorithm="HS256")
+        # response = make_response(redirect('http://localhost:5173/main'))
+        response = make_response(jsonify({"token": token}))
+        response.set_cookie(
+            "token",
+            token,
+            httponly = True
+        )
+        return response
     else:
         return {
             "status": "Wrong password"
@@ -154,16 +193,24 @@ def login():
 
 # Grabs Upload from MongoDB
 @app.route("/db/get_uploads")
+@token_required
 def get_uploads():
     database = client.get_database("users-db")
     users = database.get_collection("users")
-    query = {"name": "dummy"}
+    # query = {"username": "dummy"}
+    # get username from payload
+    query = {"username": request.username}
+
     user = users.find_one(query)
     uploads = user.get("saved_uploads")
-    client.close()
-    return {
-        "uploads": uploads
-    }
+    if uploads:
+        return jsonify({
+            "uploads": uploads
+        })
+    else:
+        return jsonify({
+            "message": "No uploads!"
+        })
 
 if __name__ == '__main__':
     app.run(debug=True)
