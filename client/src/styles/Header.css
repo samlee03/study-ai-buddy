@@ -49,8 +49,6 @@
 }
 
 .Header-Button {
-    background: var(--buttonBackground);
-    border: 1px solid var(--border);
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;

@@ -1,4 +1,4 @@
-.Page-container{
+.Page-container-Main{
     background-color: var(--primary);
 }
 
@@ -14,14 +14,15 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 30px;
 }
 
 h2 {
     font-size: 2rem;
     text-align: left;
     width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .RecentUploadContainer {

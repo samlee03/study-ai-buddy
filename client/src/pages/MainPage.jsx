@@ -43,7 +43,7 @@ const MainPage = () => {
           }}
         >
             <Header />
-        <div className="Page-container">
+        <div className="Page-container-Main">
             <div className='Upload-page'>
                 <h2>New Upload</h2>
                 <div className='NewUploadContainer'>

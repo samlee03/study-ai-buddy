@@ -41,7 +41,8 @@
     color: var(--buttonText);
     border-radius: 5px;
     cursor: pointer;
-    width: auto;
+    width: 10%;
+    margin-right: auto;
 }
 
 .Upload-button:hover {
