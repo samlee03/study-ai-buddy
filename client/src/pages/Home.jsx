@@ -2,14 +2,29 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header'
 import "../styles/Home.css"
+import { useTheme } from '../components/ThemeContext';
 const Home = () => {
+    const { theme} = useTheme();
     const navigate = useNavigate();
 
     const handleTryItClick = () => {
         navigate('/main');
     };
     return (
-        <div>
+        <div
+            style={{
+                '--primary' : theme.primary,
+                '--secondary' : theme.secondary,
+                '--background': theme.background,
+                '--title': theme.title,
+                '--subtitle': theme.subtitle,
+                '--text': theme.textColor,
+                '--border': theme.border,
+                '--buttonBackground' : theme.buttonBackground,
+                '--buttonHover' : theme.buttonHover,
+                '--buttonText' : theme.buttonText,
+            }}
+        >
             <Header />
             <div>
                 <div className="Page-container">

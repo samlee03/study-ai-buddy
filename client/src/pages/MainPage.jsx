@@ -3,9 +3,11 @@ import Header from '../components/Header'
 import NewUpload from '../components/NewUpload'; 
 import RecentUpload from '../components/RecentUpload'; 
 import '../styles/MainPage.css';
+import { useTheme } from '../components/ThemeContext';
 import logo from "../assets/StudyBuddyIcon.png"
 
 const MainPage = () => {
+    const { theme} = useTheme();
     const [uploadTypes, setUploadTypes] = useState([]);
     const [recentUploads, setRecentUploads] = useState([]);
   
@@ -24,7 +26,22 @@ const MainPage = () => {
     }, []);
 
     return (
-        <div>
+        <div
+        style={{
+            '--primary' : theme.primary,
+            '--secondary' : theme.secondary,
+            '--background': theme.background,
+            '--title': theme.title,
+            '--subtitle': theme.subtitle,
+            '--text': theme.textColor,
+            '--border': theme.border,
+            '--buttonBackground' : theme.buttonBackground,
+            '--buttonHover' : theme.buttonHover,
+            '--buttonText' : theme.buttonText,
+            '--buttonDisable' : theme.buttonDisable,
+            '--boxShadow': theme.boxShadow
+          }}
+        >
             <Header />
         <div className="Page-container">
             <div className='Upload-page'>

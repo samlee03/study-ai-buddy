@@ -13,3 +13,12 @@ input[value="Sign Up"] {
 	padding: 8px 10px 8px 10px;
 	font-size: 16px;
 }
+
+.Page-container {
+	background-color: var(--background);
+}
+
+.Form-block {
+	background-color: var(--primary);
+	border: 1px solid var(--border);
+}

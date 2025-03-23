@@ -11,6 +11,7 @@ import UploadPage from './pages/UploadPage';
 import Main from './pages/MainPage';
 import Test from './pages/Test';
 import FlashcardTest from './pages/FlashcardTest';
+import { ThemeProvider } from './components/ThemeContext';
 
 // const Shortcuts = () => {
 //   const navigate = useNavigate();
@@ -31,19 +32,21 @@ import FlashcardTest from './pages/FlashcardTest';
 function App() {
   return (
     <>
-      <BrowserRouter>
-        {/* <Shortcuts/> */}
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignupPage />} />
-          <Route path="forgot" element={<ForgotPassword />} />
-          <Route path="upload" element={<UploadPage />} />
-          <Route path="main" element={<Main />} />
-          <Route path="test" element={<Test />} />
-          <Route path="FlashcardTest" element={<FlashcardTest />} />
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          {/* <Shortcuts/> */}
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="signup" element={<SignupPage />} />
+            <Route path="forgot" element={<ForgotPassword />} />
+            <Route path="upload" element={<UploadPage />} />
+            <Route path="main" element={<Main />} />
+            <Route path="test" element={<Test />} />
+            <Route path="FlashcardTest" element={<FlashcardTest />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   )
 }

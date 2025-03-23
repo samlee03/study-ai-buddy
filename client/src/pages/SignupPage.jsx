@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import "../styles/SignupPage.css"
+import { useTheme } from '../components/ThemeContext';
 
 const SignupPage = () => {
+    const { theme} = useTheme();
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -29,7 +31,22 @@ const SignupPage = () => {
         }
     }
     return (
-        <div>
+        <div
+        style={{
+            '--primary' : theme.primary,
+            '--secondary' : theme.secondary,
+            '--background': theme.background,
+            '--title': theme.title,
+            '--subtitle': theme.subtitle,
+            '--text': theme.textColor,
+            '--border': theme.border,
+            '--buttonBackground' : theme.buttonBackground,
+            '--buttonHover' : theme.buttonHover,
+            '--buttonText' : theme.buttonText,
+            '--buttonDisable' : theme.buttonDisable,
+            '--boxShadow': theme.boxShadow
+          }}
+        >
             <Header />
             <div className="Page-container">
                 <div className="Form-block">

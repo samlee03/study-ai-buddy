@@ -32,15 +32,15 @@
   justify-content: flex-start;
   text-align: left;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
 }
 
 .flashcard-front {
-  background-color: #fff;
+  background-color: var(--primary);
 }
 
 .flashcard-back {
-  background-color: #f4f4f4;
+  background-color: var(--secondary);
   transform: rotateY(180deg); 
 }
   
