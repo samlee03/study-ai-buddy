@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request, jsonify, redirect, make_response
 from flask_cors import CORS
 import io
 import os
@@ -6,14 +6,44 @@ import json
 import bcrypt
 from pymongo import MongoClient
 from dotenv import load_dotenv
-
+import jwt
+from datetime import datetime, timedelta
+from functools import wraps
+import jwt
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # MongoDB Client
 uri = os.getenv("MONGO_URI")
 client = MongoClient(uri)
+
+# Authentication - For Protected Routes
+def token_required(function):
+    @wraps(function)
+    def decorated(*args, **kwargs):
+        token = request.cookies.get('token')
+        if not token:
+            print("THERE WAS NO TOKEN")
+            return jsonify({
+                "message": "there was no token"
+            })
+        
+        # Verify Token
+        try:
+            payload = jwt.decode(token, os.getenv("JWT_SECRET_KEY"), algorithms="HS256")
+        except:
+            response = make_response(redirect('login'))
+            response.delete_cookie('token')
+            return jsonify({
+                "message": "there was an invalid token",
+                "token": token
+            })
+        request.username = payload['username']
+        return function(*args, **kwargs)
+    return decorated
+
+
 
 @app.route("/")
 def home():
@@ -93,6 +123,7 @@ def test():
         ]
     }
 
+# Should take a File Object and return flashcards, will be a POST request, Returns flashcards & Stores in db
 @app.route("/api/flashcards")
 def flashcard():
     return {
@@ -111,6 +142,7 @@ def flashcard():
 
 @app.route("/db/register_user", methods=["POST"])
 def user():
+
     data = request.get_json()
     username = data.get("username")
     email = data.get("email")
@@ -149,25 +181,62 @@ def user():
         "status": status
     })
 
-@app.route("/db/login")
+
+@app.route("/db/login", methods=["POST"])
 def login():
     
+    data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
+
     database = client.get_database("users-db")
     users = database.get_collection("users")
-    username = "dummy1"
-    password = "test123"
+
+    # username = "dummy1"
+    # password = "test123"
     query = { "username": username }
     # Check for pw
     
     user = users.find_one(query)
     if user and bcrypt.checkpw(password.encode("utf-8"), user.get("password")):
-        return {
-            "status": "Logged in"
-        } 
+        # Generate Token
+        token = jwt.encode({
+            "exp": (datetime.now() + timedelta(seconds=20)).timestamp(),
+            "username": username
+        }, os.getenv("JWT_SECRET_KEY"), algorithm="HS256")
+        # response = make_response(redirect('http://localhost:5173/main'))
+        response = make_response(jsonify({"token": token}))
+        response.set_cookie(
+            "token",
+            token,
+            httponly = True,
+            max_age = 30
+        )
+        return response
     else:
         return {
             "status": "Wrong password"
         }
+
+@app.route("/db/get_uploads")
+@token_required
+def get_uploads():
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    # query = {"username": "dummy"}
+    # get username from payload
+    query = {"username": request.username}
+
+    user = users.find_one(query)
+    uploads = user.get("saved_uploads")
+    if uploads:
+        return jsonify({
+            "uploads": uploads
+        })
+    else:
+        return jsonify({
+            "message": "No uploads!"
+        })
 
 
 if __name__ == "__main__":

@@ -49,6 +49,9 @@ def token_required(function):
         return function(*args, **kwargs)
     return decorated
 
+
+
+# Routes
 @app.route("/test/gemini")
 def test_gemini():
     instructions = "Analyze the topic and ONLY return an array of questions with keys, question and options, revolving this topic. No other supplementary text needed."
@@ -93,8 +96,8 @@ def flashcard():
         ]
     }
 
-
-# Returns array of flashcard objects {front: .., back: ..}
+# # 
+# Post a File Object - Returns array of flashcard objects {front: .., back: ..}
 @app.route("/api/get_flashcard", methods=["POST"])
 def get_flashcard():
     # File Processing in Memory
