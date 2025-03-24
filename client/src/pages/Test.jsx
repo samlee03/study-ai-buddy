@@ -6,7 +6,9 @@ const Test = () => {
     <>
       <Header />
       {/* <Questions/> */}
-      <FileUpload/>
+      <FileUpload type="mcq"/>
+      <br></br>
+      <FileUpload type="flashcard"/>
     </>
   )
 }
@@ -42,7 +44,7 @@ const Questions = () => {
   )
 }
 
-const FileUpload = () => {
+const FileUpload = ({type}) => {
   const [file, setFile] = useState();
   const [text, setText] = useState([]);
   useEffect(() => {
@@ -60,22 +62,39 @@ const FileUpload = () => {
     }
     const formData = new FormData()
     formData.append('file', file)
-    try {
-      const response = await fetch('/api/get_flashcard', {
-        method: 'POST',
-        body: formData,
-      });
+    if (type == "flashcard"){
+      try {
+        const response = await fetch('/api/get_flashcard', {
+          method: 'POST',
+          body: formData,
+        });
 
-      if (!response.ok) throw new Error('Failed to extract text');
-      const data = await response.json()
-      setText(data.text);
-    } catch (error) {
-      console.error("Error:", error);
+        if (!response.ok) throw new Error('Failed to extract text');
+        const data = await response.json()
+        setText(data.text);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    } else {
+
+      
+      try {
+        const response = await fetch('/api/get_questions', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) throw new Error('Failed to extract text');
+        const data = await response.json()
+        setText(data.text);
+      } catch (error) {
+        console.error("Error:", error);
+      }
     }
   }
   return (
     <>
-      <button onClick={handleExtractText}>Extract Text</button>
+      <button onClick={handleExtractText}>Extract Text for {type}</button>
       <input type="file" onChange={handleFileChange} />
       {/* <p>{text}</p> */}
       {text.map((e, i) => {

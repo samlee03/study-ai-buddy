@@ -121,6 +121,30 @@ def get_flashcard():
     return {
         "text": vocabs
     }
+# Post a File Object - Returns array of flashcard objects {front: .., back: ..}
+@app.route("/api/get_questions", methods=["POST"])
+def get_questions():
+    # File Processing in Memory
+    file = request.files["file"]
+    content = file.read()
+    text = ""
+
+    with pdfplumber.open(io.BytesIO(content)) as pdf:
+        for page in pdf.pages:
+            text += page.extract_text()
+
+    # Create Flashcards with Gemini API
+    instructions = "Analyze the topic and ONLY return an array of questions with keys, question and options, revolving this topic. No other supplementary text needed."
+    client = genai.Client(api_key=os.getenv("API_KEY"))
+    response = client.models.generate_content(
+        model="gemini-2.0-flash", contents=(instructions + text)
+    )
+    data = response.text.strip('```json\n').strip('\n```')
+    questions = json.loads(data)
+    
+    return {
+        "text": questions
+    }
 
 @app.route("/db/register_user", methods=["POST"])
 def user():
