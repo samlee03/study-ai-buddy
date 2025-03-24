@@ -11,7 +11,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     const handleTryItClick = () => {
-        navigate('/main');
+        navigate('/login');
     };
     return (
         <div

@@ -42,8 +42,8 @@ input[type="email"] {
     display: flex;
     background-color: white;
     border-radius: 20px;
-    height: 400px;
-    width: 600px;
+    height: 450px;
+    width: 375px;
 }
 
 .Form-container {

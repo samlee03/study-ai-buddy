@@ -4,7 +4,8 @@ import Header from '../components/Header'
 const Test = () => {
   return (
     <>
-      <Questions/>
+      <Header />
+      {/* <Questions/> */}
       <FileUpload/>
     </>
   )
@@ -18,7 +19,6 @@ const Questions = () => {
   }, [])
   return (
     <div>
-      <Header />
       <div>Questions</div>
       {(typeof data === 'undefined') ? (
         <p>loading</p>
