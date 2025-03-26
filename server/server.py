@@ -201,7 +201,7 @@ def login():
     if user and bcrypt.checkpw(password.encode("utf-8"), user.get("password")):
         # Generate Token
         token = jwt.encode({
-            "exp": (datetime.now() + timedelta(seconds=20)).timestamp(),
+            "exp": (datetime.now() + timedelta(hours=1)).timestamp(),
             "username": username
         }, os.getenv("JWT_SECRET_KEY"), algorithm="HS256")
         # response = make_response(redirect('http://localhost:5173/main'))
@@ -210,7 +210,8 @@ def login():
             "token",
             token,
             httponly = True,
-            max_age = 30
+            max_age = 15,
+            path='/'
         )
         return response
     else:
@@ -238,6 +239,18 @@ def get_uploads():
             "message": "No uploads!"
         })
 
+
+@app.route('/api/cookie')
+def cookie():
+        response = make_response(jsonify({"message": "Cookie Set"}))
+        response.set_cookie(
+            "token",
+            "textover here...",
+            httponly = True,
+            max_age = 8,
+            path='/'
+        )
+        return response
 
 if __name__ == "__main__":
     app.run(debug=True)

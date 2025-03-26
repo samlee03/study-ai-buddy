@@ -245,5 +245,16 @@ def get_uploads():
             "message": "No uploads!"
         })
 
+@app.route('/api/cookie')
+def cookie():
+        response = make_response(jsonify({"message": "Cookie Set"}))
+        response.set_cookie(
+            "token",
+            "textover here...",
+            httponly = True,
+            max_age = 15,
+            path='/'
+        )
+        return response
 if __name__ == '__main__':
     app.run(debug=True)
