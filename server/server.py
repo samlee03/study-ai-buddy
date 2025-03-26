@@ -203,7 +203,7 @@ def login():
     if user and bcrypt.checkpw(password.encode("utf-8"), user.get("password")):
         # Generate Token
         token = jwt.encode({
-            "exp": (datetime.now() + timedelta(hours=1)).timestamp(),
+            "exp": (datetime.now() + timedelta(seconds=15)).timestamp(),
             "username": username
         }, os.getenv("JWT_SECRET_KEY"), algorithm="HS256")
         # response = make_response(redirect('http://localhost:5173/main'))
