@@ -1,10 +1,15 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
+import { useCookies } from 'react-cookie'
 const Test = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  const token = cookies.token;
   return (
     <>
       <Header />
+      <GetCookie/>
+      {token ? <p>TOken exists!</p> : <></>}
       {/* <Questions/> */}
       <FileUpload type="mcq"/>
       <br></br>
@@ -104,6 +109,23 @@ const FileUpload = ({type}) => {
           </div>
         })
       }
+    </>
+  )
+}
+
+const GetCookie = () => {
+  const handleCookie = async() => {
+    fetch('http://localhost:5000/api/cookie', {method: "GET", credentials: 'include'})
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+    })
+  }
+  return (
+    <>
+      <div>
+        <button onClick={handleCookie}>Get Cookie</button>
+      </div>
     </>
   )
 }
