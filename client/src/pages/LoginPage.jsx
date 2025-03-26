@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import "../styles/LoginPage.css"
 import { useTheme } from '../components/ThemeContext';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import CheckAuth from '../components/CheckAuth';
 
 const LoginPage = () => {
+    const { isLoggedIn } = CheckAuth();
     const { theme} = useTheme();
     const navigate = useNavigate();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("dummy1");
+    const [password, setPassword] = useState("test123");
     const [message, setMessage] = useState("");
     const handleSubmit = async () => {
         let body = {
@@ -26,10 +28,10 @@ const LoginPage = () => {
             if (!response.ok) throw new Error('Login Error');
             const data = await response.json()
             if (data.status){
-                console.log(data.status);
+                // console.log(data.status);
                 setMessage("Username or password was incorrect");
             } else {
-                console.log(data.token)
+                // console.log(data.token)
                 navigate('/main')
                 setMessage("Signed in. Redirect user to main page.")
             }
@@ -38,16 +40,11 @@ const LoginPage = () => {
             console.error(error)
         }
     }
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');  // or check cookies
-        if (token) {
-            console.log("Cookie still exists!!")
-            navigate('/main');
-        } else {
-            console.log("No cookie")
-        }   
-    }, []);
+    useEffect (() => {
+        if (isLoggedIn){
+            navigate('/main')
+        }
+    }, [isLoggedIn])
     return (
         <div
         style={{

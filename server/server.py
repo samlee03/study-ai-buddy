@@ -25,9 +25,11 @@ def token_required(function):
         token = request.cookies.get('token')
         if not token:
             print("THERE WAS NO TOKEN")
-            return jsonify({
-                "message": "there was no token"
-            })
+            response = make_response(redirect('login'))
+            # return jsonify({
+            #     "message": "there was no token"
+            # })
+            return response
         
         # Verify Token
         try:
@@ -220,7 +222,6 @@ def login():
         }
 
 @app.route("/db/get_uploads")
-@token_required
 def get_uploads():
     database = client.get_database("users-db")
     users = database.get_collection("users")
@@ -252,5 +253,12 @@ def cookie():
         )
         return response
 
+@app.route('/api/check-cookie')
+def check_cookie():
+    token = request.cookies.get('token')
+    if token:
+        return jsonify({"loggedIn": True})
+    else:
+        return jsonify({"loggedIn": False})
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,21 +1,31 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
-import { useCookies } from 'react-cookie'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom';
+import CheckAuth from '../components/CheckAuth';
 const Test = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
-  const token = cookies.token;
-  return (
-    <>
-      <Header />
-      <GetCookie/>
-      {token ? <p>TOken exists!</p> : <></>}
-      {/* <Questions/> */}
-      <FileUpload type="mcq"/>
-      <br></br>
-      <FileUpload type="flashcard"/>
-    </>
-  )
+  
+  // const [cookies] = useCookies(['token']);
+  const { isLoggedIn } = CheckAuth();
+  if (isLoggedIn){
+    return (
+      <>
+        <Header />
+        <GetCookie/>
+        <p>TOken exists!</p>
+        
+
+        {/* <Questions/> */}
+        <FileUpload type="mcq"/>
+        <br></br>
+        <FileUpload type="flashcard"/>
+      </>
+    )
+    
+  } else {
+    return (<><Header/></>)
+  }
 }
 const Questions = () => {
   const [data, setData] = useState();

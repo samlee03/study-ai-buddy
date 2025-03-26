@@ -5,6 +5,7 @@ import "../styles/Home.css"
 import { useTheme } from '../components/ThemeContext';
 import RobotHome from "../assets/RobotHome.svg";
 import RobotHead from "../assets/RobotHeadForward.svg"
+import CheckAuth from '../components/CheckAuth';
 
 const Home = () => {
     const { theme} = useTheme();
