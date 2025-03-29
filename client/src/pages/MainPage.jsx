@@ -23,9 +23,12 @@ const MainPage = () => {
           .then(data => setUploadTypes(data.UploadTypes))
           .catch(error => console.error("Error fetching upload types:", error));
         // Fetch recent uploads
-        fetch("http://localhost:5000/api/tempUploads")
+        fetch("http://localhost:5000/db/get_saved_uploads", {
+            method: 'GET',
+            credentials: 'include'
+        })
           .then(response => response.json())
-          .then(data => setRecentUploads(data.tempUploads))
+          .then(data => setRecentUploads(data.uploads))
           .catch(error => console.error("Error fetching recent uploads:", error));
       }
     }, [isLoggedIn]);
@@ -64,7 +67,7 @@ const MainPage = () => {
                       <hr className="divider" />
                       <h2>Recent Upload</h2>
                       <div className='RecentUploadContainer'>
-                          {recentUploads.map((upload, index) => (
+                          {recentUploads ? recentUploads.map((upload, index) => (
                               <RecentUpload
                                   key={index}
                                   title={upload.title}
@@ -72,7 +75,7 @@ const MainPage = () => {
                                   image={logo}
                                   type={upload.type}
                               />
-                          ))}
+                          )) : <></>}
                       </div>   
                   </div>
               </div>
