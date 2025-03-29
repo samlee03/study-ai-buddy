@@ -9,6 +9,7 @@ const FlashcardTest = () => {
   const { theme} = useTheme();
   const location = useLocation(); 
   const flashcardType = location.state?.type || 'normal';
+  const flashcardContent = location.state?.content
   const [data, setData] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
   
@@ -33,10 +34,10 @@ const FlashcardTest = () => {
   }
 
   const getLength = () => {
-    if (flashcardType === "question" && data?.questions) {
-      return data.questions.length;
+    if (flashcardType === "question") {
+      return flashcardContent.length;
     } else if (flashcardType === "normal" && data?.flashcards) {
-      return data.flashcards.length;
+      return flashcardContent.length;
     } else {
       return 0;
     }
@@ -76,7 +77,7 @@ const FlashcardTest = () => {
         <p>Loading...</p> 
       ) : (
         <div className="flashcard-container">
-          {flashcardType === "question" && getLength() > 0 && (
+          {/* {flashcardType === "question" && getLength() > 0 && (
             <Flashcard
               type="mc"
               key={currentIndex}
@@ -84,13 +85,30 @@ const FlashcardTest = () => {
               options= {data.questions[currentIndex].options}
               correctAnswer= {data.questions[currentIndex].answer}
             />
+          )} */}
+          {flashcardType === "question" && getLength() > 0 && (
+            <Flashcard
+              type="mc"
+              key={currentIndex}
+              question= {flashcardContent[currentIndex].question}
+              options= {flashcardContent[currentIndex].options}
+              correctAnswer= {flashcardContent[currentIndex].answer}
+            />
           )}
-          {flashcardType === "normal" && getLength() > 0 && (
+          {/* {flashcardType === "normal" && getLength() > 0 && (
             <Flashcard
               type = "normal"
               key={currentIndex}
               question={data.flashcards[currentIndex].front}
               answer={data.flashcards[currentIndex].back}
+            />
+          )} */}
+          {flashcardType === "normal" && getLength() > 0 && (
+            <Flashcard
+              type = "normal"
+              key={currentIndex}
+              question={flashcardContent[currentIndex].front}
+              answer={flashcardContent[currentIndex].back}
             />
           )}
         </div>

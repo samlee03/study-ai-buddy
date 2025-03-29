@@ -74,6 +74,7 @@ const MainPage = () => {
                                   subtitle={upload.subtitle}
                                   image={logo}
                                   type={upload.type}
+                                  content={upload.content}
                               />
                           )) : <></>}
                       </div>   
