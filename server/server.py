@@ -240,6 +240,22 @@ def get_uploads():
             "message": "No uploads!"
         })
 
+@app.route("/db/get_saved_uploads")
+def get_saved_uploads():
+    token = request.cookies.get('token')
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    try: 
+        payload = jwt.decode(token, os.getenv("JWT_SECRET_KEY"), algorithms="HS256")
+        username = payload.get("username")
+        query = {"username": username}
+
+        user = users.find_one(query)
+        uploads = user.get("saved_uploads")
+        return jsonify({"uploads": uploads})
+    
+    except:
+        return jsonify({"error": "error authenticating"})
 
 @app.route('/api/cookie')
 def cookie():
