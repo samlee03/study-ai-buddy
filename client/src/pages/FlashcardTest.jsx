@@ -17,8 +17,8 @@ const FlashcardTest = () => {
 
     if (flashcardType === "question") {
       apiUrl = "http://localhost:5000/api/questions";
-    } else if (flashcardType === "short-answer") {
-      apiUrl = "http://localhost:5000/api/short-answer-flashcards";
+    } else if (flashcardType === "shortResponse") {
+      apiUrl = "http://localhost:5000/api/shortResponse";
     }
 
     fetch(apiUrl)
@@ -37,6 +37,8 @@ const FlashcardTest = () => {
       return data.questions.length;
     } else if (flashcardType === "normal" && data?.flashcards) {
       return data.flashcards.length;
+    } else if (flashcardType === "shortResponse" && data?.shortResponse) {
+      return data.shortResponse.length;
     } else {
       return 0;
     }
@@ -82,7 +84,7 @@ const FlashcardTest = () => {
               key={currentIndex}
               question= {data.questions[currentIndex].question}
               options= {data.questions[currentIndex].options}
-              correctAnswer= {data.questions[currentIndex].answer}
+              answer= {data.questions[currentIndex].answer}
             />
           )}
           {flashcardType === "normal" && getLength() > 0 && (
@@ -91,6 +93,14 @@ const FlashcardTest = () => {
               key={currentIndex}
               question={data.flashcards[currentIndex].front}
               answer={data.flashcards[currentIndex].back}
+            />
+          )}
+          {flashcardType === "shortResponse" && getLength() > 0 && (
+            <Flashcard
+              type = "shortResponse"
+              key={currentIndex}
+              question={data.shortResponse[currentIndex].question}
+              answer={data.shortResponse[currentIndex].answer}
             />
           )}
         </div>

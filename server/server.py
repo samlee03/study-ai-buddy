@@ -54,16 +54,16 @@ def uploadType():
     return {
         "UploadTypes" : [
             {
-                "title" : "Vocabulary",
-                "subtitle" : "Learn new words and improve your language skills."
+                "title" : "Flashcards",
+                "subtitle" : "Great for memorization and self-testing in subjects like vocabulary, definitions, and key concepts."
             },
             {
-                "title" : "Math",
-                "subtitle" : "Practice math problems and improve calculations."
+                "title" : "Multiple Choice Question",
+                "subtitle" : "A multiple-choice flashcard presents a question along with several answer options. Useful for quizzes, practice tests, and self-assessment in areas where recognition-based learning is effective."
             },
             {
-                "title" : "History",
-                "subtitle" : "Some history subtitles"
+                "title" : "Short Response",
+                "subtitle" : "A short response flashcard requires the user to type out their answer in a text box before submitting it. This format is ideal for critical thinking, recall-based learning, and open-ended questions where written responses are necessary."
             }
         ]
     }
@@ -83,9 +83,9 @@ def tempUploads():
                 "type": "normal"
             },
             {
-                "title": "Question format",
+                "title": "Short Response format",
                 "subtitle": "Description",
-                "type": "question"
+                "type": "shortResponse"
             },
             {
                 "title": "Normal format",
@@ -119,6 +119,25 @@ def test():
                 "question": "What is 2+1?",
                 "options": ["1", "2", "3"],
                 "answer" : "3"
+            }
+        ]
+    }
+
+@app.route("/api/shortResponse")
+def shortResponse():
+    return {
+        "shortResponse" : [
+            {
+                "question" : "Explain Something",
+                "answer" : "Correct Explanation"
+            },
+            {
+                "question" : "Explain Something else",
+                "answer" : "Correct Explanation"
+            },
+            {
+                "question" : "Explain Something",
+                "answer" : "Correct Explanation"
             }
         ]
     }
