@@ -6,10 +6,12 @@ import json
 import bcrypt
 from pymongo import MongoClient
 from dotenv import load_dotenv
-import jwt
 from datetime import datetime, timedelta
 from functools import wraps
 import jwt
+import pdfplumber
+from google import genai
+
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -256,6 +258,98 @@ def get_saved_uploads():
     
     except:
         return jsonify({"error": "error authenticating"})
+    
+
+# Post a File Object - Returns array of flashcard objects {front: .., back: ..}
+@app.route("/api/get_flashcard", methods=["POST"])
+def get_flashcard():
+    # File Processing in Memory
+    file = request.files["file"]
+    content = file.read()
+    text = ""
+
+    with pdfplumber.open(io.BytesIO(content)) as pdf:
+        for page in pdf.pages:
+            text += page.extract_text()
+
+    # Create Flashcards with Gemini API
+    instructions = "Return ONLY an array of pairs, with keys 'front' and 'back' of the vocabulary I list next. No supplementary text needed. The text is: "
+    genclient = genai.Client(api_key=os.getenv("API_KEY"))
+    response = genclient.models.generate_content(
+        model="gemini-2.0-flash", contents=(instructions + text)
+    )
+    data = response.text.strip('```json\n').strip('\n```')
+    vocabs = json.loads(data)
+    
+    uploadObj = {
+        "type": "normal",
+        "title": "untitled upload",
+        "subtitle": "un-subtitled upload",
+        "content": vocabs
+    }
+    token = request.cookies.get('token')
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    try: 
+        payload = jwt.decode(token, os.getenv("JWT_SECRET_KEY"), algorithms="HS256")
+        username = payload.get("username")
+        query = {"username": username}
+        
+        document = {'$push': {"saved_uploads": uploadObj}}
+
+        users.update_one(query, document)
+        return {
+            "text": vocabs
+        }
+    except:
+        return jsonify({"error": "error authenticating"})
+    
+# Post a File Object - Returns array of flashcard objects {question: .., options: .., answer}
+@app.route("/api/get_questions", methods=["POST"])
+def get_questions():
+    # File Processing in Memory
+    file = request.files["file"]
+    content = file.read()
+    text = ""
+
+    with pdfplumber.open(io.BytesIO(content)) as pdf:
+        for page in pdf.pages:
+            text += page.extract_text()
+
+    # Create Flashcards with Gemini API
+    instructions = "Analyze the topic and ONLY return an array of questions with keys, question and options, revolving this topic. No other supplementary text needed."
+    client = genai.Client(api_key=os.getenv("API_KEY"))
+    response = client.models.generate_content(
+        model="gemini-2.0-flash", contents=(instructions + text)
+    )
+    data = response.text.strip('```json\n').strip('\n```')
+    questions = json.loads(data)
+    
+    uploadObj = {
+        "type": "question",
+        "title": "untitled",
+        "subtitle": "un-subtitled",
+        "content": questions
+    }
+    token = request.cookies.get('token')
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    try: 
+        payload = jwt.decode(token, os.getenv("JWT_SECRET_KEY"), algorithms="HS256")
+        username = payload.get("username")
+        query = {"username": username}
+        
+        document = {'$push': {"saved_uploads": uploadObj}}
+
+        users.update_one(query, document)
+        return {
+            "text": questions
+        }
+
+    except:
+        return jsonify({"error": "error authenticating"})
+
+
 
 @app.route('/api/cookie')
 def cookie():

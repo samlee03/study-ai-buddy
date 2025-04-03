@@ -121,7 +121,7 @@ def get_flashcard():
     return {
         "text": vocabs
     }
-# Post a File Object - Returns array of flashcard objects {front: .., back: ..}
+# Post a File Object - Returns array of flashcard objects {question: .., options: .., answer}
 @app.route("/api/get_questions", methods=["POST"])
 def get_questions():
     # File Processing in Memory

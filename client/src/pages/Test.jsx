@@ -87,6 +87,7 @@ const FileUpload = ({type}) => {
         if (!response.ok) throw new Error('Failed to extract text');
         const data = await response.json()
         setText(data.text);
+
       } catch (error) {
         console.error("Error:", error);
       }
@@ -112,13 +113,13 @@ const FileUpload = ({type}) => {
       <button onClick={handleExtractText}>Extract Text for {type}</button>
       <input type="file" onChange={handleFileChange} />
       {/* <p>{text}</p> */}
-      {text.map((e, i) => {
+      {/* {text.map((e, i) => {
           return <div key={i}>
             <p><strong>{e.front}</strong></p>
             <p>{e.back}</p>
           </div>
         })
-      }
+      } */}
     </>
   )
 }
