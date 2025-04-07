@@ -6,6 +6,15 @@ import '../styles/MainPage.css';
 import { useTheme } from '../components/ThemeContext';
 import logo from "../assets/RobotHead.svg"
 import CheckAuth from '../components/CheckAuth';
+import flashcard from "../assets/Flashcard.svg"
+import multipleChoice from "../assets/multipleChoice.svg"
+import shortResponse from "../assets/Short Response.svg"
+
+const imageMap = {
+    "Flashcards": flashcard,
+    "Multiple Choice Question": multipleChoice,
+    "Short Response": shortResponse,
+  };
 
 const MainPage = () => {
     const { isLoggedIn } = CheckAuth()
@@ -60,7 +69,7 @@ const MainPage = () => {
                               key={index}
                               title={type.title}
                               subtitle={type.subtitle}
-                              image={logo}
+                              image={imageMap[type.title]}
                           />
                       ))}
                   </div>

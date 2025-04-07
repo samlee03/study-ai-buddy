@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import '../styles/Flashcard.css';
 import { useTheme } from '../components/ThemeContext';
 
-const Flashcard = ({ type = "normal", question, answer, options = [], correctAnswer }) => {
+const Flashcard = ({ type = "normal", question, answer, options = []}) => {
   const { theme} = useTheme();
   const [isFlipped, setIsFlipped] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
+  const [userInput, setUserInput] = useState(""); 
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -21,6 +22,9 @@ const Flashcard = ({ type = "normal", question, answer, options = [], correctAns
     event.stopPropagation(); 
     if (selectedOption) {
       setIsCorrect(selectedOption === correctAnswer);
+    }
+    else if (type === "shortResponse") {
+      setIsCorrect(userInput.trim().toLowerCase() === answer.toLowerCase());
     }
     setIsFlipped(true); 
   };
@@ -93,8 +97,8 @@ const Flashcard = ({ type = "normal", question, answer, options = [], correctAns
                   {options.map((option, index) => {
                     let className = "mc-option";
                     if (option === selectedOption) {
-                      className += option === correctAnswer ? " correct" : " incorrect";
-                    } else if (option === correctAnswer) {
+                      className += option === answer ? " correct" : " incorrect";
+                    } else if (option === answer) {
                       className += " correct";
                     }
 
@@ -110,6 +114,33 @@ const Flashcard = ({ type = "normal", question, answer, options = [], correctAns
             )}
           </>
         )}
+        {type === "shortResponse" && (
+           <>
+             {!isFlipped ? (
+               <div className="flashcard-front">
+                 <p>{question}</p>
+                 <textarea
+                   value={userInput}
+                   onChange={(e) => setUserInput(e.target.value)}
+                   placeholder="Type your answer here..."
+                   className="short-response-input"
+                 />
+                 <button className="check-button" onClick={handleCheckAnswer} disabled={!userInput.trim()}>
+                   Check
+                 </button>
+                 {isCorrect === false && <p className="incorrect">Incorrect. Try again!</p>}
+               </div>
+             ) : (
+               <div className="flashcard-back">
+                 <p>{question}</p>
+                 <p className={isCorrect ? "correct" : "incorrect"}>
+                   {isCorrect ? "Correct!" : `Incorrect. The answer is: ${answer}`}
+                 </p>
+               </div>
+             )}
+           </>
+         )}
+         
       </div>
     </div>
   );
