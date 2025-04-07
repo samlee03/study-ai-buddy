@@ -10,6 +10,7 @@ import flashcard from "../assets/Flashcard.svg"
 import multipleChoice from "../assets/multipleChoice.svg"
 import shortResponse from "../assets/Short Response.svg"
 
+//Use of AI, a way to map the upload type to its corresponding image
 const imageMap = {
     "Flashcards": flashcard,
     "Multiple Choice Question": multipleChoice,
@@ -20,7 +21,7 @@ const MainPage = () => {
     const { isLoggedIn } = CheckAuth()
     // const isLoggedIn = true; // If you want to grant permission always for testing
     
-    const { theme} = useTheme();
+    const {theme} = useTheme();
     const [uploadTypes, setUploadTypes] = useState([]);
     const [recentUploads, setRecentUploads] = useState([]);
     
@@ -44,6 +45,7 @@ const MainPage = () => {
     if (isLoggedIn){
       return (
           <div
+          //Use of AI, mainly for syntax
           style={{
               '--primary' : theme.primary,
               '--secondary' : theme.secondary,
@@ -59,7 +61,7 @@ const MainPage = () => {
               '--boxShadow': theme.boxShadow
             }}
           >
-              <Header />
+            <Header />
           <div className="Page-container-Main">
               <div className='Upload-page'>
                   <h2>New Upload</h2>

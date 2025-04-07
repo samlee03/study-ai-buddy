@@ -75,6 +75,7 @@ const FlashcardTest = () => {
     className="test-container">
       <Header />
       <h2>Flashcards</h2>
+      {/* Use of AI, mainly for syntax for if statement */}
       {typeof data === 'undefined' ? (
         <p>Loading...</p> 
       ) : (

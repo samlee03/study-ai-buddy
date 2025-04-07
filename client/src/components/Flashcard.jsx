@@ -19,7 +19,6 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
   };
 
   const handleCheckAnswer = (event) => {
-    event.stopPropagation(); 
     if (selectedOption) {
       setIsCorrect(selectedOption === answer);
     }
