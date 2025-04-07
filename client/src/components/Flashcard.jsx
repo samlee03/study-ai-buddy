@@ -21,9 +21,9 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
   const handleCheckAnswer = (event) => {
     event.stopPropagation(); 
     if (selectedOption) {
-      setIsCorrect(selectedOption === correctAnswer);
+      setIsCorrect(selectedOption === answer);
     }
-    else if (type === "shortResponse") {
+    else if (userInput) {
       setIsCorrect(userInput.trim().toLowerCase() === answer.toLowerCase());
     }
     setIsFlipped(true); 
@@ -72,7 +72,6 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
                     <label key={index} className="mc-option">
                       <input
                         type="radio"
-                        name={`mc-${question}`}
                         value={option}
                         checked={selectedOption === option}
                         onChange={handleOptionChange}
@@ -88,7 +87,6 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
                 >
                   Check
                 </button>
-                {isCorrect === false && <p className="incorrect">Incorrect. Try again!</p>}
               </div>
             ) : (
               <div className="flashcard-back">
@@ -128,19 +126,24 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
                  <button className="check-button" onClick={handleCheckAnswer} disabled={!userInput.trim()}>
                    Check
                  </button>
-                 {isCorrect === false && <p className="incorrect">Incorrect. Try again!</p>}
                </div>
              ) : (
                <div className="flashcard-back">
                  <p>{question}</p>
-                 <p className={isCorrect ? "correct" : "incorrect"}>
-                   {isCorrect ? "Correct!" : `Incorrect. The answer is: ${answer}`}
-                 </p>
+                 {isCorrect ? (
+                  <p>{`Correct! The answer is:`}<br /> {answer}</p>
+                 ) : (
+                  <p>
+                    {`Incorrect! The answer is:`}<br /> {answer}  
+                    <br />
+                    {`Your reponse is:`}<br /> {userInput}
+                  </p>
+                 )}
                </div>
              )}
            </>
          )}
-         
+
       </div>
     </div>
   );

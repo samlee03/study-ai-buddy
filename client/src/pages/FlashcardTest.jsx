@@ -38,6 +38,8 @@ const FlashcardTest = () => {
       return flashcardContent.length;
     } else if (flashcardType === "normal" && data?.flashcards) {
       return flashcardContent.length;
+    } else if (flashcardType === "shortResponse" && data?.flashcards){
+      return flashcardContent.length;
     } else {
       return 0;
     }
@@ -92,7 +94,7 @@ const FlashcardTest = () => {
               key={currentIndex}
               question= {flashcardContent[currentIndex].question}
               options= {flashcardContent[currentIndex].options}
-              correctAnswer= {flashcardContent[currentIndex].answer}
+              answer= {flashcardContent[currentIndex].answer}
             />
           )}
           {/* {flashcardType === "normal" && getLength() > 0 && (
@@ -109,6 +111,14 @@ const FlashcardTest = () => {
               key={currentIndex}
               question={flashcardContent[currentIndex].front}
               answer={flashcardContent[currentIndex].back}
+            />
+          )}
+          {flashcardType === "shortResponse" && getLength() > 0 && (
+            <Flashcard
+              type = "shortResponse"
+              key={currentIndex}
+              question={flashcardContent[currentIndex].question}
+              answer={flashcardContent[currentIndex].answer}
             />
           )}
         </div>
