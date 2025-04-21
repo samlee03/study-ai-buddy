@@ -25,15 +25,6 @@ h2 {
     margin-bottom: 40px;
 }
 
-/* .DisplayRecentButton {
-    /* margin-top: '10px', */
-    /* fontSize: '0.9rem',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    border: '1px solid #ccc',
-    backgroundColor: '#f9f9f9' */
-/* } */ 
-
 .RecentUploadContainer {
     display: grid; 
     gap: 20px; 

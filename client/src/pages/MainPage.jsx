@@ -26,7 +26,23 @@ const MainPage = () => {
     const [recentUploads, setRecentUploads] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [displayRecent, setDisplayRecent] = useState(true);
+    const [filterFlashcard, setFilterFlashcard] = useState("All")
     
+    const typeOptions = ['All', 'Flashcard', 'Multiple Choice', 'Short Response'];
+    const typeMapping = {
+      All : "All",
+      normal: 'Flashcard',
+      question: 'Multiple Choice',
+      shortResponse: 'Short Response',
+    };
+    const filteredUploads = recentUploads?.filter(upload =>
+      (upload.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      upload.subtitle.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (filterFlashcard === 'All' || typeMapping[upload.type] === filterFlashcard)
+    );
+
+    const displayedUploads = displayRecent ? filteredUploads.slice().reverse() : filteredUploads;
+
     useEffect(() => {
       // Fetch upload types
       if (isLoggedIn){
@@ -44,13 +60,6 @@ const MainPage = () => {
           .catch(error => console.error("Error fetching recent uploads:", error));
       }
     }, [isLoggedIn]);
-
-    const filteredUploads = recentUploads?.filter(upload =>
-      upload.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      upload.subtitle.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    const displayedUploads = displayRecent ? filteredUploads.slice().reverse() : filteredUploads;
 
     if (isLoggedIn){
       return (
@@ -95,10 +104,19 @@ const MainPage = () => {
                           value={searchTerm}
                           onChange={e => setSearchTerm(e.target.value)}
                         />
-                        <button className= 'DisplayRecentButton'
+                        <button
                           onClick={() => setDisplayRecent(prev => !prev)}
                         >
                         {displayRecent ? 'Newest' : 'Oldest'}
+                        </button>
+                        <button
+                          onClick={() => {
+                            const currentIndex = typeOptions.indexOf(filterFlashcard);
+                            const nextIndex = (currentIndex + 1) % typeOptions.length;
+                            setFilterFlashcard(typeOptions[nextIndex]);
+                          }}
+                        >
+                          {filterFlashcard}
                         </button>
                       </div>
                     <div className='RecentUploadContainer'>
