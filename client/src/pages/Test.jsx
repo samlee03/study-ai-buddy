@@ -13,13 +13,15 @@ const Test = () => {
       <>
         <Header />
         <GetCookie/>
-        <p>TOken exists!</p>
+        <p>Logged In</p>
         
 
         {/* <Questions/> */}
         <FileUpload type="mcq"/>
         <br></br>
         <FileUpload type="flashcard"/>
+        <br></br>
+        <FileUpload type="shortResponse"/>
       </>
     )
     
@@ -91,6 +93,22 @@ const FileUpload = ({type}) => {
       } catch (error) {
         console.error("Error:", error);
       }
+    }
+    else if(type == "shortResponse") {
+      try {
+        const response = await fetch('/api/get_short_response', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) throw new Error('Failed to extract text');
+        const data = await response.json()
+        setText(data.text);
+
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    
     } else {
 
       

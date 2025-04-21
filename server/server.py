@@ -317,9 +317,9 @@ def get_questions():
             text += page.extract_text()
 
     # Create Flashcards with Gemini API
-    instructions = "Analyze the topic and ONLY return an array of questions with keys, question and options, revolving this topic. No other supplementary text needed."
-    client = genai.Client(api_key=os.getenv("API_KEY"))
-    response = client.models.generate_content(
+    instructions = "Analyze the topic and ONLY return an array of questions with keys, question options and answer (one of the options), revolving this topic. No other supplementary text needed."
+    genclient = genai.Client(api_key=os.getenv("API_KEY"))
+    response = genclient.models.generate_content(
         model="gemini-2.0-flash", contents=(instructions + text)
     )
     data = response.text.strip('```json\n').strip('\n```')
@@ -327,7 +327,7 @@ def get_questions():
     
     uploadObj = {
         "type": "question",
-        "title": "untitled",
+        "title": "untitled mcq",
         "subtitle": "un-subtitled",
         "content": questions
     }
@@ -349,7 +349,50 @@ def get_questions():
     except:
         return jsonify({"error": "error authenticating"})
 
+# Post a File Object - Returns array of flashcard objects {question: .., options: .., answer}
+@app.route("/api/get_short_response", methods=["POST"])
+def get_short_response():
+    # File Processing in Memory
+    file = request.files["file"]
+    content = file.read()
+    text = ""
 
+    with pdfplumber.open(io.BytesIO(content)) as pdf:
+        for page in pdf.pages:
+            text += page.extract_text()
+
+    # Create Flashcards with Gemini API
+    instructions = "Analyze the topic and ONLY return an array of questions in dictionary format with the question revolving this topic. It should test for the following material and can be answered in a sentence or two. Question should be easy to comprehend. No other supplementary text needed."
+    genclient = genai.Client(api_key=os.getenv("API_KEY"))
+    response = genclient.models.generate_content(
+        model="gemini-2.0-flash", contents=(instructions + text)
+    )
+    data = response.text.strip('```json\n').strip('\n```')
+    questions = json.loads(data)
+    
+    uploadObj = {
+        "type": "shortResponse",
+        "title": "untitled short answer",
+        "subtitle": "un-subtitled",
+        "content": questions
+    }
+    token = request.cookies.get('token')
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    try: 
+        payload = jwt.decode(token, os.getenv("JWT_SECRET_KEY"), algorithms="HS256")
+        username = payload.get("username")
+        query = {"username": username}
+        
+        document = {'$push': {"saved_uploads": uploadObj}}
+
+        users.update_one(query, document)
+        return {
+            "text": questions
+        }
+
+    except:
+        return jsonify({"error": "error authenticating"})
 
 @app.route('/api/cookie')
 def cookie():
@@ -362,6 +405,18 @@ def cookie():
             path='/'
         )
         return response
+
+@app.route('/api/check', methods=["POST"])
+def check_answer():
+    question = request.json.get("question")
+    answer = request.json.get("answer")
+    genclient = genai.Client(api_key=os.getenv("API_KEY"))
+    print("this ran")
+    response = genclient.models.generate_content(
+        model="gemini-2.0-flash", contents=("Is this response valid? Provide short, concise suggestions or feedback. If possible, add other answers. Question" + str(question) + ". Answer: " + str(answer) + ".")
+    )
+    return jsonify({"response": response.text})
+    
 
 @app.route('/api/check-cookie')
 def check_cookie():
