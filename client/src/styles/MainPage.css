@@ -25,6 +25,19 @@ h2 {
     margin-bottom: 40px;
 }
 
+.searchBox {
+    border-radius: 5px;
+    border: 1px solid var(--buttonBackground);
+    padding: 8px;   
+    color: var(--buttonBackground);
+    outline: none;
+}
+
+.searchBox:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); 
+}
+
 .RecentUploadContainer {
     display: grid; 
     gap: 20px; 

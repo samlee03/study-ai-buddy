@@ -10,7 +10,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import UploadPage from './pages/UploadPage';
 import Main from './pages/MainPage';
 import Test from './pages/Test';
-import FlashcardTest from './pages/FlashcardTest';
+import FlashcardPage from './pages/FlashcardPage';
 import { ThemeProvider } from './components/ThemeContext';
 
 // const Shortcuts = () => {
@@ -43,7 +43,7 @@ function App() {
             <Route path="upload" element={<UploadPage />} />
             <Route path="main" element={<Main />} />
             <Route path="test" element={<Test />} />
-            <Route path="FlashcardTest" element={<FlashcardTest />} />
+            <Route path="FlashcardPage" element={<FlashcardPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

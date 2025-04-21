@@ -95,16 +95,17 @@ const MainPage = () => {
                       ))}
                   </div>
                   <hr className="divider" />
-                  <h2>Recent Upload</h2>
+                  <h2>Recent Uploads</h2>
                   <div>
                       <div className= 'RecentUploadFilter'>
                         <input
+                          className ='searchBox'
                           type="text"
                           placeholder="Search..."
                           value={searchTerm}
                           onChange={e => setSearchTerm(e.target.value)}
                         />
-                        <button
+                        <button 
                           onClick={() => setDisplayRecent(prev => !prev)}
                         >
                         {displayRecent ? 'Newest' : 'Oldest'}
