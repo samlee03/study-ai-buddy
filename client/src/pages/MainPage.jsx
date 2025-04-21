@@ -12,9 +12,9 @@ import shortResponse from "../assets/Short Response.svg"
 
 //Use of AI, a way to map the upload type to its corresponding image
 const imageMap = {
-    "Flashcards": flashcard,
-    "Multiple Choice Question": multipleChoice,
-    "Short Response": shortResponse,
+    "normal": flashcard,
+    "question": multipleChoice,
+    "shortResponse": shortResponse,
   };
 
 const MainPage = () => {
@@ -24,6 +24,8 @@ const MainPage = () => {
     const {theme} = useTheme();
     const [uploadTypes, setUploadTypes] = useState([]);
     const [recentUploads, setRecentUploads] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [displayRecent, setDisplayRecent] = useState(true);
     
     useEffect(() => {
       // Fetch upload types
@@ -42,6 +44,14 @@ const MainPage = () => {
           .catch(error => console.error("Error fetching recent uploads:", error));
       }
     }, [isLoggedIn]);
+
+    const filteredUploads = recentUploads?.filter(upload =>
+      upload.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      upload.subtitle.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const displayedUploads = displayRecent ? filteredUploads.slice().reverse() : filteredUploads;
+
     if (isLoggedIn){
       return (
           <div
@@ -71,25 +81,44 @@ const MainPage = () => {
                               key={index}
                               title={type.title}
                               subtitle={type.subtitle}
-                              image={imageMap[type.title]}
+                              image={imageMap[type.type]}
                           />
                       ))}
                   </div>
-                      <hr className="divider" />
-                      <h2>Recent Upload</h2>
-                      <div className='RecentUploadContainer'>
-                          {recentUploads ? recentUploads.map((upload, index) => (
-                              <RecentUpload
-                                  key={index}
-                                  title={upload.title}
-                                  subtitle={upload.subtitle}
-                                  image={logo}
-                                  type={upload.type}
-                                  content={upload.content}
-                              />
-                          )) : <></>}
-                      </div>   
+                  <hr className="divider" />
+                  <h2>Recent Upload</h2>
+                  <div>
+                      <div className= 'RecentUploadFilter'>
+                        <input
+                          type="text"
+                          placeholder="Search..."
+                          value={searchTerm}
+                          onChange={e => setSearchTerm(e.target.value)}
+                        />
+                        <button className= 'DisplayRecentButton'
+                          onClick={() => setDisplayRecent(prev => !prev)}
+                        >
+                        {displayRecent ? 'Newest' : 'Oldest'}
+                        </button>
+                      </div>
+                    <div className='RecentUploadContainer'>
+                      {displayedUploads?.length > 0 ? (
+                        displayedUploads.map((upload, index) => (
+                          <RecentUpload
+                            key={index}
+                            title={upload.title}
+                            subtitle={upload.subtitle}
+                            image={imageMap[upload.type]}
+                            type={upload.type}
+                            content={upload.content}
+                          />
+                        ))
+                      ) : (
+                        <p>No uploads found.</p>
+                      )}
+                    </div>
                   </div>
+                </div>
               </div>
           </div>
       )
