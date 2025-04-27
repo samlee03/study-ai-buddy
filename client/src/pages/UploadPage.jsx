@@ -6,6 +6,7 @@ import { useDropzone } from 'react-dropzone'
 import Upload from "../assets/upload.png"
 
 const UploadPage = () => {
+    let type = 'flashcard'
     const handleFileAdd = () => {
         document.getElementById("FileList").innerHTML = '';
         for (let i = 0; i < document.getElementById("FileDrop").files.length; i++) {
@@ -31,6 +32,60 @@ const UploadPage = () => {
         {file.path} - {file.size} bytes
         </li>
     ));
+
+    const handleUpload = async () => {
+        if (!file){
+          return ;
+        }
+        const formData = new FormData()
+        formData.append('file', file)
+        if (type == "flashcard"){
+          try {
+            const response = await fetch('/api/get_flashcard', {
+              method: 'POST',
+              body: formData,
+            });
+    
+            if (!response.ok) throw new Error('Failed to extract text');
+            const data = await response.json()
+            setText(data.text);
+    
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }
+        else if(type == "shortResponse") {
+          try {
+            const response = await fetch('/api/get_short_response', {
+              method: 'POST',
+              body: formData,
+            });
+    
+            if (!response.ok) throw new Error('Failed to extract text');
+            const data = await response.json()
+            setText(data.text);
+    
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        
+        } else {
+    
+          
+          try {
+            const response = await fetch('/api/get_questions', {
+              method: 'POST',
+              body: formData,
+            });
+    
+            if (!response.ok) throw new Error('Failed to extract text');
+            const data = await response.json()
+            setText(data.text);
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }
+      }
 
     return (
         <div
