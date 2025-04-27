@@ -1,0 +1,60 @@
+.EditFlashcard {
+    background-color: var(--primary);
+    width: 100%;
+    min-height: 100px;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.EditFlashcardInput {
+    width: 90%;
+    height: 40px;
+    padding: 5px;
+}
+
+.EditFlashcardTextArea {
+    width: 90%;
+    height: 100px;
+    resize: none;
+    padding: 5px;
+}
+
+.EditFlashcardRow {
+    display: flex;
+    margin-bottom: 15px; 
+    justify-content: end;
+}
+
+.EditFlashcardLabel {
+    flex: 0 0 120px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.SaveButton {
+    margin-left: auto;
+    width: 100px; 
+    height: 40px;
+    padding: 10px;
+    background-color: var(--buttonBackground);
+    color: var(--buttonText);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.SaveButton:hover {
+    background-color: var(--buttonHover);
+}
+
+.SaveButton:active {
+    transform: scale(0.95); 
+}
+
+.RemoveOptionButton, .AddOptionButton {
+    margin-left: auto;
+    padding: 5px;
+    cursor: pointer;
+}

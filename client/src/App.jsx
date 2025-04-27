@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import React, { useEffect } from 'react';
 import './App.css'
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
 
 import Home from './pages/Home'
@@ -11,6 +11,7 @@ import UploadPage from './pages/UploadPage';
 import Main from './pages/MainPage';
 import Test from './pages/Test';
 import FlashcardPage from './pages/FlashcardPage';
+import FlashcardsView from './pages/FlashcardsView';
 import { ThemeProvider } from './components/ThemeContext';
 
 // const Shortcuts = () => {
@@ -29,12 +30,24 @@ import { ThemeProvider } from './components/ThemeContext';
 //   )
 // }
 
+function ScrollToTop() {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);  
+  }, [location]); 
+
+  return null;
+}
+
 function App() {
   return (
     <>
+      
       <ThemeProvider>
         <BrowserRouter>
           {/* <Shortcuts/> */}
+          <ScrollToTop/>
           <Routes>
             <Route index element={<Home />} />
             <Route path="login" element={<LoginPage />} />
@@ -44,6 +57,7 @@ function App() {
             <Route path="main" element={<Main />} />
             <Route path="test" element={<Test />} />
             <Route path="FlashcardPage" element={<FlashcardPage />} />
+            <Route path="flashcardsView" element={<FlashcardsView />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

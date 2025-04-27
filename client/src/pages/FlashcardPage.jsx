@@ -8,8 +8,8 @@ import { useTheme } from '../components/ThemeContext';
 const FlashcardTest = () => {
   const { theme} = useTheme();
   const location = useLocation(); 
-  const flashcardType = location.state?.type || 'normal';
-  const flashcardContent = location.state?.content
+  const flashcardType = location.state?.flashcardType || 'normal';
+  const flashcardContent = location.state?.flashcards
   const [data, setData] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [shuffledContent, setShuffledContent] = useState([]);
@@ -87,7 +87,7 @@ const FlashcardTest = () => {
     className="test-container">
       <Header />
       <h2>Flashcards</h2>
-      {/* Use of AI, mainly for syntax for if statement */}
+      {/* Use of AI, mainly for syntax for ternary operator */}
       {typeof data === 'undefined' ? (
         <p>Loading...</p> 
       ) : (

@@ -8,7 +8,7 @@ const RecentUpload = ({title, subtitle, image, type, content}) => {
     const navigate = useNavigate();
 
     const handleViewClick = () => {
-        navigate('/FlashcardPage', { state: { type, content } });
+        navigate('/FlashcardsView', { state: { title, subtitle, type, content } });
     };
     return (
         <div 

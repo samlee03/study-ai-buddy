@@ -1,0 +1,61 @@
+.FlashcardsView {
+    background-color : var(--background);
+    width : 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.TitleRow, .EditableFlashcardContainer {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.TitleInput,
+.SubtitleInput {
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--title);
+    padding: 20px;
+    width: 100%;
+}
+
+.TitleInput {
+    font-weight: bold;
+    font-size: 2rem !important; /*  AI use here with !important, font size just doesn't change no matter what for some reason*/
+}
+
+.SubtitleInput {
+    color: var(--subtitle);
+    font-size: 1.5rem !important;
+}
+
+.EditableFlashcardContainer {
+    gap: 20px;
+    padding-bottom: 50px;
+}
+
+.ViewButton {
+    margin-left: auto;
+    width: 100px; 
+    height: 40px;
+    padding: 10px;
+    background-color: var(--buttonBackground);
+    color: var(--buttonText);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.ViewButton:hover {
+    background-color: var(--buttonHover);
+}
+
+.ViewButton:active {
+    transform: scale(0.95); 
+}
