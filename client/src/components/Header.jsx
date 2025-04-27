@@ -4,7 +4,10 @@ import "../styles/Header.css"
 import { useTheme } from './ThemeContext';
 import logo from "../assets/RobotHead.svg"
 import silhouette from "../assets/Silhouette.jpg"
+import CheckAuth from '../components/CheckAuth';
+
 const Header = () => {
+    const { isLoggedIn } = CheckAuth()
     const { theme} = useTheme();
     const location = useLocation();
     let navigate = useNavigate();
@@ -36,6 +39,18 @@ const Header = () => {
       return location.pathname === path ? 'Header-Button active' : 'Header-Button';
     };
 
+    const handleLogOut = async () => {
+      const response = await fetch('/api/clear-cookie', {
+        method: 'GET',
+        credentials: 'include', // Src: ChatGPT, credentials must be 'include' to view/modify cookies in headers
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.status);
+        document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        navigate('/Login')
+      }
+    }
   return (
     <div style={{
       '--background': theme.headerBackground,
@@ -68,7 +83,8 @@ const Header = () => {
           />
           {dropdownOpen && (
             <div className="Dropdown-menu">
-                <button className="Dropdown-button" onClick={handleSignInClick}>Sign In</button>
+                {!isLoggedIn ? <button className="Dropdown-button" onClick={handleSignInClick}>Sign In</button>
+                : <button className="Dropdown-button" onClick={handleLogOut}>Log out</button>}
             </div>
           )}
         </div>

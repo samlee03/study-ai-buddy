@@ -208,7 +208,7 @@ def login():
     if user and bcrypt.checkpw(password.encode("utf-8"), user.get("password")):
         # Generate Token
         token = jwt.encode({
-            "exp": (datetime.now() + timedelta(seconds=15)).timestamp(),
+            "exp": (datetime.now() + timedelta(seconds=59)).timestamp(),
             "username": username
         }, os.getenv("JWT_SECRET_KEY"), algorithm="HS256")
         # response = make_response(redirect('http://localhost:5173/main'))
@@ -217,7 +217,7 @@ def login():
             "token",
             token,
             httponly = True,
-            max_age = 15,
+            max_age = 59,
             path='/'
         )
         return response
@@ -397,17 +397,17 @@ def get_short_response():
     except:
         return jsonify({"error": "error authenticating"})
 
-@app.route('/api/cookie')
-def cookie():
-        response = make_response(jsonify({"message": "Cookie Set"}))
-        response.set_cookie(
-            "token",
-            "textover here...",
-            httponly = True,
-            max_age = 8,
-            path='/'
-        )
-        return response
+# @app.route('/api/cookie')
+# def cookie():
+#         response = make_response(jsonify({"message": "Cookie Set"}))
+#         response.set_cookie(
+#             "token",
+#             "textover here...",
+#             httponly = True,
+#             max_age = 59,
+#             path='/'
+#         )
+#         return response
 
 @app.route('/api/check', methods=["POST"])
 def check_answer():
@@ -420,12 +420,18 @@ def check_answer():
     )
     return jsonify({"response": response.text})
     
+@app.route('/api/clear-cookie')
+def clear_cookie():
+    response = make_response(jsonify({"status": "cleared cookie"}))
+    response.delete_cookie('token')
+    return response
+
 
 @app.route('/api/check-cookie')
 def check_cookie():
     token = request.cookies.get('token')
     if token:
-        return jsonify({"loggedIn": True})
+        return jsonify({"loggedIn": True, "token": token})
     else:
         return jsonify({"loggedIn": False})
 if __name__ == "__main__":
