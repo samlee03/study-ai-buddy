@@ -8,11 +8,16 @@ import RobotHead from "../assets/RobotHeadForward.svg"
 import CheckAuth from '../components/CheckAuth';
 
 const Home = () => {
+    const { isLoggedIn } = CheckAuth()
     const { theme} = useTheme();
     const navigate = useNavigate();
 
     const handleTryItClick = () => {
-        navigate('/login');
+        if (isLoggedIn) {
+            navigate('/main');
+        } else {
+            navigate('/login');
+        }
     };
     return (
         <div
