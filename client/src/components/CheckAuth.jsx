@@ -22,7 +22,8 @@ function CheckAuth() {
 
     useEffect(() => {
         if(isLoggedIn == null) return;
-        if (!isLoggedIn) {
+        const noRedirectPaths = ['/', '/signup', '/forgot']
+        if (!isLoggedIn && !noRedirectPaths.includes(location.pathname)) {
             navigate("/login")
         }
     }, [isLoggedIn])

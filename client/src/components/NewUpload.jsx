@@ -1,9 +1,9 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../styles/NewUpload.css';
 import { useTheme } from '../components/ThemeContext';
 
-const NewUpload = ({title, subtitle, image}) => {
+const NewUpload = ({title, subtitle, image, type}) => {
     const { theme} = useTheme();
     let navigate = useNavigate();
     const handleClick = () => {
@@ -34,7 +34,7 @@ const NewUpload = ({title, subtitle, image}) => {
                 <p className='UploadSubtitle-New'>
                     {subtitle}
                 </p>
-                <button className="Upload-button" onClick={handleClick}>Upload</button>
+                <Link to={`/upload/` + type} className="Upload-button" onClick={handleClick}>Upload</Link>
             </div>
         </div>
     )

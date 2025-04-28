@@ -91,6 +91,7 @@ const MainPage = () => {
                               title={type.title}
                               subtitle={type.subtitle}
                               image={imageMap[type.type]}
+                              type={type.type}
                           />
                       ))}
                   </div>

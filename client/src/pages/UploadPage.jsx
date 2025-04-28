@@ -1,21 +1,23 @@
 import React from 'react'
 import Header from '../components/Header'
 import "../styles/UploadPage.css"
+import { useParams, useNavigate } from "react-router-dom"
 import { useTheme } from '../components/ThemeContext';
 import { useDropzone } from 'react-dropzone'
 import Upload from "../assets/upload.png"
 
 const UploadPage = () => {
-    let type = 'flashcard'
-    const handleFileAdd = () => {
-        document.getElementById("FileList").innerHTML = '';
-        for (let i = 0; i < document.getElementById("FileDrop").files.length; i++) {
-            const newFile = document.createElement("li");
-            const fName = document.createTextNode("Document "+ (i+1) + ": "+ document.getElementById("FileDrop").files[i].name);
-            newFile.appendChild(fName);
-            document.getElementById("FileList").appendChild(newFile);
-        }
-    };
+    const { type } = useParams();
+    const navigate = useNavigate();
+    // const handleFileAdd = () => {
+    //     document.getElementById("FileList").innerHTML = '';
+    //     for (let i = 0; i < document.getElementById("FileDrop").files.length; i++) {
+    //         const newFile = document.createElement("li");
+    //         const fName = document.createTextNode("Document "+ (i+1) + ": "+ document.getElementById("FileDrop").files[i].name);
+    //         newFile.appendChild(fName);
+    //         document.getElementById("FileList").appendChild(newFile);
+    //     }
+    // };
     const { theme } = useTheme();
 
 
@@ -33,13 +35,13 @@ const UploadPage = () => {
         </li>
     ));
 
-    const handleUpload = async () => {
+    const handleUpload = async (file) => {
         if (!file){
           return ;
         }
         const formData = new FormData()
         formData.append('file', file)
-        if (type == "flashcard"){
+        if (type == "normal"){
           try {
             const response = await fetch('/api/get_flashcard', {
               method: 'POST',
@@ -48,8 +50,8 @@ const UploadPage = () => {
     
             if (!response.ok) throw new Error('Failed to extract text');
             const data = await response.json()
-            setText(data.text);
-    
+            navigate("/main")
+
           } catch (error) {
             console.error("Error:", error);
           }
@@ -63,8 +65,8 @@ const UploadPage = () => {
     
             if (!response.ok) throw new Error('Failed to extract text');
             const data = await response.json()
-            setText(data.text);
-    
+            navigate("/main")
+
           } catch (error) {
             console.error("Error:", error);
           }
@@ -80,7 +82,7 @@ const UploadPage = () => {
     
             if (!response.ok) throw new Error('Failed to extract text');
             const data = await response.json()
-            setText(data.text);
+            navigate("/main")
           } catch (error) {
             console.error("Error:", error);
           }
@@ -140,7 +142,7 @@ const UploadPage = () => {
                             </div>
                         </div>
                         <div>
-                            <button>Upload</button>
+                            <button onClick={() => handleUpload(acceptedFiles[0])}>Upload</button>
                         </div>
                     </section>
                 </div>
