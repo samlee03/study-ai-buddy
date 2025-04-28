@@ -427,7 +427,7 @@ def check_answer():
     genclient = genai.Client(api_key=os.getenv("API_KEY"))
     print("this ran")
     response = genclient.models.generate_content(
-        model="gemini-2.0-flash", contents=("Is this response valid? Provide short, concise suggestions or feedback. If possible, add other answers. Question" + str(question) + ". Answer: " + str(answer) + ".")
+        model="gemini-2.0-flash", contents=("Provide short, concise suggestions or feedback. If possible, add other answers. Return in plain text, no more than 400 characters, no special characters like '*' other than basic punctuation. Question" + str(question) + ". Answer: " + str(answer) + ".")
     )
     return jsonify({"response": response.text})
     

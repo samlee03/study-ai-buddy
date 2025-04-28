@@ -9,6 +9,9 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [userInput, setUserInput] = useState(""); 
 
+  // For ShortResponse
+  const [feedback, setFeedback] = useState('');
+
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
@@ -18,13 +21,33 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
     setIsCorrect(null); 
   };
 
-  const handleCheckAnswer = (event) => {
-    if (selectedOption) {
-      setIsCorrect(selectedOption === answer);
+  const handleCheckAnswer = async (event) => {
+    // if (selectedOption) {
+    //   setIsCorrect(selectedOption === answer);
+    // }
+    // else if (userInput) {
+    //   setIsCorrect(userInput.trim().toLowerCase() === answer.toLowerCase());
+    // }
+
+    const response = await fetch('http://localhost:5000/api/check', 
+      { method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          "question": question,
+          "answer": userInput 
+        })
+      }
+    )
+    if (response.ok){
+      const data = await response.json()
+      console.log(data);
+      setFeedback(data.response);
+    } else {
+      throw error;
     }
-    else if (userInput) {
-      setIsCorrect(userInput.trim().toLowerCase() === answer.toLowerCase());
-    }
+
+    // const data = await response.json();
+    // console.log(data.response)
     setIsFlipped(true); 
   };
 
@@ -128,8 +151,8 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
                </div>
              ) : (
                <div className="flashcard-back">
-                 <p>{question}</p>
-                 {isCorrect ? (
+                 <p>{question}</p><br></br>
+                 {/* {isCorrect ? (
                   <p>{`Correct! The answer is:`}<br /> {answer}</p>
                  ) : (
                   <p>
@@ -137,7 +160,9 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
                     <br />
                     {`Your reponse is:`}<br /> {userInput}
                   </p>
-                 )}
+                 )} */}
+                 <p>Your response: {userInput} </p><br></br>
+                 <p>Feedback: {feedback && feedback} </p>
                </div>
              )}
            </>
