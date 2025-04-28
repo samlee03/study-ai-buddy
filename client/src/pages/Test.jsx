@@ -12,16 +12,16 @@ const Test = () => {
     return (
       <>
         <Header />
-        <GetCookie/>
+        {/* <GetCookie/> */}
         <p>Logged In</p>
         
 
         {/* <Questions/> */}
-        <FileUpload type="mcq"/>
+        {/* <FileUpload type="mcq"/>
         <br></br>
         <FileUpload type="flashcard"/>
         <br></br>
-        <FileUpload type="shortResponse"/>
+        <FileUpload type="shortResponse"/> */}
       </>
     )
     
@@ -64,9 +64,9 @@ const Questions = () => {
 const FileUpload = ({type}) => {
   const [file, setFile] = useState();
   const [text, setText] = useState([]);
-  useEffect(() => {
-    console.log(text)
-  }, [text])
+  // useEffect(() => {
+  //   console.log(text)
+  // }, [text])
   const handleFileChange = (e) => {
     if (e.target.files) {
       setFile(e.target.files[0]);

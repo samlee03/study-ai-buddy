@@ -60,7 +60,7 @@ def uploadType():
             {
                 "title" : "Flashcards",
                 "type" : "normal",
-                "subtitle" : "Great for memorization and self-testing in subjects like vocabulary, definitions, and key concepts."
+                "subtitle" : "Great for memorization and self-testing in subjects like vocabulary, definitions, and key concepts.",
             },
             {
                 "title" : "Multiple Choice Question",
@@ -268,6 +268,10 @@ def get_saved_uploads():
 def get_flashcard():
     # File Processing in Memory
     file = request.files["file"]
+    title = request.form["title"]
+    subtitle = request.form['subtitle']
+    comments = request.form['comments']
+
     content = file.read()
     text = ""
 
@@ -276,18 +280,18 @@ def get_flashcard():
             text += page.extract_text()
 
     # Create Flashcards with Gemini API
-    instructions = "Return ONLY an array of pairs, with keys 'front' and 'back' of the vocabulary I list next. No supplementary text needed. The text is: "
+    instructions = "Return ONLY an array of pairs, with keys 'front' and 'back' of the vocabulary I list. No supplementary text needed. If the text provided isn't a traditional, front and back, try your best to synthesize information in a front and back order. Also keep in mind of the user comments: "
     genclient = genai.Client(api_key=os.getenv("API_KEY"))
     response = genclient.models.generate_content(
-        model="gemini-2.0-flash", contents=(instructions + text)
+        model="gemini-2.0-flash", contents=(instructions + comments + ". The text is " + text)
     )
     data = response.text.strip('```json\n').strip('\n```')
     vocabs = json.loads(data)
     
     uploadObj = {
         "type": "normal",
-        "title": "untitled upload",
-        "subtitle": "un-subtitled upload",
+        "title": title,
+        "subtitle": subtitle,
         "content": vocabs
     }
     token = request.cookies.get('token')
@@ -312,6 +316,10 @@ def get_flashcard():
 def get_questions():
     # File Processing in Memory
     file = request.files["file"]
+    title = request.form["title"]
+    subtitle = request.form['subtitle']
+    comments = request.form['comments']
+
     content = file.read()
     text = ""
 
@@ -320,18 +328,18 @@ def get_questions():
             text += page.extract_text()
 
     # Create Flashcards with Gemini API
-    instructions = "Analyze the topic and ONLY return an array of questions with keys, question options and answer (one of the options), revolving this topic. No other supplementary text needed."
+    instructions = "Analyze the topic and ONLY return an array of questions with keys, question options and answer (one of the options), revolving this topic. No other supplementary text needed. Format I want it in {question: .., options: .., answer} These are some user comments you may want to consider when creating the question set. "
     genclient = genai.Client(api_key=os.getenv("API_KEY"))
     response = genclient.models.generate_content(
-        model="gemini-2.0-flash", contents=(instructions + text)
+        model="gemini-2.0-flash", contents=(instructions + comments + ". Here are the notes: " + text  )
     )
     data = response.text.strip('```json\n').strip('\n```')
     questions = json.loads(data)
     
     uploadObj = {
         "type": "question",
-        "title": "untitled mcq",
-        "subtitle": "un-subtitled",
+        "title": title,
+        "subtitle": subtitle,
         "content": questions
     }
     token = request.cookies.get('token')
@@ -357,6 +365,9 @@ def get_questions():
 def get_short_response():
     # File Processing in Memory
     file = request.files["file"]
+    title = request.form["title"]
+    subtitle = request.form['subtitle']
+    comments = request.form['comments']
     content = file.read()
     text = ""
 
@@ -365,18 +376,18 @@ def get_short_response():
             text += page.extract_text()
 
     # Create Flashcards with Gemini API
-    instructions = "Analyze the topic and ONLY return an array of questions in dictionary format with the question revolving this topic. It should test for the following material and can be answered in a sentence or two. Question should be easy to comprehend. No other supplementary text needed."
+    instructions = "Analyze the topic and ONLY return an array of questions in dictionary format with the question revolving this topic. It should test for the following material and can be answered in a sentence or two. Question should be easy to comprehend. No other supplementary text needed. Here are some comments from the user"
     genclient = genai.Client(api_key=os.getenv("API_KEY"))
     response = genclient.models.generate_content(
-        model="gemini-2.0-flash", contents=(instructions + text)
+        model="gemini-2.0-flash", contents=(instructions + comments + '. Text: ' + text)
     )
     data = response.text.strip('```json\n').strip('\n```')
     questions = json.loads(data)
     
     uploadObj = {
         "type": "shortResponse",
-        "title": "untitled short answer",
-        "subtitle": "un-subtitled",
+        "title": title,
+        "subtitle": subtitle,
         "content": questions
     }
     token = request.cookies.get('token')
@@ -425,6 +436,15 @@ def clear_cookie():
     response = make_response(jsonify({"status": "cleared cookie"}))
     response.delete_cookie('token')
     return response
+
+
+@app.route('/api/textbot')
+def textbot():
+    genclient = genai.Client(api_key=os.getenv("API_KEY"))
+    response = genclient.models.generate_content(
+        model="gemini-2.0-flash", contents=("Before generating questions, can you ask me questions to clarify on what I'm weak on based on the topic? to generate for me")
+    )
+
 
 
 @app.route('/api/check-cookie')

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Header'
 import "../styles/UploadPage.css"
 import { useParams, useNavigate } from "react-router-dom"
@@ -9,6 +9,9 @@ import Upload from "../assets/upload.png"
 const UploadPage = () => {
     const { type } = useParams();
     const navigate = useNavigate();
+    const [title, setTitle] = useState('')
+    const [subtitle, setSubtitle] = useState('')
+    const [comments, setComments] = useState('')
     // const handleFileAdd = () => {
     //     document.getElementById("FileList").innerHTML = '';
     //     for (let i = 0; i < document.getElementById("FileDrop").files.length; i++) {
@@ -20,6 +23,9 @@ const UploadPage = () => {
     // };
     const { theme } = useTheme();
 
+    const handleTitle = (e) => {
+      setTitle(e.target.value)
+    }
 
     const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
         
@@ -41,6 +47,9 @@ const UploadPage = () => {
         }
         const formData = new FormData()
         formData.append('file', file)
+        formData.append('title', title)
+        formData.append('subtitle', subtitle)
+        formData.append('comments', comments) 
         if (type == "normal"){
           try {
             const response = await fetch('/api/get_flashcard', {
@@ -127,18 +136,18 @@ const UploadPage = () => {
                             <div {...getRootProps({className: 'dropzone'})}>
                                 <input {...getInputProps()} />
                                     <img className='file-upload-img' src={Upload} />
-                                    <h3>Drag & drop files or <span style={{ textDecoration: 'underline', cursor: 'pointer' }}>Browse</span></h3>
-
-
+                                    <h3>Drag & drop files or <span style={{ textDecoration: 'underline'}}>Browse</span></h3>
                                     <p>Supported Formats: pdf </p>
                             </div>
                             <div className='files-text-section'>
                                 <h4>File to Upload</h4>
                                 {acceptedFiles.length > 0 ? <div className='file-display'>{acceptedFiles[0].name}</div> : <p>No file selected</p>}<br></br>
                                 <label htmlFor='title'>Title</label><br></br>
-                                <input type='text' id='title' name='title'></input>                                
-                                <label htmlFor='subtitle'>Subtitle</label><br></br>
-                                <input type='text' id='subtitle' name='subtitle'></input>                                
+                                <input type='text' id='title' name='title' placeholder='Title your upload..' onChange={(e) => setTitle(e.target.value)}></input>                                
+                                <label htmlFor='subtitle' >Subtitle</label><br></br>
+                                <input type='text' id='subtitle' name='subtitle'  placeholder='Add a subtitle..' onChange={(e) => setSubtitle(e.target.value)}></input>       
+                                <label htmlFor='comments'>Comments</label><br></br>
+                                <input type='textbox' id='comments' name='comments' placeholder='Any specific details you would like to let us know..' onChange={(e) => setComments(e.target.value)}></input>                       
                             </div>
                         </div>
                         <div>
