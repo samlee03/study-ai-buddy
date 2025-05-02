@@ -5,6 +5,10 @@ import os
 import json
 import bcrypt
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+import uuid
+
+
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from functools import wraps
@@ -208,7 +212,7 @@ def login():
     if user and bcrypt.checkpw(password.encode("utf-8"), user.get("password")):
         # Generate Token
         token = jwt.encode({
-            "exp": (datetime.now() + timedelta(seconds=59)).timestamp(),
+            "exp": (datetime.now() + timedelta(minutes=10)).timestamp(),
             "username": username
         }, os.getenv("JWT_SECRET_KEY"), algorithm="HS256")
         # response = make_response(redirect('http://localhost:5173/main'))
@@ -217,7 +221,7 @@ def login():
             "token",
             token,
             httponly = True,
-            max_age = 59,
+            max_age = 600,
             path='/'
         )
         return response
@@ -237,10 +241,12 @@ def get_uploads():
     user = users.find_one(query)
     uploads = user.get("saved_uploads")
     if uploads:
+        print("uploads: " + uploads)
         return jsonify({
             "uploads": uploads
         })
     else:
+        print("no uploads")
         return jsonify({
             "message": "No uploads!"
         })
@@ -257,10 +263,11 @@ def get_saved_uploads():
 
         user = users.find_one(query)
         uploads = user.get("saved_uploads")
+        print(uploads)
         return jsonify({"uploads": uploads})
     
     except:
-        return jsonify({"error": "error authenticating"})
+        return jsonify({"error": "error authenticating for get_saved"})
     
 
 # Post a File Object - Returns array of flashcard objects {front: .., back: ..}
@@ -289,6 +296,7 @@ def get_flashcard():
     vocabs = json.loads(data)
     
     uploadObj = {
+        "id": str(uuid.uuid4()),
         "type": "normal",
         "title": title,
         "subtitle": subtitle,
@@ -431,6 +439,32 @@ def check_answer():
     )
     return jsonify({"response": response.text})
     
+@app.route('/api/save_card', methods=["POST"])
+def save_card():
+    id = request.json.get('id')
+    new_content = request.json.get('new_content')
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    token = request.cookies.get('token')
+
+    
+    payload = jwt.decode(token, os.getenv("JWT_SECRET_KEY"), algorithms="HS256")
+    username = payload.get("username")
+    query = {"username": username}
+    
+    update_operation = { "$set": 
+        {"saved_uploads.$[card].content": new_content}
+    }
+    array_filters = [{"card.id": id}]
+
+
+    result = users.update_one(query, update_operation, array_filters=array_filters)
+    
+    if result.modified_count == 0:
+        return jsonify({"error": "No document was updated"}), 400
+    print("saved")
+    return jsonify({"status": "saved"})
+
 @app.route('/api/clear-cookie')
 def clear_cookie():
     response = make_response(jsonify({"status": "cleared cookie"}))

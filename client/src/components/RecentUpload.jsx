@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import '../styles/RecentUpload.css';
 import { useTheme } from '../components/ThemeContext';
 
-const RecentUpload = ({title, subtitle, image, type, content}) => {
+const RecentUpload = ({id, title, subtitle, image, type, content}) => {
     const { theme} = useTheme();
     const navigate = useNavigate();
 
     const handleViewClick = () => {
-        navigate('/FlashcardsView', { state: { title, subtitle, type, content } });
+        navigate('/FlashcardsView', { state: { id, title, subtitle, type, content } });
     };
     return (
         <div 

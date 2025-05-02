@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header'
 import EditFlashcardNormal from '../components/EditFlashcardNormal';
 import EditFlashcardMC from '../components/EditFlashcardMC';
@@ -17,15 +17,75 @@ const FlashcardsView = () => {
     const flashcardType = location.state?.type || 'normal';
     const flashcardContent = location.state?.content;
 
+    const card_id = location.state?.id;
+
     const [flashcards, setFlashcards] = useState(flashcardContent);
     const [isAddingCard, setIsAddingCard] = useState(false);
 
-    const handleSaveFlashcard = (index, newTerm, newDefinition) => {
+    const handleSaveFlashcard = async (index, newTerm, newDefinition) => {
       const updatedFlashcards = [...flashcards];
-      updatedFlashcards[index] = { term: newTerm, definition: newDefinition };
+      updatedFlashcards[index] = { front: newTerm, back: newDefinition };
+       
       setFlashcards(updatedFlashcards);
+      const response = await fetch('http://localhost:5000/api/save_card', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            "id": card_id,
+            new_content: updatedFlashcards
+        })
+      })
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Server Response:', data);
+      } else {
+        const data = await response.json();
+        console.error('Error:', data);
+      }
+
+    };
+    const handleSaveMCQ = async (index, newQuestion, newOptions, newAnswer) => {
+      const updatedFlashcards = [...flashcards];
+      updatedFlashcards[index] = { question: newQuestion, options: newOptions, answer: newAnswer };
+      
+      setFlashcards(updatedFlashcards);
+      const response = await fetch('http://localhost:5000/api/save_card', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            "id": card_id,
+            new_content: updatedFlashcards
+        })
+      })
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Server Response:', data);
+      } else {
+        const data = await response.json();
+        console.error('Error:', data);
+      }
+
     };
 
+    const setNewFlashcard = (type, param1, param2) => {
+      console.log("Set");
+      if (type == "normal"){
+        setFlashcards(prev => [...prev, {"front": param1, "back": param2}])
+        handleSaveFlashcard(flashcards.length, param1, param2);
+        setIsAddingCard(false);
+      }
+    }
+    const setNewMCQ = (question, options, answer) => {
+      setFlashcards(prev => [...prev, { question, options, answer: answer }]);
+      handleSaveMCQ(flashcards.length, question, options, answer); 
+      setIsAddingCard(false);
+    }
     const handleViewClick = () => {
         navigate('/FlashcardPage', { state: { flashcardType, flashcards } });
     };
@@ -37,6 +97,9 @@ const FlashcardsView = () => {
         answer : "",
         options : [""],
     }
+    useEffect(() => {
+        console.log(card_id);
+    }, [])
     return (
         <div
             style={{
@@ -96,7 +159,7 @@ const FlashcardsView = () => {
                             key={index}
                             question={flashcard.question}
                             options={flashcard.options}
-                            onSave={(newQuestion, newOptions) => handleSaveFlashcard(index, newQuestion, newOptions)}
+                            onSave={(newQuestion, newOptions, correctAnswer) => handleSaveMCQ( index, newQuestion, newOptions, correctAnswer)}
                         />
                     ))
                 )}
@@ -117,7 +180,7 @@ const FlashcardsView = () => {
                             <EditFlashcardNormal
                                 term={newFlashcard.front}
                                 definition={newFlashcard.back}
-                                onSave={(newTerm, newDefinition) => setNewFlashcard({ term: newTerm, definition: newDefinition })}
+                                onSave={(newTerm, newDefinition) => setNewFlashcard('normal', newTerm, newDefinition)}
                             />
                         )}
 
@@ -125,7 +188,7 @@ const FlashcardsView = () => {
                             <EditFlashcardMC
                                 question={newFlashcard.question}
                                 options={newFlashcard.options}
-                                onSave={(newQuestion, newOptions) => setNewFlashcard({ question: newQuestion, options: newOptions })}
+                                onSave={(newQuestion, newOptions, newAnswer) => setNewMCQ(newQuestion, newOptions, newAnswer)}
                             />
                         )}
 

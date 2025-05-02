@@ -41,7 +41,7 @@ const MainPage = () => {
       (filterFlashcard === 'All' || typeMapping[upload.type] === filterFlashcard)
     );
 
-    const displayedUploads = displayRecent ? filteredUploads.slice().reverse() : filteredUploads;
+    const displayedUploads = displayRecent && filteredUploads?.length > 0 ? filteredUploads.slice().reverse() : filteredUploads;
 
     useEffect(() => {
       // Fetch upload types
@@ -60,6 +60,10 @@ const MainPage = () => {
           .catch(error => console.error("Error fetching recent uploads:", error));
       }
     }, [isLoggedIn]);
+
+    useEffect(() => {
+      console.log("recentUploads state:", recentUploads);
+    }, [recentUploads]);
 
     if (isLoggedIn){
       return (
@@ -126,6 +130,7 @@ const MainPage = () => {
                         displayedUploads.map((upload, index) => (
                           <RecentUpload
                             key={index}
+                            id={upload.id}
                             title={upload.title}
                             subtitle={upload.subtitle}
                             image={imageMap[upload.type]}

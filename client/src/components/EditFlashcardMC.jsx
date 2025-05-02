@@ -3,7 +3,7 @@ import '../styles/EditFlashcard.css';
 
 const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, correctAnswer: initialCorrectAnswer, onSave }) => {
   const [question, setQuestion] = useState(initialQuestion);
-  const [options, setOptions] = useState(initialOptions);
+  const [options, setOptions] = useState(initialOptions || []);
   const [correctAnswer, setCorrectAnswer] = useState(initialCorrectAnswer);
 
   const handleQuestionChange = (e) => {
@@ -43,7 +43,8 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, c
         />
       </div>
 
-      {(options.length || 1) && options.map((option, index) => (
+      {/* {(options.length || 1) && options.map((option, index) => ( */}
+      {(options?.length > 0) && options?.map((option, index) => (
           <div className="EditFlashcardRow" key={index}>
               <label className="EditFlashcardLabel">Option {index + 1}</label>
               <input
@@ -68,7 +69,7 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, c
           className="EditFlashcardInput"
         >
           {options.map((option, index) => (
-            <option key={index} value={index}>
+            <option key={index} value={option}>
               {option}
             </option>
           ))}
