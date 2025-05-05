@@ -8,10 +8,14 @@ input[value="Sign Up"] {
 	margin-bottom: 15px;
 	border-radius: 10px;
 	cursor: pointer;
-	background-color: #000000;
-	color: white;
+	background-color: var(--buttonBackground);
+	color: var(--buttonText);
 	padding: 8px 10px 8px 10px;
 	font-size: 16px;
+}
+
+input[value="Sign Up"]:Hover {
+	background: var(--buttonHover);
 }
 
 .Page-container {

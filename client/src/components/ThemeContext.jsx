@@ -30,7 +30,7 @@ export const ThemeProvider = ({ children }) => {
       textColor: "#075e85",
       headerBackground : "#ffffff",
       buttonBackground: "#66a0d4",
-      buttonHover: "#5786B0",
+      buttonHover: "#7fdbf5",
       buttonText: "#ffffff",
       buttonDisable: "#012f5d",
       border : "#000000",

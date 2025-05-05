@@ -151,7 +151,7 @@ const UploadPage = () => {
                             </div>
                         </div>
                         <div>
-                            <button onClick={() => handleUpload(acceptedFiles[0])}>Upload</button>
+                            <button className="upload-button" onClick={() => handleUpload(acceptedFiles[0])}>Upload</button>
                         </div>
                     </section>
                 </div>

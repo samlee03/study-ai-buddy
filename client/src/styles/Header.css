@@ -23,6 +23,10 @@
     display: inline-block;
 }
 
+.Profile-container:hover {
+    background: #f0f0f0;
+}
+
 .Dropdown-menu {
     position: absolute;
     right: 0;

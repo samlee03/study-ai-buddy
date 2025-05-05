@@ -1,13 +1,3 @@
-/* .FileDrop{
-    width: 450px;
-    height:300px;
-    min-height:500px;
-    display: flex;
-    left:20px;
-    border: 2px dashed rgb(91, 91, 91);
-    margin:auto;
-} */
-
 .upload-container-main {
     height: calc(100vh - 75px);
     display: flex;
@@ -71,4 +61,8 @@
 
 .file-upload-img {
     height: 100px;
+}
+
+.upload-button:Hover {
+    background: var(--buttonHover);
 }

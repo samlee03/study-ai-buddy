@@ -1,18 +1,22 @@
 input[value="Sign In"] {
-    border: 1px solid rgb(121, 121, 121);
-    border-radius: 10px;
+    border-radius: 5px;
+    background-color: var(--buttonBackground);
+    color: var(--buttonText);
     cursor: pointer;
-    background-color: #bababa;
     padding: 8px 10px 8px 10px;
     margin-top: 20px;
     margin-bottom: 15px;
-    font-size:16px;
+    font-size: 16px;
 }
 
-label{
-    margin-bottom:5px;
-    font-size:18px;
+input[value="Sign In"]:Hover {
+    background: var(--buttonHover);
 }
+
+    label {
+        margin-bottom: 5px;
+        font-size: 18px;
+    }
 
 input[type="text"]
 {
