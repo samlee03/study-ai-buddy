@@ -104,6 +104,7 @@ const UploadPage = () => {
                 '--primary': theme.primary,
                 '--secondary': theme.secondary,
                 '--background': theme.background,
+                '--background2': theme.background2,
                 '--title': theme.title,
                 '--subtitle': theme.subtitle,
                 '--text': theme.textColor,

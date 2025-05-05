@@ -73,6 +73,7 @@ const MainPage = () => {
               '--primary' : theme.primary,
               '--secondary' : theme.secondary,
               '--background': theme.background,
+              '--background2': theme.background2,
               '--title': theme.title,
               '--subtitle': theme.subtitle,
               '--text': theme.textColor,
@@ -87,65 +88,64 @@ const MainPage = () => {
             <Header />
           <div className="Page-container-Main">
               <div className='Upload-page'>
-                  <h2>New Upload</h2>
-                  <div className='NewUploadContainer'>
-                      {uploadTypes.map((type, index) => (
-                          <NewUpload 
-                              key={index}
-                              title={type.title}
-                              subtitle={type.subtitle}
-                              image={imageMap[type.type]}
-                              type={type.type}
-                          />
-                      ))}
-                  </div>
-                  <hr className="divider" />
-                  <h2>Recent Uploads</h2>
-                  <div>
-                      <div className= 'RecentUploadFilter'>
-                        <input
-                          className ='searchBox'
-                          type="text"
-                          placeholder="Search..."
-                          value={searchTerm}
-                          onChange={e => setSearchTerm(e.target.value)}
-                        />
-                        <button 
-                          onClick={() => setDisplayRecent(prev => !prev)}
-                        >
-                        {displayRecent ? 'Newest' : 'Oldest'}
-                        </button>
-                        <button
-                          onClick={() => {
-                            const currentIndex = typeOptions.indexOf(filterFlashcard);
-                            const nextIndex = (currentIndex + 1) % typeOptions.length;
-                            setFilterFlashcard(typeOptions[nextIndex]);
-                          }}
-                        >
-                          {filterFlashcard}
-                        </button>
-                      </div>
-                    <div className='RecentUploadContainer'>
-                      {displayedUploads?.length > 0 ? (
-                        displayedUploads.map((upload, index) => (
-                          <RecentUpload
+                <h2>New Upload</h2>
+                <div className='NewUploadContainer'>
+                    {uploadTypes.map((type, index) => (
+                        <NewUpload 
                             key={index}
-                            id={upload.id}
-                            title={upload.title}
-                            subtitle={upload.subtitle}
-                            image={imageMap[upload.type]}
-                            type={upload.type}
-                            content={upload.content}
-                          />
-                        ))
-                      ) : (
-                        <p>No uploads found.</p>
-                      )}
+                            title={type.title}
+                            image={imageMap[type.type]}
+                            type={type.type}
+                        />
+                    ))}
+                </div>
+                <hr className="divider" />
+                <h2>Recent Uploads</h2>
+                <div>
+                    <div className= 'RecentUploadFilter'>
+                      <input
+                        className ='searchBox'
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                      />
+                      <button 
+                        onClick={() => setDisplayRecent(prev => !prev)}
+                      >
+                      {displayRecent ? 'Newest' : 'Oldest'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          const currentIndex = typeOptions.indexOf(filterFlashcard);
+                          const nextIndex = (currentIndex + 1) % typeOptions.length;
+                          setFilterFlashcard(typeOptions[nextIndex]);
+                        }}
+                      >
+                        {filterFlashcard}
+                      </button>
                     </div>
+                  <div className='RecentUploadContainer'>
+                    {displayedUploads?.length > 0 ? (
+                      displayedUploads.map((upload, index) => (
+                        <RecentUpload
+                          key={index}
+                          id={upload.id}
+                          title={upload.title}
+                          subtitle={upload.subtitle}
+                          image={imageMap[upload.type]}
+                          type={upload.type}
+                          content={upload.content}
+                        />
+                      ))
+                    ) : (
+                      <p>No uploads found.</p>
+                    )}
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
+        </div>
       )
   }
 }

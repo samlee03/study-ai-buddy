@@ -31,10 +31,15 @@ const NewUpload = ({title, subtitle, image, type}) => {
                 <div className='UploadTitle-New'>
                     {title}
                 </div>
-                <p className='UploadSubtitle-New'>
+                {/* <p className='UploadSubtitle-New'>
                     {subtitle}
-                </p>
-                <Link to={`/upload/` + type} className="Upload-button" onClick={handleClick}>Upload</Link>
+                </p> */}
+                <div className='UploadButtonContainer-New'>
+                    <Link to={`/upload/` + type} className="Upload-button-New" onClick={handleClick}>Upload</Link>
+                    <button className="Upload-button-New">
+                        +
+                    </button>
+                </div>
             </div>
         </div>
     )

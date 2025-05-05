@@ -67,12 +67,12 @@ def uploadType():
                 "subtitle" : "Great for memorization and self-testing in subjects like vocabulary, definitions, and key concepts.",
             },
             {
-                "title" : "Multiple Choice Question",
+                "title" : "Multiple Choice Questions",
                 "type" : "question",
                 "subtitle" : "A multiple-choice flashcard presents a question along with several answer options. Useful for quizzes, practice tests, and self-assessment in areas where recognition-based learning is effective."
             },
             {
-                "title" : "Short Response",
+                "title" : "Short Responses",
                 "type" : "shortResponse",
                 "subtitle" : "A short response flashcard requires the user to type out their answer in a text box before submitting it. This format is ideal for critical thinking, recall-based learning, and open-ended questions where written responses are necessary."
             }
@@ -241,7 +241,7 @@ def get_uploads():
     user = users.find_one(query)
     uploads = user.get("saved_uploads")
     if uploads:
-        print("uploads: " + uploads)
+        # print("uploads: " + uploads)
         return jsonify({
             "uploads": uploads
         })
@@ -263,7 +263,7 @@ def get_saved_uploads():
 
         user = users.find_one(query)
         uploads = user.get("saved_uploads")
-        print(uploads)
+        # print(uploads)
         return jsonify({"uploads": uploads})
     
     except:
@@ -433,7 +433,7 @@ def check_answer():
     question = request.json.get("question")
     answer = request.json.get("answer")
     genclient = genai.Client(api_key=os.getenv("API_KEY"))
-    print("this ran")
+    # print("this ran")
     response = genclient.models.generate_content(
         model="gemini-2.0-flash", contents=("Provide short, concise suggestions or feedback. If possible, add other answers. Return in plain text, no more than 400 characters, no special characters like '*' other than basic punctuation. Question" + str(question) + ". Answer: " + str(answer) + ".")
     )

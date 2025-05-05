@@ -1,5 +1,13 @@
-.Page-container-Main{
-    background-color: var(--background);
+.Page-container-Main {
+    min-height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        var(--background2) 0px,
+        var(--background2) 350px,
+        var(--background) 450px,
+        var(--background) 80%,
+        white 100%
+    );
 }
 
 .Upload-page {
@@ -11,10 +19,11 @@
 }
 
 .NewUploadContainer {
-    width: 100%;
+    width: 105%;
+    margin-left: -2.5%;
     display: flex;
-    flex-direction: column;
-    gap: 30px;
+    flex-direction: row;
+    gap: 20px;
 }
 
 h2 {
