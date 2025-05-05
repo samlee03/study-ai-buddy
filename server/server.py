@@ -479,7 +479,24 @@ def textbot():
         model="gemini-2.0-flash", contents=("Before generating questions, can you ask me questions to clarify on what I'm weak on based on the topic? to generate for me")
     )
 
+@app.route('/api/regenerate-flashcard', methods=["POST"])
+def regenerate():
+    formattedInput = ''
+    input = request.json.get("incorrect")
+    type = request.json.get('type')
+    for question in input:
+        formattedInput += question + ", "
+    instructions = f"The user has gotten these questions wrong, provide multiple questions that would give the user more practice based on these questions that were answered incorrectly: {formattedInput}, return only in the following format with no supplementary text: {'object with question, options, and answer where question and options correspond to an MCQ question' if type == "mcq" else 'object with question and answer, where answer should be a short 1-2 sentence response'}"
+    
+    genclient = genai.Client(api_key=os.getenv("API_KEY"))
+    response = genclient.models.generate_content(
+        model="gemini-2.0-flash", contents=(instructions)
+    )
 
+    data = response.text.strip('```json\n').strip('\n```')
+    newQuestions = json.loads(data)
+
+    return jsonify({"new-questions": newQuestions})
 
 @app.route('/api/check-cookie')
 def check_cookie():
