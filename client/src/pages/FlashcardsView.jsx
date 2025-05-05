@@ -64,6 +64,8 @@ const FlashcardsView = () => {
         })
       })
       if (response.ok) {
+        console.log('Saving:', { newQuestion, newOptions, newAnswer });
+
         const data = await response.json();
         console.log('Server Response:', data);
       } else {
@@ -108,7 +110,7 @@ const FlashcardsView = () => {
       }
     }
     const setNewMCQ = (question, options, answer) => {
-      setFlashcards(prev => [...prev, { question, options, answer: answer }]);
+      setFlashcards(prev => [...prev, { question: question, options: options, answer: answer }]);
       handleSaveMCQ(flashcards.length, question, options, answer); 
       setIsAddingCard(false);
     }

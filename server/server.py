@@ -456,10 +456,12 @@ def save_card():
         {"saved_uploads.$[card].content": new_content}
     }
     array_filters = [{"card.id": id}]
+    print("Card ID:", id)
 
 
     result = users.update_one(query, update_operation, array_filters=array_filters)
-    
+    print("Username from token:", username)
+
     if result.modified_count == 0:
         return jsonify({"error": "No document was updated"}), 400
     print("saved")
