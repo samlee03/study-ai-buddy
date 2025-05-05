@@ -241,7 +241,7 @@ def get_uploads():
     user = users.find_one(query)
     uploads = user.get("saved_uploads")
     if uploads:
-        print("uploads: " + uploads)
+        # print("uploads: " + uploads)
         return jsonify({
             "uploads": uploads
         })
@@ -263,7 +263,7 @@ def get_saved_uploads():
 
         user = users.find_one(query)
         uploads = user.get("saved_uploads")
-        print(uploads)
+        # print(uploads)
         return jsonify({"uploads": uploads})
     
     except:
@@ -433,7 +433,7 @@ def check_answer():
     question = request.json.get("question")
     answer = request.json.get("answer")
     genclient = genai.Client(api_key=os.getenv("API_KEY"))
-    print("this ran")
+    # print("this ran")
     response = genclient.models.generate_content(
         model="gemini-2.0-flash", contents=("Provide short, concise suggestions or feedback. If possible, add other answers. Return in plain text, no more than 400 characters, no special characters like '*' other than basic punctuation. Question" + str(question) + ". Answer: " + str(answer) + ".")
     )

@@ -73,6 +73,32 @@ const FlashcardsView = () => {
 
     };
 
+    const handleSaveShortResponse = async (index, newQuestion, newAnswer) => {
+        const updatedFlashcards = [...flashcards];
+        updatedFlashcards[index] = { question: newQuestion, answer: newAnswer };
+         
+        setFlashcards(updatedFlashcards);
+        const response = await fetch('http://localhost:5000/api/save_card', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+              "id": card_id,
+              new_content: updatedFlashcards
+          })
+        })
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Server Response:', data);
+        } else {
+          const data = await response.json();
+          console.error('Error:', data);
+        }
+  
+      };
+
     const setNewFlashcard = (type, param1, param2) => {
       console.log("Set");
       if (type == "normal"){
@@ -85,6 +111,11 @@ const FlashcardsView = () => {
       setFlashcards(prev => [...prev, { question, options, answer: answer }]);
       handleSaveMCQ(flashcards.length, question, options, answer); 
       setIsAddingCard(false);
+    }
+    const setNewShortResponse = (question, answer) => {
+        setFlashcards(prev => [...prev, {"question": question, "answer": answer}])
+        handleSaveShortResponse(flashcards.length, question, answer);
+        setIsAddingCard(false);
     }
     const handleViewClick = () => {
         navigate('/FlashcardPage', { state: { flashcardType, flashcards } });
@@ -169,7 +200,7 @@ const FlashcardsView = () => {
                             key={index}
                             question={flashcard.question}
                             answer={flashcard.answer}
-                            onSave={(newQuestion, newAnswer) => handleSaveFlashcard(index, newQuestion, newAnswer)}
+                            onSave={(newQuestion, newAnswer) => handleSaveShortResponse(index, newQuestion, newAnswer)}
                         />
                     ))
                 )}
@@ -196,7 +227,7 @@ const FlashcardsView = () => {
                             <EditFlashcardShortResponse
                                 question={newFlashcard.question}
                                 answer={newFlashcard.answer}
-                                onSave={(newQuestion, newAnswer) => setNewFlashcard({ question: newQuestion, answer: newAnswer })}
+                                onSave={(newQuestion, newAnswer) => setNewShortResponse(newQuestion, newAnswer)}
                             />
                         )}
                     </div>
