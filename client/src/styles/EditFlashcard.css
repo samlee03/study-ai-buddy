@@ -53,6 +53,13 @@
     transform: scale(0.95); 
 }
 
+.RemoveOptionButton img, .AddOptionButton img{
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    margin: auto;
+}
+
 .RemoveOptionButton, .AddOptionButton {
     margin-left: auto;
     padding: 5px;

@@ -6,9 +6,9 @@ import '../styles/MainPage.css';
 import { useTheme } from '../components/ThemeContext';
 import logo from "../assets/RobotHead.svg"
 import CheckAuth from '../components/CheckAuth';
-import flashcard from "../assets/Flashcard.svg"
-import multipleChoice from "../assets/multipleChoice.svg"
-import shortResponse from "../assets/Short Response.svg"
+import flashcard from "../assets/Flashcard.png"
+import multipleChoice from "../assets/MultipleChoice.png"
+import shortResponse from "../assets/ShortResponse.png"
 
 //Use of AI, a way to map the upload type to its corresponding image
 const imageMap = {
@@ -21,7 +21,7 @@ const MainPage = () => {
     const { isLoggedIn } = CheckAuth()
     // const isLoggedIn = true; // If you want to grant permission always for testing
     
-    const {theme} = useTheme();
+    const { theme} = useTheme();
     const [uploadTypes, setUploadTypes] = useState([]);
     const [recentUploads, setRecentUploads] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');

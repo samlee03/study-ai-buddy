@@ -6,7 +6,7 @@ import '../styles/FlashcardPage.css';
 import { useTheme } from '../components/ThemeContext';
 
 const FlashcardTest = () => {
-  const { theme} = useTheme();
+  const {theme} = useTheme();
   const location = useLocation(); 
   const flashcardType = location.state?.flashcardType || 'normal';
   const flashcardContent = location.state?.flashcards
