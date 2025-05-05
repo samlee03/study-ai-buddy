@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import '../styles/FlashcardsView.css';
 
 const FlashcardsView = () => {
-    const {theme} = useTheme();
+    const { theme} = useTheme();
     const navigate = useNavigate();
     const location = useLocation(); 
     const [title, setTitle] = useState(location.state?.title || '');
@@ -175,7 +175,7 @@ const FlashcardsView = () => {
 
             <div className='EditableFlashcardContainer'>
                 <button className="ViewButton" onClick={handleViewClick}>
-                    View
+                    Study
                 </button>
                 {flashcardType === 'normal' && (
                     flashcards.map((flashcard, index) => (

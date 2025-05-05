@@ -7,7 +7,7 @@ import CheckAuth from '../components/CheckAuth';
 
 const LoginPage = () => {
     const { isLoggedIn } = CheckAuth();
-    const { theme} = useTheme();
+    const {theme} = useTheme();
     const navigate = useNavigate();
     const [username, setUsername] = useState("dummy1");
     const [password, setPassword] = useState("test123");

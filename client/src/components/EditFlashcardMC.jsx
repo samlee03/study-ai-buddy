@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/EditFlashcard.css';
+import Trashcan from "../assets/Trashcan.png"
+import Add from "../assets/Add2.png"
 
 const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, correctAnswer: initialCorrectAnswer, onSave }) => {
   const [question, setQuestion] = useState(initialQuestion);
@@ -55,11 +57,15 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, c
                   placeholder={`Enter option ${index + 1}`}
                   className="EditFlashcardInput"
               />
-              <button type="button" className="RemoveOptionButton" onClick={() => handleRemoveOption(index)}>Remove</button>
+              <button type="button" className="RemoveOptionButton" onClick={() => handleRemoveOption(index)}>
+                <img src={Trashcan} alt="Remove"/>
+              </button>
           </div>
       ))}
 
-      <button className="AddOptionButton" onClick={handleAddOption}>Add Option</button>
+      <button className="AddOptionButton" onClick={handleAddOption}>
+       <img src={Add} alt="Add"/>
+      </button>
 
       <div className="EditFlashcardRow">
         <label className="EditFlashcardLabel">Correct Answer</label>
