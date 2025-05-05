@@ -68,3 +68,12 @@
     display: block;
     margin: auto;
 }
+
+.Upload-button-New {
+    transition: transform 0.1s ease;
+}
+
+.Upload-button-New:active {
+    transform: scale(0.95);
+}
+  

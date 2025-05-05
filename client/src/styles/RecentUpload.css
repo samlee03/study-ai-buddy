@@ -54,3 +54,11 @@
 .Button-RecentUpload:hover {
     background-color: var(--buttonHover);
 }
+
+.Button-RecentUpload {
+  transition: transform 0.1s ease;
+}
+
+.Button-RecentUpload:active {
+  transform: scale(0.95);
+}
