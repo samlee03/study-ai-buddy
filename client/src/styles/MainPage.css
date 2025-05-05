@@ -5,7 +5,8 @@
         var(--background2) 0px,
         var(--background2) 350px,
         var(--background) 450px,
-        var(--background) 100%
+        var(--background) 80%,
+        white 100%
     );
 }
 

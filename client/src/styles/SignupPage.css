@@ -15,7 +15,13 @@ input[value="Sign Up"] {
 }
 
 .Page-container {
-	background-color: var(--background);
+	background: linear-gradient(
+        to bottom,
+        var(--background) 0%,
+        var(--background2) 50%,
+        var(--background) 90%,
+        white 100%
+    );
 	display: flex;
     justify-content: center;
     align-items: center;
