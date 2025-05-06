@@ -180,33 +180,36 @@ const FlashcardPage = () => {
         </div>
       )}
       <div className='bottomControls'>
-        <div className='ToggleTracking'>
+        <div className="navigation">
+          {flashcardType !== "normal" && (
+            <button className='imgOption' style={{ visibility: 'hidden' }}>
+              <img src={Regenerate} alt="regenerate"/>
+            </button>
+          )}
           <button className='imgOption' onClick={toggleProgressTracking}>
             {isTrackingProgress ? 'Stop Tracking' : 'Start Tracking'}
-          </button>
-        </div>
-        <div className="navigation">
-          <button className='imgOption' onClick={shuffleCards}>
-            <img src={Shuffle} alt="shuffle"/>
           </button>
           {flashcardType === "normal" && isTrackingProgress && (
             <button className='imgOption' onClick={handleCorrectClick}>
               <img src={Checkmark} alt="correct" />
             </button>
           )}
-          <div className="flashcard-count-wrapper">
-            <div className="flashcard-count">
-              {currentIndex + 1} / {getLength()}
-            </div>
+          <div className="flashcard-count">
+            {currentIndex + 1} / {getLength()}
           </div>
           {flashcardType === "normal" && isTrackingProgress && (
             <button className='imgOption' onClick={handleIncorrectClick}>
               <img src={Xmark} alt="incorrect"/>
             </button>
           )}
-          <button className='imgOption' onClick={{regenerateCards}}>
-            <img src={Regenerate} alt="regenerate"/>
+          <button className='imgOption' onClick={shuffleCards}>
+            <img src={Shuffle} alt="shuffle"/>
           </button>
+          {flashcardType !== "normal" && (
+            <button className='imgOption' onClick={{regenerateCards}}>
+              <img src={Regenerate} alt="regenerate"/>
+            </button>
+          )}
         </div>
       </div>
     </div>
