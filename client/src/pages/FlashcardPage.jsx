@@ -9,7 +9,7 @@ import Regenerate from "../assets/regenerate.png"
 import Checkmark from "../assets/checkmark.png"
 import Xmark from "../assets/x.png"
 
-const FlashcardTest = () => {
+const FlashcardPage = () => {
   const {theme} = useTheme();
   const location = useLocation(); 
   const flashcardType = location.state?.flashcardType || 'normal';
@@ -22,6 +22,7 @@ const FlashcardTest = () => {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [answeredIndexes, setAnsweredIndexes] = useState([]);
+  const [incorrectQuestions, setIncorrectQuestions] = useState([]);
   const [isTrackingProgress, setIsTrackingProgress] = useState(false);
 
   useEffect(() => {
@@ -94,6 +95,7 @@ const FlashcardTest = () => {
     if (!answeredIndexes.includes(currentIndex)) {
       setIncorrect(prev => prev + 1);
       setAnsweredIndexes(prev => [...prev, currentIndex]);
+      setIncorrectQuestions(prev => [...prev, currentIndex])
     }
   };
 
@@ -211,4 +213,4 @@ const FlashcardTest = () => {
   );  
 };
 
-export default FlashcardTest
+export default FlashcardPage
