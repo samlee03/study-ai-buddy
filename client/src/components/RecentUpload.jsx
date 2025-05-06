@@ -10,6 +10,7 @@ const RecentUpload = ({id, title, subtitle, image, type, content}) => {
     const handleViewClick = () => {
         navigate('/FlashcardsView', { state: { id, title, subtitle, type, content } });
     };
+
     return (
         <div 
         style={{

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Flashcard.css';
 import { useTheme } from '../components/ThemeContext';
 
-const Flashcard = ({ type = "normal", question, answer, options = []}) => {
+const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipSignal }) => {
   const { theme} = useTheme();
   const [isFlipped, setIsFlipped] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -11,6 +11,10 @@ const Flashcard = ({ type = "normal", question, answer, options = []}) => {
 
   // For ShortResponse
   const [feedback, setFeedback] = useState('');
+  
+  useEffect(() => {
+    setIsFlipped(false);
+  }, [resetFlipSignal]);
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);

@@ -4,6 +4,10 @@ import Flashcard from '../components/Flashcard';
 import Header from '../components/Header'
 import '../styles/FlashcardPage.css';
 import { useTheme } from '../components/ThemeContext';
+import Shuffle from "../assets/shuffle.png"
+import Regenerate from "../assets/regenerate.png"
+import Checkmark from "../assets/checkmark.png"
+import Xmark from "../assets/x.png"
 
 const FlashcardTest = () => {
   const {theme} = useTheme();
@@ -14,6 +18,10 @@ const FlashcardTest = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [shuffledContent, setShuffledContent] = useState([]);
   const [isShuffled, setIsShuffled] = useState(false);
+  const [resetFlipSignal, setResetFlipSignal] = useState(0);
+  const [correct, setCorrect] = useState(0);
+  const [incorrect, setIncorrect] = useState(0);
+  const [answeredIndexes, setAnsweredIndexes] = useState([]);
 
   useEffect(() => {
     let apiUrl = "http://localhost:5000/api/flashcards"; // Default API
@@ -67,6 +75,25 @@ const FlashcardTest = () => {
     }
     setShuffledContent(shuffled);
     setIsShuffled(true);
+    setResetFlipSignal(prev => prev + 1);
+  };
+
+  const regenerateCards = () => {
+
+  };
+  
+  const handleCorrectClick = () => {
+    if (!answeredIndexes.includes(currentIndex)) {
+      setCorrect(prev => prev + 1);
+      setAnsweredIndexes(prev => [...prev, currentIndex]);
+    }
+  };
+  
+  const handleIncorrectClick = () => {
+    if (!answeredIndexes.includes(currentIndex)) {
+      setIncorrect(prev => prev + 1);
+      setAnsweredIndexes(prev => [...prev, currentIndex]);
+    }
   };
 
   return (
@@ -88,72 +115,73 @@ const FlashcardTest = () => {
     className="test-container">
       <Header />
       <h2>Flashcards</h2>
+      <div className='ScoreSection'>
+        <h3 className="ScoreCorrect">Correct : {correct}</h3>
+        <h3 className="ScoreIncorrect">Incorrect : {incorrect}</h3>
+      </div>
       {/* Use of AI, mainly for syntax for ternary operator */}
       {typeof data === 'undefined' ? (
         <p>Loading...</p> 
       ) : (
-        <div className="flashcard-container">
-          {/* {flashcardType === "question" && getLength() > 0 && (
-            <Flashcard
-              type="mc"
-              key={currentIndex}
-              question= {data.questions[currentIndex].question}
-              options= {data.questions[currentIndex].options}
-              correctAnswer= {data.questions[currentIndex].answer}
-            />
-          )} */}
-          {flashcardType === "question" && getLength() > 0 && (
-            <Flashcard
-              type="mc"
-              key={currentIndex}
-              question={isShuffled? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
-              options={isShuffled ? shuffledContent[currentIndex].options : flashcardContent[currentIndex].options}
-              answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
-            />
-          )}
-          {/* {flashcardType === "normal" && getLength() > 0 && (
-            <Flashcard
-              type = "normal"
-              key={currentIndex}
-              question={data.flashcards[currentIndex].front}
-              answer={data.flashcards[currentIndex].back}
-            />
-          )} */}
-          {flashcardType === "normal" && getLength() > 0 && (
-            <Flashcard
-              type = "normal"
-              key={currentIndex}
-              question={isShuffled ? shuffledContent[currentIndex].front : flashcardContent[currentIndex].front}
-              answer={isShuffled ? shuffledContent[currentIndex].back : flashcardContent[currentIndex].back}
-            />
-          )}
-          {flashcardType === "shortResponse" && getLength() > 0 && (
-            <Flashcard
-              type = "shortResponse"
-              key={currentIndex}
-              question={isShuffled ? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
-              answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
-            />
-          )}
+        <div className='flashcardSection'>
+          <button className='ButtonArrow' onClick={prevCard} disabled={currentIndex === 0}>
+            {'<'}
+          </button>
+          <div className="flashcard-container">
+            {flashcardType === "question" && getLength() > 0 && (
+              <Flashcard
+                type="mc"
+                key={currentIndex}
+                resetFlipSignal={resetFlipSignal}
+                question={isShuffled? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
+                options={isShuffled ? shuffledContent[currentIndex].options : flashcardContent[currentIndex].options}
+                answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
+              />
+            )}
+            {flashcardType === "normal" && getLength() > 0 && (
+              <Flashcard
+                type = "normal"
+                key={currentIndex}
+                resetFlipSignal={resetFlipSignal}
+                question={isShuffled ? shuffledContent[currentIndex].front : flashcardContent[currentIndex].front}
+                answer={isShuffled ? shuffledContent[currentIndex].back : flashcardContent[currentIndex].back}
+              />
+            )}
+            {flashcardType === "shortResponse" && getLength() > 0 && (
+              <Flashcard
+                type = "shortResponse"
+                key={currentIndex}
+                resetFlipSignal={resetFlipSignal}
+                question={isShuffled ? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
+                answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
+              />
+            )}
+          </div>
+          <button className='ButtonArrow' onClick={nextCard} disabled={currentIndex === getLength() - 1}>
+            {'>'}
+          </button>
         </div>
       )}
       <div className='bottomControls'>
-        <div className='sideControls'>
-          <button onClick={shuffleCards}>
-            Shuffle
-          </button>
-        </div>
         <div className="navigation">
-          <button onClick={prevCard} disabled={currentIndex === 0}>
-            {'<'}
+          <button className='imgOption' onClick={shuffleCards}>
+            <img src={Shuffle} alt="shuffle"/>
           </button>
-
+          {flashcardType === "normal" && (
+            <button className='imgOption' onClick={handleCorrectClick}>
+              <img src={Checkmark} alt="correct" />
+            </button>
+          )}
           <div className="flashcard-count">
             {currentIndex + 1} / {getLength()}
           </div>
-
-          <button onClick={nextCard} disabled={currentIndex === getLength() - 1}>
-            {'>'}
+          {flashcardType === "normal" && (
+            <button className='imgOption' onClick={handleIncorrectClick}>
+              <img src={Xmark} alt="incorrect"/>
+            </button>
+          )}
+          <button className='imgOption' onClick={{regenerateCards}}>
+            <img src={Regenerate} alt="regenerate"/>
           </button>
         </div>
       </div>

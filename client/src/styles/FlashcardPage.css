@@ -14,10 +14,27 @@
   width: 100%;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
-  
-.flashcard-container {
-  margin-top: 30px;
+
+.ScoreSection {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  align-items: center;
+  width: 90%;
+}
+
+.ScoreCorrect {
+  color: green;
+}
+
+.ScoreIncorrect {
+  color: red;
 }
 
 h2 {
@@ -25,8 +42,14 @@ h2 {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  margin-top: 20px;
   color: var(--text);
+  margin: 20px;
+}
+
+.flashcardSection {
+  width: 100%;
+  display: flex;
+  flex-direction: row; 
 }
 
 .bottomControls {
@@ -35,8 +58,8 @@ h2 {
   flex-direction: row; 
   justify-content: space-between; 
   align-items: center;
-  margin-top: 20px;
   position: relative;
+  margin-top: 30px;
 }
 
 .sideControls {
@@ -84,4 +107,21 @@ button:disabled {
 
 .flashcard-count {
   font-size: 1.2rem;
+}
+
+.ButtonArrow {
+  font-size: 50px;
+}
+
+.imgOption {
+  margin-left: auto;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.imgOption img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  margin: auto;
 }
