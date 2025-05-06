@@ -22,6 +22,7 @@ const FlashcardTest = () => {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [answeredIndexes, setAnsweredIndexes] = useState([]);
+  const [isTrackingProgress, setIsTrackingProgress] = useState(false);
 
   useEffect(() => {
     let apiUrl = "http://localhost:5000/api/flashcards"; // Default API
@@ -96,6 +97,10 @@ const FlashcardTest = () => {
     }
   };
 
+  const toggleProgressTracking = () => {
+    setIsTrackingProgress(prev => !prev);
+  };
+
   return (
     <div 
     style={{
@@ -114,10 +119,20 @@ const FlashcardTest = () => {
     }}
     className="test-container">
       <Header />
-      <h2>Flashcards</h2>
-      <div className='ScoreSection'>
-        <h3 className="ScoreCorrect">Correct : {correct}</h3>
-        <h3 className="ScoreIncorrect">Incorrect : {incorrect}</h3>
+      <div className="ScoreSection">
+        {isTrackingProgress ? (
+          <>
+            <h3 className="ScoreCorrect">Correct {correct}</h3>
+            <div className="flashcard-title">Flashcards</div>
+            <h3 className="ScoreIncorrect">Incorrect {incorrect}</h3>
+          </>
+        ) : (
+          <>
+            <div />
+            <div className="flashcard-title">Flashcards</div>
+            <div /> 
+          </>
+        )}
       </div>
       {/* Use of AI, mainly for syntax for ternary operator */}
       {typeof data === 'undefined' ? (
@@ -163,19 +178,26 @@ const FlashcardTest = () => {
         </div>
       )}
       <div className='bottomControls'>
+        <div className='ToggleTracking'>
+          <button className='imgOption' onClick={toggleProgressTracking}>
+            {isTrackingProgress ? 'Stop Tracking' : 'Start Tracking'}
+          </button>
+        </div>
         <div className="navigation">
           <button className='imgOption' onClick={shuffleCards}>
             <img src={Shuffle} alt="shuffle"/>
           </button>
-          {flashcardType === "normal" && (
+          {flashcardType === "normal" && isTrackingProgress && (
             <button className='imgOption' onClick={handleCorrectClick}>
               <img src={Checkmark} alt="correct" />
             </button>
           )}
-          <div className="flashcard-count">
-            {currentIndex + 1} / {getLength()}
+          <div className="flashcard-count-wrapper">
+            <div className="flashcard-count">
+              {currentIndex + 1} / {getLength()}
+            </div>
           </div>
-          {flashcardType === "normal" && (
+          {flashcardType === "normal" && isTrackingProgress && (
             <button className='imgOption' onClick={handleIncorrectClick}>
               <img src={Xmark} alt="incorrect"/>
             </button>

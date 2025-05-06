@@ -20,30 +20,36 @@
 }
 
 .ScoreSection {
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between; 
   align-items: center;
-  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.ScoreSection > * {
+  flex: 1;
+  text-align: center;
 }
 
 .ScoreCorrect {
   color: green;
+  text-align: left;
 }
 
 .ScoreIncorrect {
   color: red;
+  text-align: right; 
 }
 
-h2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  color: var(--text);
+.flashcard-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
   margin: 20px;
+  color: var(--title);
 }
 
 .flashcardSection {
@@ -53,13 +59,11 @@ h2 {
 }
 
 .bottomControls {
-  width: 100%;
   display: flex;
-  flex-direction: row; 
-  justify-content: space-between; 
-  align-items: center;
-  position: relative;
-  margin-top: 30px;
+  justify-content: center;
+  align-items: center;     
+  width: 100%; 
+  margin-top: 20px;
 }
 
 .sideControls {
@@ -67,16 +71,13 @@ h2 {
 }
 
 .navigation {
-  position: absolute;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  width: 60%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--text);
-}
+  align-items: center;          
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+} 
 
 button, .flashcard-count {
   flex: 1; 
@@ -105,6 +106,12 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.flashcard-count-wrapper {
+  flex-grow: 1; 
+  display: flex;
+  justify-content: center; 
+}
+
 .flashcard-count {
   font-size: 1.2rem;
 }
@@ -124,4 +131,9 @@ button:disabled {
   height: 24px;
   object-fit: contain;
   margin: auto;
+}
+
+.ToggleTracking {
+  position: absolute;
+  left: 20px;
 }
