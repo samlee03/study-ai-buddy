@@ -20,7 +20,6 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
 
   const handleAddOption = () => {
     setOptions([...options, '']);
-    setCorrectAnswer("test")
   };
 
   const handleRemoveOption = (index) => {
@@ -36,9 +35,7 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
     onSave(question, options, answerToSend);
   };
 
-  useEffect(() => {
-    console.log("INTIAL ANSWER: ", initialCorrectAnswer);
-  },[])
+
   return (
     <div className="EditFlashcard">
       <div className="EditFlashcardRow">
