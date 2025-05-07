@@ -29,7 +29,7 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
 
   const handleSave = () => {
     let answerToSend = correctAnswer;
-    if (options.length == 1){
+    if (options.length == 1 || correctAnswer == ''){
       answerToSend = options[0]
     }
     onSave(question, options, answerToSend);
@@ -76,7 +76,7 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
         <label className="EditFlashcardLabel">Correct Answer</label>
         <select
           value={correctAnswer}
-          onChange={(e) => setCorrectAnswer(e.target.value)}
+          onChange={(e) => {setCorrectAnswer(e.target.value);console.log("CORRECT: ", correctAnswer)}}
           className="EditFlashcardInput"
         >
           {options.map((option, index) => (
