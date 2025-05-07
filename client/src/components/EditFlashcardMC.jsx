@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/EditFlashcard.css';
 import Trashcan from "../assets/Trashcan.png"
 import Add from "../assets/Add2.png"
@@ -20,6 +20,7 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
 
   const handleAddOption = () => {
     setOptions([...options, '']);
+    setCorrectAnswer("test")
   };
 
   const handleRemoveOption = (index) => {
@@ -28,9 +29,16 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
   };
 
   const handleSave = () => {
-    onSave(question, options, correctAnswer);
+    let answerToSend = correctAnswer;
+    if (options.length == 1){
+      answerToSend = options[0]
+    }
+    onSave(question, options, answerToSend);
   };
 
+  useEffect(() => {
+    console.log("INTIAL ANSWER: ", initialCorrectAnswer);
+  },[])
   return (
     <div className="EditFlashcard">
       <div className="EditFlashcardRow">
