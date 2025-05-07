@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../styles/NewUpload.css';
 import { useTheme } from '../components/ThemeContext';
 import Upload from "../assets/upload.png"
+import { v4 as uuidv4 } from 'uuid';
+
 
 const NewUpload = ({title, subtitle, image, type}) => {
     const { theme} = useTheme();
@@ -23,7 +25,7 @@ const NewUpload = ({title, subtitle, image, type}) => {
         }
 
         navigate('/FlashcardsView', { state: { 
-            id : 0, title : "", subtitle : "", type, content
+            id : uuidv4(), title : "", subtitle : "", type, content
         }});
     };
     return (

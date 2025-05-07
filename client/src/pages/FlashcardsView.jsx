@@ -35,6 +35,7 @@ const FlashcardsView = () => {
         credentials: 'include',
         body: JSON.stringify({
             "id": card_id,
+            "type": "normal",
             new_content: updatedFlashcards
         })
       })
@@ -60,6 +61,7 @@ const FlashcardsView = () => {
         credentials: 'include',
         body: JSON.stringify({
             "id": card_id,
+            "type": "question",
             new_content: updatedFlashcards
         })
       })
@@ -88,6 +90,7 @@ const FlashcardsView = () => {
           credentials: 'include',
           body: JSON.stringify({
               "id": card_id,
+              "type": "shortResponse",
               new_content: updatedFlashcards
           })
         })
@@ -131,7 +134,8 @@ const FlashcardsView = () => {
         options : [""],
     }
     useEffect(() => {
-        console.log(card_id);
+        console.log("Card ID: ", card_id);
+        console.log("Flashcards: ", flashcards)
     }, [])
     return (
         <div
@@ -193,6 +197,7 @@ const FlashcardsView = () => {
                             key={index}
                             question={flashcard.question}
                             options={flashcard.options}
+                            answer={flashcard.answer}
                             onSave={(newQuestion, newOptions, correctAnswer) => handleSaveMCQ( index, newQuestion, newOptions, correctAnswer)}
                         />
                     ))

@@ -3,7 +3,7 @@ import '../styles/EditFlashcard.css';
 import Trashcan from "../assets/Trashcan.png"
 import Add from "../assets/Add2.png"
 
-const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, correctAnswer: initialCorrectAnswer, onSave }) => {
+const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, answer: initialCorrectAnswer, onSave }) => {
   const [question, setQuestion] = useState(initialQuestion);
   const [options, setOptions] = useState(initialOptions || []);
   const [correctAnswer, setCorrectAnswer] = useState(initialCorrectAnswer);

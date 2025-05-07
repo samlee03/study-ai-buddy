@@ -33,21 +33,23 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
     //   setIsCorrect(userInput.trim().toLowerCase() === answer.toLowerCase());
     // }
 
-    const response = await fetch('http://localhost:5000/api/check', 
-      { method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          "question": question,
-          "answer": userInput 
-        })
+    if (type == "shortResponse"){
+      const response = await fetch('http://localhost:5000/api/check', 
+        { method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            "question": question,
+            "answer": userInput 
+          })
+        }
+      )
+      if (response.ok){
+        const data = await response.json()
+        console.log(data);
+        setFeedback(data.response);
+      } else {
+        throw error;
       }
-    )
-    if (response.ok){
-      const data = await response.json()
-      console.log(data);
-      setFeedback(data.response);
-    } else {
-      throw error;
     }
 
     // const data = await response.json();

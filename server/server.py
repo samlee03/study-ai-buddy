@@ -345,6 +345,7 @@ def get_questions():
     questions = json.loads(data)
     
     uploadObj = {
+        "id": str(uuid.uuid4()),
         "type": "question",
         "title": title,
         "subtitle": subtitle,
@@ -393,6 +394,7 @@ def get_short_response():
     questions = json.loads(data)
     
     uploadObj = {
+        "id": str(uuid.uuid4()),
         "type": "shortResponse",
         "title": title,
         "subtitle": subtitle,
@@ -442,6 +444,7 @@ def check_answer():
 @app.route('/api/save_card', methods=["POST"])
 def save_card():
     id = request.json.get('id')
+    type = request.json.get('type')
     new_content = request.json.get('new_content')
     database = client.get_database("users-db")
     users = database.get_collection("users")
@@ -452,20 +455,42 @@ def save_card():
     username = payload.get("username")
     query = {"username": username}
     
-    update_operation = { "$set": 
-        {"saved_uploads.$[card].content": new_content}
-    }
-    array_filters = [{"card.id": id}]
-    print("Card ID:", id)
+    is_existing_card = users.find_one({
+        "username": username, 
+        "saved_uploads.id": id
+    })
+    if is_existing_card:
+
+        update_operation = { "$set": 
+            {"saved_uploads.$[card].content": new_content}
+        }
+        array_filters = [{"card.id": id}]
+        print("Card ID:", id)
 
 
-    result = users.update_one(query, update_operation, array_filters=array_filters)
-    print("Username from token:", username)
+        result = users.update_one(query, update_operation, array_filters=array_filters)
+        print("Username from token:", username)
 
-    if result.modified_count == 0:
-        return jsonify({"error": "No document was updated"}), 400
-    print("saved")
-    return jsonify({"status": "saved"})
+        if result.modified_count == 0:
+            return jsonify({"error": "No document was updated"}), 400
+        print("saved")
+        return jsonify({"status": "saved"})
+    else: 
+        print("New Card")
+        result = users.update_one(query, {
+            "$push": {
+                "saved_uploads" : {
+                    "id": id,
+                    "type": type,
+                    "title": "Untitled",
+                    "subtitle": "Unsubtitled",
+                    "content": new_content
+                }
+            }
+        })
+
+
+        return jsonify({"status": "new card set and saved"})
 
 @app.route('/api/clear-cookie')
 def clear_cookie():
@@ -499,6 +524,11 @@ def regenerate():
     newQuestions = json.loads(data)
 
     return jsonify({"new-questions": newQuestions})
+
+# @app.route('/api/create-first-upload', methods=["POST"])
+# def create_first_upload():
+#     id = request.json.get('id')
+    
 
 @app.route('/api/check-cookie')
 def check_cookie():
