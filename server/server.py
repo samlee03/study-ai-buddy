@@ -537,7 +537,7 @@ def regenerate():
     type = request.json.get('type')
     for question in input:
         formattedInput += question + ", "
-    instructions = f"The user has gotten these questions wrong, provide multiple questions that would give the user more practice based on these questions that were answered incorrectly: {formattedInput}, return only in the following format with no supplementary text: {'object with question, options, and answer where question and options correspond to an MCQ question' if type == "mcq" else 'object with question and answer, where answer should be a short 1-2 sentence response'}"
+    instructions = f"The user has gotten these questions wrong, provide multiple questions that would give the user more practice based on these questions that were answered incorrectly: {formattedInput}, return only in the following format with no supplementary text: {'object with question, options, and answer where question and options correspond to an MCQ question' if type == "question" else 'object with question and answer, where answer should be a short 1-2 sentence response'}"
     
     genclient = genai.Client(api_key=os.getenv("API_KEY"))
     response = genclient.models.generate_content(

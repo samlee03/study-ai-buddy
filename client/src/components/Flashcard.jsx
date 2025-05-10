@@ -33,7 +33,14 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
     // else if (userInput) {
     //   setIsCorrect(userInput.trim().toLowerCase() === answer.toLowerCase());
     // }
-
+    if (type == "mc"){
+      const correctAnswer = selectedOption === answer;
+      if (correctAnswer) {
+        onCorrect()
+      } else {
+        onIncorrect(question)
+      }
+    }
     if (type == "shortResponse"){
       const response = await fetch('http://localhost:5000/api/check', 
         { method: 'POST',

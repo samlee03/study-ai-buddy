@@ -13,7 +13,7 @@ const FlashcardPage = () => {
   const {theme} = useTheme();
   const location = useLocation(); 
   const flashcardType = location.state?.flashcardType || 'normal';
-  const flashcardContent = location.state?.flashcards
+  const [flashcardContent, setFlashcardContent] = useState(location.state?.flashcards || [])
   const card_id = location.state?.card_id
   const [data, setData] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -98,7 +98,18 @@ const FlashcardPage = () => {
       })
     })
     if (response.ok){
+      // Reset after regeneration
+      console.log(flashcardType)
       console.log("DATA RECEIVED")
+      const data = await response.json();
+      setFlashcardContent(data["new-questions"])
+      setCurrentIndex(0);
+      setIsShuffled(false);
+      setAnsweredIndexes([]);
+      setIncorrectQuestions([]);
+      setCorrect(0);
+      setIncorrect(0);
+      setResetFlipSignal(prev => prev + 1);
     }
   };
   
@@ -118,7 +129,7 @@ const FlashcardPage = () => {
   };
 
   const handleShortResponseIncorrect = (question) => {
-    if (isTrackingProgress){
+    if (isTrackingProgress && !answeredIndexes.includes(currentIndex)){
       setIncorrect(prev => prev + 1);
       setAnsweredIndexes(prev => [...prev, currentIndex]);
       setIncorrectQuestions(prev => [...prev, question])
