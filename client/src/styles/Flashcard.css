@@ -30,7 +30,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  text-align: left;
+  text-align: center;
   padding: 20px;
   border: 1px solid var(--border);
   transform-origin: center;
@@ -120,4 +120,13 @@ input[type="radio"] {
 
 p {
   font-size: 1.75rem;
+}
+
+.flashcard-regular-question {
+  font-family: "Days One";
+  font-size: 4rem;
+}
+.flashcard-regular-answer {
+  font-family: "DM Sans";
+  font-size: 3.25rem;
 }

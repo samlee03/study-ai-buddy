@@ -94,12 +94,12 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
           <>
             {!isFlipped && (
               <div className="flashcard-front">
-                <p>{question}</p>
+                <p className='flashcard-regular-question'>{question}</p>
               </div>
             )}
             {isFlipped && (
               <div className="flashcard-back">
-                <p>{answer}</p>
+                <p className='flashcard-regular-answer'>{answer}</p>
               </div>
             )}
           </>
