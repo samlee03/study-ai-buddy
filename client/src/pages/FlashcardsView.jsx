@@ -36,6 +36,8 @@ const FlashcardsView = () => {
         body: JSON.stringify({
             "id": card_id,
             "type": "normal",
+            "title": title,
+            "subtitle": subtTitle,
             new_content: updatedFlashcards
         })
       })
@@ -61,6 +63,8 @@ const FlashcardsView = () => {
         credentials: 'include',
         body: JSON.stringify({
             "id": card_id,
+            "title": title,
+            "subtitle": subtTitle,
             "type": "question",
             new_content: updatedFlashcards
         })
@@ -91,6 +95,8 @@ const FlashcardsView = () => {
           body: JSON.stringify({
               "id": card_id,
               "type": "shortResponse",
+              "title": title,
+              "subtitle": subtTitle,
               new_content: updatedFlashcards
           })
         })

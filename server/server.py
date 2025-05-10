@@ -445,6 +445,8 @@ def check_answer():
 def save_card():
     id = request.json.get('id')
     type = request.json.get('type')
+    title = request.json.get('title')
+    subtitle = request.json.get('subtitle')
     new_content = request.json.get('new_content')
     database = client.get_database("users-db")
     users = database.get_collection("users")
@@ -462,7 +464,11 @@ def save_card():
     if is_existing_card:
 
         update_operation = { "$set": 
-            {"saved_uploads.$[card].content": new_content}
+            {
+                "saved_uploads.$[card].title": title,
+                "saved_uploads.$[card].subtitle": subtitle,
+                "saved_uploads.$[card].content": new_content
+            }
         }
         array_filters = [{"card.id": id}]
         print("Card ID:", id)
@@ -482,8 +488,8 @@ def save_card():
                 "saved_uploads" : {
                     "id": id,
                     "type": type,
-                    "title": "Untitled",
-                    "subtitle": "Unsubtitled",
+                    "title": title,
+                    "subtitle": subtitle,
                     "content": new_content
                 }
             }
