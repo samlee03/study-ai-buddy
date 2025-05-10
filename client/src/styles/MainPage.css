@@ -10,6 +10,17 @@
     );
 }
 
+.Page-container-Main h2 {
+  font-family: "DM Sans", sans-serif;
+  font-weight: bolder;
+  color: #075E85;
+
+}
+.Page-container-Main div {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+}
+
 .Upload-page {
     width: 90%;
     margin-left: auto;
