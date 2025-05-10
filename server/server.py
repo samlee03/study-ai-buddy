@@ -437,9 +437,12 @@ def check_answer():
     genclient = genai.Client(api_key=os.getenv("API_KEY"))
     # print("this ran")
     response = genclient.models.generate_content(
-        model="gemini-2.0-flash", contents=("Provide short, concise suggestions or feedback. If possible, add other answers. Return in plain text, no more than 400 characters, no special characters like '*' other than basic punctuation. Question" + str(question) + ". Answer: " + str(answer) + ".")
+        model="gemini-2.0-flash", contents=("First analyze whether the answer is valid based on the question. Write “YES” or “NO” followed by one newline. Then, provide short, concise suggestions or feedback. If possible, add other answers. Return in plain text, no new lines, no more than 400 characters, no special markdown characters like '**' other than basic punctuation. Question" + str(question) + ". Answer: " + str(answer) + ".")
     )
-    return jsonify({"response": response.text})
+    feedback = response.text.split('\n')
+    # return jsonify({"response": response.text})
+    return jsonify({"isCorrect": feedback[0], "response": feedback[1]})
+
     
 @app.route('/api/save_card', methods=["POST"])
 def save_card():
@@ -514,6 +517,21 @@ def textbot():
 
 @app.route('/api/regenerate-flashcard', methods=["POST"])
 def regenerate():
+    id = request.json.get('id')
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    token = request.cookies.get('token')
+
+    
+    payload = jwt.decode(token, os.getenv("JWT_SECRET_KEY"), algorithms="HS256")
+    username = payload.get("username")
+    query = {"username": username}
+    if not token:
+        return jsonify({"status": "not authenticated"})
+    
+    
+
+
     formattedInput = ''
     input = request.json.get("incorrect")
     type = request.json.get('type')
@@ -528,6 +546,13 @@ def regenerate():
 
     data = response.text.strip('```json\n').strip('\n```')
     newQuestions = json.loads(data)
+    array_filters = [{"card.id": id}]
+    users.update_one(query, {
+        "$set": {
+            "saved_uploads.$[card].content": newQuestions
+        }
+    }, array_filters=array_filters)
+    
 
     return jsonify({"new-questions": newQuestions})
 

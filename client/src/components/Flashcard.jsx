@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/Flashcard.css';
 import { useTheme } from '../components/ThemeContext';
 
-const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipSignal }) => {
+const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipSignal, onIncorrect, onCorrect }) => {
   const { theme} = useTheme();
   const [isFlipped, setIsFlipped] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -11,6 +11,7 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
 
   // For ShortResponse
   const [feedback, setFeedback] = useState('');
+  const [incorrectQuestions, setIncorrectQuestions] = useState([]);
   
   useEffect(() => {
     setIsFlipped(false);
@@ -47,6 +48,13 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
         const data = await response.json()
         console.log(data);
         setFeedback(data.response);
+        if (data.isCorrect !== "YES"){
+          // setIncorrectQuestions(prev => [...prev, question]);
+          onIncorrect(question);
+          // console.log(incorrectQuestions);
+        } else {
+          onCorrect()
+        }
       } else {
         throw error;
       }

@@ -14,6 +14,7 @@ const FlashcardPage = () => {
   const location = useLocation(); 
   const flashcardType = location.state?.flashcardType || 'normal';
   const flashcardContent = location.state?.flashcards
+  const card_id = location.state?.card_id
   const [data, setData] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [shuffledContent, setShuffledContent] = useState([]);
@@ -40,6 +41,9 @@ const FlashcardPage = () => {
       .catch((error) => console.error("Error fetching data:", error));
     
   }, [flashcardType]);
+  useEffect(() => {
+    console.log(incorrectQuestions)
+  },[incorrectQuestions])
 
   if (!data) {
     return <p>Loading...</p>; 
@@ -80,24 +84,46 @@ const FlashcardPage = () => {
     setResetFlipSignal(prev => prev + 1);
   };
 
-  const regenerateCards = () => {
-
+  const regenerateCards = async () => {
+    const response = await fetch('http://localhost:5000/api/regenerate-flashcard', {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: card_id,
+        incorrect: incorrectQuestions,
+        type: flashcardType
+      })
+    })
+    if (response.ok){
+      console.log("DATA RECEIVED")
+    }
   };
   
   const handleCorrectClick = () => {
-    if (!answeredIndexes.includes(currentIndex)) {
+    if (isTrackingProgress && !answeredIndexes.includes(currentIndex)) {
       setCorrect(prev => prev + 1);
       setAnsweredIndexes(prev => [...prev, currentIndex]);
     }
   };
   
   const handleIncorrectClick = () => {
-    if (!answeredIndexes.includes(currentIndex)) {
+    if (isTrackingProgress && !answeredIndexes.includes(currentIndex)) {
       setIncorrect(prev => prev + 1);
       setAnsweredIndexes(prev => [...prev, currentIndex]);
       setIncorrectQuestions(prev => [...prev, currentIndex])
     }
   };
+
+  const handleShortResponseIncorrect = (question) => {
+    if (isTrackingProgress){
+      setIncorrect(prev => prev + 1);
+      setAnsweredIndexes(prev => [...prev, currentIndex]);
+      setIncorrectQuestions(prev => [...prev, question])
+    }
+  }
 
   const toggleProgressTracking = () => {
     setIsTrackingProgress(prev => !prev);
@@ -153,6 +179,8 @@ const FlashcardPage = () => {
                 question={isShuffled? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
                 options={isShuffled ? shuffledContent[currentIndex].options : flashcardContent[currentIndex].options}
                 answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
+                onIncorrect={(question) => handleShortResponseIncorrect(question)}
+                onCorrect={handleCorrectClick}
               />
             )}
             {flashcardType === "normal" && getLength() > 0 && (
@@ -162,6 +190,8 @@ const FlashcardPage = () => {
                 resetFlipSignal={resetFlipSignal}
                 question={isShuffled ? shuffledContent[currentIndex].front : flashcardContent[currentIndex].front}
                 answer={isShuffled ? shuffledContent[currentIndex].back : flashcardContent[currentIndex].back}
+                onIncorrect={(question) => handleShortResponseIncorrect(question)}
+
               />
             )}
             {flashcardType === "shortResponse" && getLength() > 0 && (
@@ -171,6 +201,8 @@ const FlashcardPage = () => {
                 resetFlipSignal={resetFlipSignal}
                 question={isShuffled ? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
                 answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
+                onIncorrect={(question) => handleShortResponseIncorrect(question)}
+                onCorrect={handleCorrectClick}
               />
             )}
           </div>
@@ -206,7 +238,7 @@ const FlashcardPage = () => {
             <img src={Shuffle} alt="shuffle"/>
           </button>
           {flashcardType !== "normal" && (
-            <button className='imgOption' onClick={{regenerateCards}}>
+            <button className='imgOption' onClick={regenerateCards}>
               <img src={Regenerate} alt="regenerate"/>
             </button>
           )}

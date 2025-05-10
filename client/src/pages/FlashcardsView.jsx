@@ -129,7 +129,7 @@ const FlashcardsView = () => {
         setIsAddingCard(false);
     }
     const handleViewClick = () => {
-        navigate('/FlashcardPage', { state: { flashcardType, flashcards } });
+        navigate('/FlashcardPage', { state: { flashcardType, flashcards, card_id } });
     };
 
     const newFlashcard = {
