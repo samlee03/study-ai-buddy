@@ -258,3 +258,20 @@ def cookie():
         return response
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+####this is work in progress for email authentication#####
+
+verification_codes = {}  #this is just a temporary placeholder instead of the database
+
+@app.route('/sned-code',methods=['POST'])
+def send_code():
+    data = request.get_jason()
+    email = data.get('email')
+
+    if not email:
+        return jsonify({"error": "You need to put in an email big bro"}), 400
+    
+    #I learned this syntax from online but it should make up a random code
+    code = str(random.randint(100000, 999999))
+    verification_codes[email] = code
