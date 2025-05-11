@@ -15,6 +15,10 @@ from datetime import datetime, timedelta
 from functools import wraps
 import jwt
 
+#i am adding this for the email verfication
+import random
+import smtplib
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -260,11 +264,13 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-####this is work in progress for email authentication#####
+####this is work in progress for email authentication####
 
+
+#so this route will send the code to the user's email
 verification_codes = {}  #this is just a temporary placeholder instead of the database
 
-@app.route('/sned-code',methods=['POST'])
+@app.route('/send-code',methods=['POST'])
 def send_code():
     data = request.get_jason()
     email = data.get('email')
@@ -275,3 +281,16 @@ def send_code():
     #I learned this syntax from online but it should make up a random code
     code = str(random.randint(100000, 999999))
     verification_codes[email] = code
+
+    # we are going to attempt to send the code to the email
+    # I should mention, i got syntax help from AI
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(os.environ['EMAIL_USER'], os.environ['EMAIL_PASS'])
+            message = f"Your code is: {code}"
+            server.sendmail(os.environ['EMAIL_USER'], email, message)
+        return jsonify({"message": "Here is your code"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
