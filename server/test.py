@@ -293,4 +293,29 @@ def send_code():
         return jsonify({"message": "Here is your code"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+##so this route will get the code from the user and make sure it's correct before the user can proceed.
+
+@app.route('/verify-code',methods=['POST'])
+def verifiy_code():
+    data = request.get_jason()
+    email = data.get('email')
+    code_entered = data.get('code')
+
+    #if the user doesn't give in everything needed
+    if not email or not code_entered:
+        return jsonify({"error": "where ya code and email at lil bro"}), 400
+    
+    # for now we are using the temporary variable i set up to look up the code
+    actual_code = verification_codes.get(email)
+
+    #this is where we will compare it
+    if actual_code == code_entered:
+        return jsonify({"message": "this is the right code"}), 200
+    else:
+        return jsonify({"message": "this is the wrong code"}), 401
+    
+# note #1: to teammates (especially Sam), i am not sure if you guys already know this but i am using http status codes i found through google to label the outcomes for the routes above.
+# note #2: I didn't use mongodb yet, just a temp dict, for the routes above, I want to test out the routes with you before i do that.
+
 
