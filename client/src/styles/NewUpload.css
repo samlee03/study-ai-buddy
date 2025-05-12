@@ -10,6 +10,11 @@
     gap: 50px; 
     margin-bottom: 15px;
     background-color: var(--primary);
+    transition: transform 0.2s ease;
+}
+
+.Upload-New:hover {
+  transform: scale(1.05);
 }
 
 .UploadImage-New {

@@ -110,12 +110,14 @@ const MainPage = () => {
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                       />
-                      <button 
+                      <button
+                        className='FilterButton' 
                         onClick={() => setDisplayRecent(prev => !prev)}
                       >
                       {displayRecent ? 'Newest' : 'Oldest'}
                       </button>
                       <button
+                        className='FilterButton' 
                         onClick={() => {
                           const currentIndex = typeOptions.indexOf(filterFlashcard);
                           const nextIndex = (currentIndex + 1) % typeOptions.length;

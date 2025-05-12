@@ -11,6 +11,11 @@
     padding: 15px;
     gap: 20px; 
     background-color: var(--primary);
+    transition: transform 0.2s ease;
+}
+
+.Upload-Recent:hover {
+  transform: scale(1.05);
 }
 
 .UploadImage-Recent {
