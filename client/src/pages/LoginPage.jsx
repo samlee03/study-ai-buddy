@@ -9,8 +9,8 @@ const LoginPage = () => {
     const { isLoggedIn } = CheckAuth();
     const {theme} = useTheme();
     const navigate = useNavigate();
-    const [username, setUsername] = useState("dummy1");
-    const [password, setPassword] = useState("test123");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const handleSubmit = async () => {
         let body = {
