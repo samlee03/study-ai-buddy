@@ -4,6 +4,8 @@ import '../styles/EditFlashcard.css';
 const EditFlashcardShortResponse = ({ question: initialQuestion, answer: initialAnswer, onSave }) => {
   const [question, setQuestion] = useState(initialQuestion);
   const [answer, setAnswer] = useState(initialAnswer);
+  const [isHovered, setIsHovered] = useState(false);
+  
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
@@ -18,7 +20,11 @@ const EditFlashcardShortResponse = ({ question: initialQuestion, answer: initial
   };
 
   return (
-    <div className="EditFlashcard">
+    <
+      div className="EditFlashcard"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="EditFlashcardRow">
       <label className="EditFlashcardLabel">Question</label>
         <textarea
@@ -37,7 +43,9 @@ const EditFlashcardShortResponse = ({ question: initialQuestion, answer: initial
           className="EditFlashcardTextArea"
         />
       </div>
-      <button className="SaveButton" onClick={handleSave}>Save</button>
+      {isHovered && (
+        <button className="SaveButton" onClick={handleSave}>Save</button>
+      )}
     </div>
   );
 };

@@ -7,6 +7,7 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
   const [question, setQuestion] = useState(initialQuestion);
   const [options, setOptions] = useState(initialOptions || []);
   const [correctAnswer, setCorrectAnswer] = useState(initialCorrectAnswer);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
@@ -37,7 +38,11 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
 
 
   return (
-    <div className="EditFlashcard">
+    <
+      div className="EditFlashcard"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="EditFlashcardRow">
         <label className="EditFlashcardLabel">Question</label>
         <input
@@ -62,15 +67,19 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
                   placeholder={`Enter option ${index + 1}`}
                   className="EditFlashcardInput"
               />
-              <button type="button" className="RemoveOptionButton" onClick={() => handleRemoveOption(index)}>
-                <img src={Trashcan} alt="Remove"/>
-              </button>
+              {isHovered && (
+                <button type="button" className="RemoveOptionButton" onClick={() => handleRemoveOption(index)}>
+                  <img src={Trashcan} alt="Remove"/>
+                </button>
+              )}
           </div>
       ))}
 
-      <button className="AddOptionButton" onClick={handleAddOption}>
-       <img src={Add} alt="Add"/>
-      </button>
+      {isHovered && (
+        <button className="AddOptionButton" onClick={handleAddOption}>
+          <img src={Add} alt="Add" />
+        </button>
+      )}
 
       <div className="EditFlashcardRow">
         <label className="EditFlashcardLabel">Correct Answer</label>
@@ -86,8 +95,9 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
           ))}
         </select>
       </div>
-
-      <button className="SaveButton" onClick={handleSave}>Save</button>
+      {isHovered && (
+        <button className="SaveButton" onClick={handleSave}>Save</button>
+      )}
     </div>
   );
 };

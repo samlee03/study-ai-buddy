@@ -180,8 +180,6 @@ const FlashcardsView = () => {
                     placeholder="Enter subtitle"
                 />
             </div>
-            
-           
 
             <div className='EditableFlashcardContainer'>
                 <button className="ViewButton" onClick={handleViewClick}>

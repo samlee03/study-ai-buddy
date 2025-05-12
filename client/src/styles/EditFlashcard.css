@@ -10,27 +10,31 @@
 
 .EditFlashcardInput {
     width: 90%;
-    height: 40px;
+    height: 50px;
     padding: 5px;
+    font-size: 25px !important;
 }
 
 .EditFlashcardTextArea {
     width: 90%;
-    height: 100px;
+    height: 150px;
     resize: none;
     padding: 5px;
+    font-size: 25px;
 }
 
 .EditFlashcardRow {
     display: flex;
+    gap: 20px;
+    flex-direction: row;
     margin-bottom: 15px; 
-    justify-content: end;
 }
 
 .EditFlashcardLabel {
     flex: 0 0 120px;
     text-align: left;
     font-weight: bold;
+    font-size: 25px;
 }
 
 .SaveButton {

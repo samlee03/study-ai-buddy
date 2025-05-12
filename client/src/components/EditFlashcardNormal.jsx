@@ -4,7 +4,8 @@ import '../styles/EditFlashcard.css';
 const EditFlashcardNormal = ({ term: initialTerm, definition: initialDefinition, onSave }) => {
   const [term, setTerm] = useState(initialTerm);
   const [definition, setDefinition] = useState(initialDefinition);
-
+  const [isHovered, setIsHovered] = useState(false);
+  
   const handleTermChange = (e) => {
     setTerm(e.target.value);
   };
@@ -18,7 +19,11 @@ const EditFlashcardNormal = ({ term: initialTerm, definition: initialDefinition,
   };
 
   return (
-    <div className="EditFlashcard">
+    <
+      div className="EditFlashcard"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="EditFlashcardRow">
         <label className="EditFlashcardLabel">Term</label>
         <input
@@ -40,7 +45,9 @@ const EditFlashcardNormal = ({ term: initialTerm, definition: initialDefinition,
           className='EditFlashcardTextArea'
         />
       </div>
-      <button className='SaveButton' onClick={handleSave}>Save</button>
+      {isHovered && (
+        <button className="SaveButton" onClick={handleSave}>Save</button>
+      )}
     </div>
   );
 };
