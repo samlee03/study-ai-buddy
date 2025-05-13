@@ -19,6 +19,23 @@
   overflow: hidden;
 }
 
+.Flashcard_ChatBot {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.FlashcardArea{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .ScoreSection {
   display: flex;
   flex-direction: row;
@@ -119,15 +136,18 @@ button:disabled {
 
 .ButtonArrow {
   font-size: 50px;
+  transition: transform 0.2s ease;
 }
+
 
 .imgOption {
   margin-left: auto;
   padding: 5px;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.imgOption img {
+.imgOption img{
   width: 24px;
   height: 24px;
   object-fit: contain;
@@ -137,4 +157,120 @@ button:disabled {
 .ToggleTracking {
   position: absolute;
   left: 20px;
+}
+
+.toggleChatButton {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-bottom: 10px;
+}
+
+.toggleChatButton img{
+  width: 48px;
+  height: 48px;
+}
+
+.chat-panel {
+  height: 100%;
+  width: 25%;
+  background: var(--primary);
+  border-left: 1px solid var(--border);
+  padding: 10px;
+  transition: transform 0.2s ease;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  flex-grow: 1;
+  overflow: hidden;
+  background: var(--background);
+  border: 1px solid #000000;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.chat-scroll {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+}
+
+.chat-message {
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 16px;
+  max-width: 75%;
+}
+
+.chat-message.user {
+  background-color: var(--buttonText);
+  align-self: flex-end;
+  text-align: right;
+}
+
+.chat-message.bot {
+  background-color: var(--background2);
+  align-self: flex-start;
+  text-align: right;
+}
+
+.chat-input {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.chat-input textarea {
+  resize: none;
+  padding: 4px;
+  border-radius: 5px;
+  flex-grow: 1
+}
+
+.chat-input button {
+  padding: 8px 12px;
+  border: none;
+  background-color: var(--buttonBackground);
+  color: var(--buttonText);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.chatUpper {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatTitle {
+  width: 80%;
+  margin-left: 0;
+  font-size: 24px;
+}
+
+.closeChatBot {
+  transition: transform 0.2s ease;
+}
+
+.closeChatBot img {
+  width: 24px;
+  height: 24px;
+}
+
+.ButtonArrow:hover, .imgOption:hover, .toggleChatButton:hover, .closeChatBot:hover {
+  transform: scale(1.1);
 }

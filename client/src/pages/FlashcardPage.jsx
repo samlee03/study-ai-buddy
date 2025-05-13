@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import Flashcard from '../components/Flashcard'; 
 import Header from '../components/Header'
@@ -8,16 +8,21 @@ import Shuffle from "../assets/shuffle.png"
 import Regenerate from "../assets/regenerate.png"
 import Checkmark from "../assets/checkmark.png"
 import Xmark from "../assets/x.png"
+import Chat from "../assets/Chat.svg"
 
 const FlashcardPage = () => {
   const {theme} = useTheme();
   const location = useLocation(); 
+
+  const title = location.state?.title || 'Flashcards';
   const flashcardType = location.state?.flashcardType || 'normal';
   const [flashcardContent, setFlashcardContent] = useState(location.state?.flashcards || [])
   const card_id = location.state?.card_id
   const [data, setData] = useState();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [shuffledContent, setShuffledContent] = useState([]);
+
   const [isShuffled, setIsShuffled] = useState(false);
   const [resetFlipSignal, setResetFlipSignal] = useState(0);
   const [correct, setCorrect] = useState(0);
@@ -25,6 +30,11 @@ const FlashcardPage = () => {
   const [answeredIndexes, setAnsweredIndexes] = useState([]);
   const [incorrectQuestions, setIncorrectQuestions] = useState([]);
   const [isTrackingProgress, setIsTrackingProgress] = useState(false);
+
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     let apiUrl = "http://localhost:5000/api/flashcards"; // Default API
@@ -41,9 +51,14 @@ const FlashcardPage = () => {
       .catch((error) => console.error("Error fetching data:", error));
     
   }, [flashcardType]);
+
   useEffect(() => {
     console.log(incorrectQuestions)
-  },[incorrectQuestions])
+  },[incorrectQuestions]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   if (!data) {
     return <p>Loading...</p>; 
@@ -140,6 +155,21 @@ const FlashcardPage = () => {
     setIsTrackingProgress(prev => !prev);
   };
 
+  const handleUserSend = () => {
+    if (!input.trim()) return;
+
+    const newMessages = [...messages, { sender: 'user', text: input }];
+    setMessages(newMessages);
+    setInput('');
+
+    handleAIResponse(input);
+  };
+
+  const handleAIResponse = (userInput) => {
+    const botReply = { sender: 'ai', text: `Some Ai response` };
+    setMessages((prev) => [...prev, botReply]);
+  };
+
   return (
     <div 
     style={{
@@ -158,102 +188,166 @@ const FlashcardPage = () => {
     }}
     className="test-container">
       <Header />
-      <div className="ScoreSection">
-        {isTrackingProgress ? (
-          <>
-            <h3 className="ScoreCorrect">Correct {correct}</h3>
-            <div className="flashcard-title">Flashcards</div>
-            <h3 className="ScoreIncorrect">Incorrect {incorrect}</h3>
-          </>
-        ) : (
-          <>
-            <div />
-            <div className="flashcard-title">Flashcards</div>
-            <div /> 
-          </>
-        )}
-      </div>
-      {/* Use of AI, mainly for syntax for ternary operator */}
-      {typeof data === 'undefined' ? (
-        <p>Loading...</p> 
-      ) : (
-        <div className='flashcardSection'>
-          <button className='ButtonArrow' onClick={prevCard} disabled={currentIndex === 0}>
-            {'<'}
-          </button>
-          <div className="flashcard-container">
-            {flashcardType === "question" && getLength() > 0 && (
-              <Flashcard
-                type="mc"
-                key={currentIndex}
-                resetFlipSignal={resetFlipSignal}
-                question={isShuffled? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
-                options={isShuffled ? shuffledContent[currentIndex].options : flashcardContent[currentIndex].options}
-                answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
-                onIncorrect={(question) => handleShortResponseIncorrect(question)}
-                onCorrect={handleCorrectClick}
-              />
+      <div className='Flashcard_ChatBot'>
+        <div 
+          style={{
+            transform: isChatOpen ? 'scale(0.85)' : 'none',
+            transition: 'transform 0.3s ease',
+          }}
+          className='FlashcardArea'
+        >
+            <div className="ScoreSection">
+            {isTrackingProgress ? (
+              <>
+                <h3 className="ScoreCorrect">Correct {correct}</h3>
+                <div className="flashcard-title">{title}</div>
+                <h3 className="ScoreIncorrect">Incorrect {incorrect}</h3>
+              </>
+            ) : (
+              <>
+                <div />
+                <div className="flashcard-title">{title}</div>
+                <div /> 
+              </>
             )}
-            {flashcardType === "normal" && getLength() > 0 && (
-              <Flashcard
-                type = "normal"
-                key={currentIndex}
-                resetFlipSignal={resetFlipSignal}
-                question={isShuffled ? shuffledContent[currentIndex].front : flashcardContent[currentIndex].front}
-                answer={isShuffled ? shuffledContent[currentIndex].back : flashcardContent[currentIndex].back}
-                onIncorrect={(question) => handleShortResponseIncorrect(question)}
+          </div>
+          {/* Use of AI, mainly for syntax for ternary operator */}
+          {typeof data === 'undefined' ? (
+            <p>Loading...</p> 
+          ) : (
+            <div className='flashcardSection'>
+              <button className='ButtonArrow' onClick={prevCard} disabled={currentIndex === 0}>
+                {'<'}
+              </button>
+              <div className="flashcard-container">
+                {flashcardType === "question" && getLength() > 0 && (
+                  <Flashcard
+                    type="mc"
+                    key={currentIndex}
+                    resetFlipSignal={resetFlipSignal}
+                    question={isShuffled? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
+                    options={isShuffled ? shuffledContent[currentIndex].options : flashcardContent[currentIndex].options}
+                    answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
+                    onIncorrect={(question) => handleShortResponseIncorrect(question)}
+                    onCorrect={handleCorrectClick}
+                  />
+                )}
+                {flashcardType === "normal" && getLength() > 0 && (
+                  <Flashcard
+                    type = "normal"
+                    key={currentIndex}
+                    resetFlipSignal={resetFlipSignal}
+                    question={isShuffled ? shuffledContent[currentIndex].front : flashcardContent[currentIndex].front}
+                    answer={isShuffled ? shuffledContent[currentIndex].back : flashcardContent[currentIndex].back}
+                    onIncorrect={(question) => handleShortResponseIncorrect(question)}
 
-              />
-            )}
-            {flashcardType === "shortResponse" && getLength() > 0 && (
-              <Flashcard
-                type = "shortResponse"
-                key={currentIndex}
-                resetFlipSignal={resetFlipSignal}
-                question={isShuffled ? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
-                answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
-                onIncorrect={(question) => handleShortResponseIncorrect(question)}
-                onCorrect={handleCorrectClick}
-              />
-            )}
+                  />
+                )}
+                {flashcardType === "shortResponse" && getLength() > 0 && (
+                  <Flashcard
+                    type = "shortResponse"
+                    key={currentIndex}
+                    resetFlipSignal={resetFlipSignal}
+                    question={isShuffled ? shuffledContent[currentIndex].question : flashcardContent[currentIndex].question}
+                    answer={isShuffled ? shuffledContent[currentIndex].answer : flashcardContent[currentIndex].answer}
+                    onIncorrect={(question) => handleShortResponseIncorrect(question)}
+                    onCorrect={handleCorrectClick}
+                  />
+                )}
+              </div>
+              <button className='ButtonArrow' onClick={nextCard} disabled={currentIndex === getLength() - 1}>
+                {'>'}
+              </button>
+            </div>
+          )}
+          <div className='bottomControls'>
+            <div className="navigation">
+              {flashcardType !== "normal" && (
+                <button className='imgOption' style={{ visibility: 'hidden' }}>
+                  <img src={Regenerate} alt="regenerate"/>
+                </button>
+              )}
+              <button className='imgOption' onClick={toggleProgressTracking}>
+                {isTrackingProgress ? 'Stop Tracking' : 'Start Tracking'}
+              </button>
+              {flashcardType === "normal" && isTrackingProgress && (
+                <button className='imgOption' onClick={handleCorrectClick}>
+                  <img src={Checkmark} alt="correct" />
+                </button>
+              )}
+              <div className="flashcard-count">
+                {currentIndex + 1} / {getLength()}
+              </div>
+              {flashcardType === "normal" && isTrackingProgress && (
+                <button className='imgOption' onClick={handleIncorrectClick}>
+                  <img src={Xmark} alt="incorrect"/>
+                </button>
+              )}
+              <button className='imgOption' onClick={shuffleCards}>
+                <img src={Shuffle} alt="shuffle"/>
+              </button>
+              {flashcardType !== "normal" && (
+                <button className='imgOption' onClick={regenerateCards}>
+                  <img src={Regenerate} alt="regenerate"/>
+                </button>
+              )}
+            </div>
           </div>
-          <button className='ButtonArrow' onClick={nextCard} disabled={currentIndex === getLength() - 1}>
-            {'>'}
-          </button>
+          {!isChatOpen && (
+            <div
+              style={{
+                marginLeft: 'auto',
+              }}
+            >
+              <button
+                onClick={() => setIsChatOpen(true)}
+                className="toggleChatButton"
+              >
+                <img src={Chat} alt="Chat" />
+              </button>
+            </div>
+          )}
         </div>
-      )}
-      <div className='bottomControls'>
-        <div className="navigation">
-          {flashcardType !== "normal" && (
-            <button className='imgOption' style={{ visibility: 'hidden' }}>
-              <img src={Regenerate} alt="regenerate"/>
-            </button>
-          )}
-          <button className='imgOption' onClick={toggleProgressTracking}>
-            {isTrackingProgress ? 'Stop Tracking' : 'Start Tracking'}
-          </button>
-          {flashcardType === "normal" && isTrackingProgress && (
-            <button className='imgOption' onClick={handleCorrectClick}>
-              <img src={Checkmark} alt="correct" />
-            </button>
-          )}
-          <div className="flashcard-count">
-            {currentIndex + 1} / {getLength()}
+        {isChatOpen && (
+          <div className="chat-panel">
+            <div className="chat-container">
+              <div className='chatUpper'>
+                <div className='chatTitle'>Chatbot</div>
+                <button className="closeChatBot" onClick={() => setIsChatOpen(false)}>
+                  <img src={Xmark} alt="closeChatBot"/>
+                </button>
+              </div>
+              <div className="chat-history">
+                <div className="chat-scroll">
+                  {messages.map((msg, index) => (
+                    <div
+                      key={index}
+                      className={msg.sender === 'user' ? 'chat-message user' : 'chat-message bot'}
+                    >
+                      {msg.text}
+                    </div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+              </div>
+              <div className="chat-input">
+                <textarea
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleUserSend();
+                    }
+                  }}
+                  placeholder="Type a message..."
+                  rows={2}
+                />
+                <button onClick={handleUserSend}>Send</button>
+              </div>
+            </div>
           </div>
-          {flashcardType === "normal" && isTrackingProgress && (
-            <button className='imgOption' onClick={handleIncorrectClick}>
-              <img src={Xmark} alt="incorrect"/>
-            </button>
-          )}
-          <button className='imgOption' onClick={shuffleCards}>
-            <img src={Shuffle} alt="shuffle"/>
-          </button>
-          {flashcardType !== "normal" && (
-            <button className='imgOption' onClick={regenerateCards}>
-              <img src={Regenerate} alt="regenerate"/>
-            </button>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );  
