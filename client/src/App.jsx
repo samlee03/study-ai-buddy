@@ -14,6 +14,7 @@ import FlashcardPage from './pages/FlashcardPage';
 import FlashcardsView from './pages/FlashcardsView';
 import { ThemeProvider } from './components/ThemeContext';
 import MainPage from './pages/MainPage';
+import SignupVerifyPage from './pages/SignupVerifyPage';
 
 // const Shortcuts = () => {
 //   const navigate = useNavigate();
@@ -53,6 +54,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
+            <Route path="verify" element={<SignupVerifyPage />} />
             <Route path="forgot" element={<ForgotPassword />} />
             <Route path="upload/:type" element={<UploadPage />} />
             <Route path="upload" element={<Main />} />

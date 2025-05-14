@@ -16,6 +16,8 @@ import jwt
 import pdfplumber
 from google import genai
 
+import random
+import smtplib
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -156,7 +158,7 @@ def user():
 
     data = request.get_json()
     username = data.get("username")
-    email = data.get("email")
+    email = data.get("email").strip().lower()
     password = data.get("password").encode('utf-8')
     salt = bcrypt.gensalt()
     pw_hash = bcrypt.hashpw(password, salt)
@@ -177,21 +179,93 @@ def user():
         if user:
             status = "An account with this username is already in use"
         else:
-            print("created user")
-            users.insert_one(
-                {
-                    "username": data.get('username'),
-                    "email": data.get('email'),
-                    "password": pw_hash,
-                    "saved_uploads": []
-                }
-            )
-            status = "Created user"
+
+            # Prompt Verfication
+            data = request.get_json()
+            email = data.get('email')
+
+            if not email:
+                return jsonify({"error": "You need to put in an email big bro"}), 400
+            
+            #I learned this syntax from online but it should make up a random code
+            code = str(random.randint(100000, 999999))
+            # verification_codes[email] = code
+
+            # we are going to attempt to send the code to the email
+            # I should mention, i got syntax help from AI
+            try:
+                with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                    server.starttls()
+                    server.login(os.environ['EMAIL_USER'], os.environ['EMAIL_PASS'])
+                    # Credit: ChatGPT for formatting the Email Message
+                    message = f"""From: {os.environ['EMAIL_USER']}
+To: {email}
+Subject: Your Verification Code
+
+Your code is: {code}
+"""
+                    server.sendmail(os.environ['EMAIL_USER'], email, message)
+                print("Succesfully sent code to user")
+
+                # Store in the DB
+                database["email-verification"].update_one(
+                    {"email": email},
+                    {"$set": {"code": code}},
+                    upsert=True
+                )
+                status = "sent"
+            except Exception as e:
+                status = "error"
+                print("error")
+
+            # print("created user")
+            # users.insert_one(
+            #     {
+            #         "username": data.get('username'),
+            #         "email": data.get('email'),
+            #         "password": pw_hash,
+            #         "saved_uploads": []
+            #     }
+            # )
+            # status = "Created user"
 
     return jsonify({
-        "status": status
+        "status": status,
+        "user": username,
+        "pw_hashed": pw_hash.decode('utf-8')
     })
 
+@app.route('/verify-code',methods=['POST'])
+def verifiy_code():
+    data = request.get_json()
+    email = data.get('email')
+    username = data.get("username")
+    pw = data.get('pw')
+    code_entered = data.get('code')
+
+    #if the user doesn't give in everything needed
+    if not email or not code_entered:
+        return jsonify({"error": "where ya code and email at lil bro"}), 400
+    
+    # for now we are using the temporary variable i set up to look up the code
+    # actual_code = verification_codes.get(email)
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    emails = database.get_collection("email-verification")
+    user = emails.find_one({"email": email})
+    #this is where we will compare it
+    if user["code"] == code_entered:
+        users.insert_one(
+            {
+                "username": username,
+                "email": data.get('email'),
+                "password": pw.encode('utf-8'),
+                "saved_uploads": []
+            }
+        )
+        return jsonify({"message": "this is the right code"}), 200
+    else:
+        return jsonify({"message": "this is the wrong code"}), 401
 
 @app.route("/db/login", methods=["POST"])
 def login():

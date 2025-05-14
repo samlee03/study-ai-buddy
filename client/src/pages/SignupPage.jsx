@@ -27,11 +27,14 @@ const SignupPage = () => {
             if (!response.ok) throw new Error('Failed to extract text');
             const data = await response.json()
             console.log(data.status)
+            if (data.status == "sent"){
+                navigate('/verify', {state: { email: email, user: data.user, pw: data.pw_hashed }})
+            }
             if (data.status == "Created user"){
                 navigate('/login')
             }
         } 
-        catch {
+        catch (error) {
             console.error(error)
         }
     }

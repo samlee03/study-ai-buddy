@@ -22,6 +22,7 @@ import smtplib
 load_dotenv()
 
 app = Flask(__name__)
+
 CORS(app)
 
 
@@ -260,8 +261,7 @@ def cookie():
             path='/'
         )
         return response
-if __name__ == '__main__':
-    app.run(debug=True)
+
 
 
 ####this is work in progress for email authentication####
@@ -272,7 +272,7 @@ verification_codes = {}  #this is just a temporary placeholder instead of the da
 
 @app.route('/send-code',methods=['POST'])
 def send_code():
-    data = request.get_jason()
+    data = request.get_json()
     email = data.get('email')
 
     if not email:
@@ -288,7 +288,13 @@ def send_code():
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
             server.login(os.environ['EMAIL_USER'], os.environ['EMAIL_PASS'])
-            message = f"Your code is: {code}"
+            # Credit: ChatGPT for formatting the Email Message
+            message = f"""From: {os.environ['EMAIL_USER']}
+To: {email}
+Subject: Your Verification Code
+
+Your code is: {code}
+"""
             server.sendmail(os.environ['EMAIL_USER'], email, message)
         return jsonify({"message": "Here is your code"}), 200
     except Exception as e:
@@ -319,3 +325,5 @@ def verifiy_code():
 # note #2: I didn't use mongodb yet, just a temp dict, for the routes above, I want to test out the routes with you before i do that.
 
 
+if __name__ == '__main__':
+    app.run(debug=True)
