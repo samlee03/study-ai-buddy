@@ -30,7 +30,8 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
 
   const handleSave = () => {
     let answerToSend = correctAnswer;
-    if (options.length == 1 || correctAnswer == ''){
+    if (options.length == 1 || correctAnswer == '' || correctAnswer == undefined){
+      console.log("Option[0] is ", options[0])
       answerToSend = options[0]
     }
     onSave(question, options, answerToSend);
