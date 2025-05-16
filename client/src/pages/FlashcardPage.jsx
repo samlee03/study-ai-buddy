@@ -9,9 +9,11 @@ import Regenerate from "../assets/regenerate.png"
 import Checkmark from "../assets/checkmark.png"
 import Xmark from "../assets/x.png"
 import Chat from "../assets/Chat.svg"
-
+import leftArrow from "../assets/rewind-button.png"
 const FlashcardPage = () => {
   const {theme} = useTheme();
+  const backendUrl = "http://localhost:5000"
+
   const location = useLocation(); 
 
   const title = location.state?.title || 'Flashcards';
@@ -37,12 +39,12 @@ const FlashcardPage = () => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    let apiUrl = "http://localhost:5000/api/flashcards"; // Default API
+    let apiUrl = `${backendUrl}/api/flashcards`; // Default API
 
     if (flashcardType === "question") {
-      apiUrl = "http://localhost:5000/api/questions";
+      apiUrl = `${backendUrl}/api/questions`;
     } else if (flashcardType === "short-answer") {
-      apiUrl = "http://localhost:5000/api/short-answer-flashcards";
+      apiUrl = `${backendUrl}/api/short-answer-flashcards`;
     }
 
     fetch(apiUrl)
@@ -100,7 +102,7 @@ const FlashcardPage = () => {
   };
 
   const regenerateCards = async () => {
-    const response = await fetch('http://localhost:5000/api/regenerate-flashcard', {
+    const response = await fetch(`${backendUrl}/api/regenerate-flashcard`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -155,14 +157,35 @@ const FlashcardPage = () => {
     setIsTrackingProgress(prev => !prev);
   };
 
-  const handleUserSend = () => {
+  const handleUserSend = async () => {
     if (!input.trim()) return;
 
     const newMessages = [...messages, { sender: 'user', text: input }];
+    let log = []
+    newMessages.forEach((e) => log.push(e.text))
+    console.log("Question: ", flashcardContent[currentIndex].question);
+
     setMessages(newMessages);
     setInput('');
+    console.log(flashcardContent[currentIndex].question)
+    const response = await fetch(`${backendUrl}/ask-studybuddy`, 
+      {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "question": flashcardContent[currentIndex].question || flashcardContent[currentIndex].front,
+          "chatlog": log
+        })
+      }
+    )
+    const data = await response.json();
+    console.log(data.response)
 
-    handleAIResponse(input);
+    const botReply = { sender: 'ai', text: data.response };
+    setMessages((prev) => [...prev, botReply]);
+    // handleAIResponse(input);
   };
 
   const handleAIResponse = (userInput) => {
@@ -196,20 +219,23 @@ const FlashcardPage = () => {
           }}
           className='FlashcardArea'
         >
-            <div className="ScoreSection">
-            {isTrackingProgress ? (
-              <>
-                <h3 className="ScoreCorrect">Correct {correct}</h3>
-                <div className="flashcard-title">{title}</div>
-                <h3 className="ScoreIncorrect">Incorrect {incorrect}</h3>
-              </>
-            ) : (
-              <>
-                <div />
-                <div className="flashcard-title">{title}</div>
-                <div /> 
-              </>
-            )}
+            <div className="title-container">
+              <div className="flashcard-title">{title}</div>
+              <div className="ScoreSection">
+              {isTrackingProgress ? (
+                  <>
+                    <h3 className="ScoreCorrect">Correct {correct}</h3>
+                    <h3 className="ScoreIncorrect">Incorrect {incorrect}</h3>
+                  </>
+
+              ) : (
+                <>
+                  <div></div>
+                  <div></div>
+                </>
+              )}
+            </div>
+
           </div>
           {/* Use of AI, mainly for syntax for ternary operator */}
           {typeof data === 'undefined' ? (
@@ -217,7 +243,7 @@ const FlashcardPage = () => {
           ) : (
             <div className='flashcardSection'>
               <button className='ButtonArrow' onClick={prevCard} disabled={currentIndex === 0}>
-                {'<'}
+                <img className="left-arrow-flashcard" src={leftArrow}></img>
               </button>
               <div className="flashcard-container">
                 {flashcardType === "question" && getLength() > 0 && (
@@ -256,7 +282,9 @@ const FlashcardPage = () => {
                 )}
               </div>
               <button className='ButtonArrow' onClick={nextCard} disabled={currentIndex === getLength() - 1}>
-                {'>'}
+                {/* {'>'} */}
+                <img className="right-arrow-flashcard" src={leftArrow}></img>
+
               </button>
             </div>
           )}

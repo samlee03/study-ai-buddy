@@ -1,9 +1,11 @@
 /* Use of AI in some styling such as justify-content, align-items, and flex-direction */
 .flashcard {
-  width: 900px;
+  /* width: 900px; */
+  width: 52.5vw;
   margin-left: auto;
   margin-right: auto;
-  height: 500px;
+  /* height: 500px; */
+  height: 60vh;
   perspective: 1000px;
   display: inline-block;
   border-radius: 15px;
@@ -36,16 +38,20 @@
   transform-origin: center;
   backface-visibility: hidden;
   color: var(--text);
+  /* color: rgb(23, 103, 243); */
 }
 
 .flashcard-front {
-  background-color: var(--primary);
+  /* background-color: var(--primary); */
+  background-color: white;
+  border: none;
 }
 
 .flashcard-back {
   background-color: var(--primary);
   transform: rotateY(180deg); 
   backface-visibility: visible;
+  border: none;
 }
 
 .options {

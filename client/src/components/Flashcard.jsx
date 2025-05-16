@@ -4,6 +4,7 @@ import { useTheme } from '../components/ThemeContext';
 
 const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipSignal, onIncorrect, onCorrect }) => {
   const { theme} = useTheme();
+  const backendUrl = "http://localhost:5000"
   const [isFlipped, setIsFlipped] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
@@ -42,7 +43,7 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
       }
     }
     if (type == "shortResponse"){
-      const response = await fetch('http://localhost:5000/api/check', 
+      const response = await fetch(`${backendUrl}/api/check`, 
         { method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({

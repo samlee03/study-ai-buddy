@@ -11,6 +11,7 @@ const Header = () => {
     const { theme } = useTheme();
     const location = useLocation();
     let navigate = useNavigate();
+    const backendUrl = "http://localhost:5000"
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -41,7 +42,7 @@ const Header = () => {
     };
 
     const handleLogOut = async () => {
-        const response = await fetch('/api/clear-cookie', {
+        const response = await fetch(`${backendUrl}/api/clear-cookie`, {
             method: 'GET',
             credentials: 'include', // Src: ChatGPT, credentials must be 'include' to view/modify cookies in headers
         });

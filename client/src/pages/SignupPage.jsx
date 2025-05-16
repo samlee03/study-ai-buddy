@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
     const { theme} = useTheme();
+    const backendUrl = "http://localhost:5000"
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -19,7 +20,7 @@ const SignupPage = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/db/register_user', {
+            const response = await fetch(`${backendUrl}/db/register_user`, {
                 method: 'POST',
                 headers: {'Content-Type': "application/json"},
                 body: JSON.stringify(body)

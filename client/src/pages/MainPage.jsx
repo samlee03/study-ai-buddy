@@ -23,6 +23,7 @@ const MainPage = () => {
     // const isLoggedIn = true; // If you want to grant permission always for testing
     
     const { theme} = useTheme();
+    const backendUrl = "http://localhost:5000"
     const [uploadTypes, setUploadTypes] = useState([]);
     const [recentUploads, setRecentUploads] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -48,12 +49,12 @@ const MainPage = () => {
     useEffect(() => {
       // Fetch upload types
       if (isLoggedIn){
-        fetch("http://localhost:5000/api/uploadType")
+        fetch(`${backendUrl}/api/uploadType`)
           .then(response => response.json())
           .then(data => setUploadTypes(data.UploadTypes))
           .catch(error => console.error("Error fetching upload types:", error));
         // Fetch recent uploads
-        fetch("http://localhost:5000/db/get_saved_uploads", {
+        fetch(`${backendUrl}/db/get_saved_uploads`, {
             method: 'GET',
             credentials: 'include'
         })
