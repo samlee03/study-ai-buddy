@@ -327,3 +327,27 @@ def verifiy_code():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+#chatbot feature, work in progress
+
+#so first i am going to build an basic function that will utilize gemini to get an response to an question
+#got syntax help from ai since i am still fairly new when it comes to building ai features, but i am learning as i build this app
+def get_reply(question):
+    genai.configure(api_key=os.getenv("AIzaSyCaFmf2v-V_41RUT7Oyh_fOpOVZXAapN98"))
+    model = genai.GenerativeModel('gemini-pro') #after doing some research, gemini pro is perfect for text generation when coming up with study material
+    reply = model.generate_content(question)
+    return reply.text
+
+#and now I am going to build the route that will utilize the basic function (get_reply)
+
+@app.route('/ask-studybuddy', methods=['POST'])
+def chatbot():
+    data = request.json
+    question = data.get('question', '')
+    if not question:
+        return jsonify({"response": "Pkease enter a question."}), 400
+    
+    answer = get_reply(question) #this is where this route will look at the basic function for this whole feature to work
+    return jsonify({"response": answer})
+
+#note to teammate Sam, please reach out to me for any questions
