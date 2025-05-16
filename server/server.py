@@ -18,6 +18,7 @@ from google import genai
 
 import random
 import smtplib
+import time
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -372,6 +373,7 @@ def get_flashcard():
     uploadObj = {
         "id": str(uuid.uuid4()),
         "type": "normal",
+        "last_updated": time.time(),
         "title": title,
         "subtitle": subtitle,
         "content": vocabs
@@ -420,6 +422,7 @@ def get_questions():
     
     uploadObj = {
         "id": str(uuid.uuid4()),
+        "last_updated": time.time(),
         "type": "question",
         "title": title,
         "subtitle": subtitle,
@@ -470,6 +473,7 @@ def get_short_response():
     uploadObj = {
         "id": str(uuid.uuid4()),
         "type": "shortResponse",
+        "last_updated": time.time(),
         "title": title,
         "subtitle": subtitle,
         "content": questions
@@ -542,6 +546,7 @@ def save_card():
 
         update_operation = { "$set": 
             {
+                "saved_uploads.$[card].last_updated": time.time(),
                 "saved_uploads.$[card].title": title,
                 "saved_uploads.$[card].subtitle": subtitle,
                 "saved_uploads.$[card].content": new_content
@@ -565,6 +570,7 @@ def save_card():
                 "saved_uploads" : {
                     "id": id,
                     "type": type,
+                    "last_updated": time.time(),
                     "title": title,
                     "subtitle": subtitle,
                     "content": new_content
@@ -623,6 +629,7 @@ def regenerate():
     array_filters = [{"card.id": id}]
     users.update_one(query, {
         "$set": {
+            "saved_uploads.$[card].last_updated": time.time(),
             "saved_uploads.$[card].content": newQuestions
         }
     }, array_filters=array_filters)
