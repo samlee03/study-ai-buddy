@@ -333,7 +333,7 @@ if __name__ == '__main__':
 #so first i am going to build an basic function that will utilize gemini to get an response to an question
 #got syntax help from ai since i am still fairly new when it comes to building ai features, but i am learning as i build this app
 def get_reply(question):
-    genai.configure(api_key=os.getenv("AIzaSyCaFmf2v-V_41RUT7Oyh_fOpOVZXAapN98"))
+    genai.configure(api_key=os.getenv("Gemini key (my bad guys accidentally pushed it into repo last time)"))
     model = genai.GenerativeModel('gemini-pro') #after doing some research, gemini pro is perfect for text generation when coming up with study material
     reply = model.generate_content(question)
     return reply.text
