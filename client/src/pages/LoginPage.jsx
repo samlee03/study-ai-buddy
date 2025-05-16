@@ -8,6 +8,7 @@ import CheckAuth from '../components/CheckAuth';
 const LoginPage = () => {
     const { isLoggedIn } = CheckAuth();
     const {theme} = useTheme();
+    const backendUrl = "http://localhost:5000"
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -19,7 +20,7 @@ const LoginPage = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/db/login', {
+            const response = await fetch(`${backendUrl}/db/login`, {
                 method: 'POST',
                 headers: {'Content-Type': "application/json"},
                 credentials: 'include',

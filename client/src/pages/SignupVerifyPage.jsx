@@ -8,11 +8,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function SignupVerifyPage() {
     const { theme } = useTheme();
     const location = useLocation();
+    const backendUrl = "http://localhost:5000"
     const navigate = useNavigate();
     const { email, user, pw } = location.state
     const [input, setInput] = useState('')
     const handleVerify = async () => {
-        const response = await fetch('http://localhost:5000/verify-code', {
+        const response = await fetch(`${backendUrl}/verify-code`, {
             method: "POST",
             headers: {'Content-Type': "application/json"},
             body: JSON.stringify({

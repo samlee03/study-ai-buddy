@@ -12,6 +12,8 @@ import Chat from "../assets/Chat.svg"
 
 const FlashcardPage = () => {
   const {theme} = useTheme();
+  const backendUrl = "http://localhost:5000"
+
   const location = useLocation(); 
 
   const title = location.state?.title || 'Flashcards';
@@ -37,12 +39,12 @@ const FlashcardPage = () => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    let apiUrl = "http://localhost:5000/api/flashcards"; // Default API
+    let apiUrl = `${backendUrl}/api/flashcards`; // Default API
 
     if (flashcardType === "question") {
-      apiUrl = "http://localhost:5000/api/questions";
+      apiUrl = `${backendUrl}/api/questions`;
     } else if (flashcardType === "short-answer") {
-      apiUrl = "http://localhost:5000/api/short-answer-flashcards";
+      apiUrl = `${backendUrl}/api/short-answer-flashcards`;
     }
 
     fetch(apiUrl)
@@ -100,7 +102,7 @@ const FlashcardPage = () => {
   };
 
   const regenerateCards = async () => {
-    const response = await fetch('http://localhost:5000/api/regenerate-flashcard', {
+    const response = await fetch(`${backendUrl}/api/regenerate-flashcard`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -166,7 +168,7 @@ const FlashcardPage = () => {
     setMessages(newMessages);
     setInput('');
     console.log(flashcardContent[currentIndex].question)
-    const response = await fetch("http://localhost:5000/ask-studybuddy", 
+    const response = await fetch(`${backendUrl}/ask-studybuddy`, 
       {
         method: "POST",
         headers: {

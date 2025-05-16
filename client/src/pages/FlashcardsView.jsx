@@ -11,6 +11,7 @@ import '../styles/FlashcardsView.css';
 const FlashcardsView = () => {
     const { theme} = useTheme();
     const navigate = useNavigate();
+    const backendUrl = "http://localhost:5000"
     const location = useLocation(); 
     const [title, setTitle] = useState(location.state?.title || '');
     const [subtTitle, setSubtTitle] = useState(location.state?.subtTitle || '');
@@ -27,7 +28,7 @@ const FlashcardsView = () => {
       updatedFlashcards[index] = { front: newTerm, back: newDefinition };
        
       setFlashcards(updatedFlashcards);
-      const response = await fetch('http://localhost:5000/api/save_card', {
+      const response = await fetch(`${backendUrl}/api/save_card`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -55,7 +56,7 @@ const FlashcardsView = () => {
       updatedFlashcards[index] = { question: newQuestion, options: newOptions, answer: newAnswer };
       
       setFlashcards(updatedFlashcards);
-      const response = await fetch('http://localhost:5000/api/save_card', {
+      const response = await fetch(`${backendUrl}/api/save_card`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -86,7 +87,7 @@ const FlashcardsView = () => {
         updatedFlashcards[index] = { question: newQuestion, answer: newAnswer };
          
         setFlashcards(updatedFlashcards);
-        const response = await fetch('http://localhost:5000/api/save_card', {
+        const response = await fetch(`${backendUrl}/api/save_card`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
