@@ -155,14 +155,35 @@ const FlashcardPage = () => {
     setIsTrackingProgress(prev => !prev);
   };
 
-  const handleUserSend = () => {
+  const handleUserSend = async () => {
     if (!input.trim()) return;
 
     const newMessages = [...messages, { sender: 'user', text: input }];
+    let log = []
+    newMessages.forEach((e) => log.push(e.text))
+    console.log("Question: ", flashcardContent[currentIndex].question);
+
     setMessages(newMessages);
     setInput('');
+    console.log(flashcardContent[currentIndex].question)
+    const response = await fetch("http://localhost:5000/ask-studybuddy", 
+      {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "question": flashcardContent[currentIndex].question,
+          "chatlog": log
+        })
+      }
+    )
+    const data = await response.json();
+    console.log(data.response)
 
-    handleAIResponse(input);
+    const botReply = { sender: 'ai', text: data.response };
+    setMessages((prev) => [...prev, botReply]);
+    // handleAIResponse(input);
   };
 
   const handleAIResponse = (userInput) => {

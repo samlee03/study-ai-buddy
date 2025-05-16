@@ -630,6 +630,34 @@ def regenerate():
 
     return jsonify({"new-questions": newQuestions})
 
+def get_reply(question, previousChatLog):
+    # genai.configure(api_key=os.getenv("API_KEY"))
+    # model = genai.GenerativeModel('gemini-pro') #after doing some research, gemini pro is perfect for text generation when coming up with study material
+    # reply = model.generate_content(question)
+    genclient = genai.Client(api_key=os.getenv("API_KEY"))
+    # print("this ran")
+    instructions = f"Without giving the user the direct answer of the question, '{question}',can you lead the user towards the right answer. Make sure user is on track. Return a short response no more than 20 words in plain text in a friendly manner? The previous chat history is this: '{previousChatLog}' and is asking '{previousChatLog[-1] if previousChatLog else "no comment made yet"}'"
+
+    response = genclient.models.generate_content(
+        model="gemini-2.0-flash", contents=(instructions)
+    )
+    # return reply.text
+    return response.text
+
+#and now I am going to build the route that will utilize the basic function (get_reply)
+
+@app.route('/ask-studybuddy', methods=['POST'])
+def chatbot():
+    data = request.json
+
+    question = data.get('question')
+    chatlog = data.get('chatlog')
+    if not question:
+        return jsonify({"response": "Pkease enter a question."}), 400
+    
+    answer = get_reply(question, chatlog) #this is where this route will look at the basic function for this whole feature to work
+    return jsonify({"response": answer})
+
 # @app.route('/api/create-first-upload', methods=["POST"])
 # def create_first_upload():
 #     id = request.json.get('id')
