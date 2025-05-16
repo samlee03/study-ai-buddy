@@ -9,7 +9,7 @@ import Regenerate from "../assets/regenerate.png"
 import Checkmark from "../assets/checkmark.png"
 import Xmark from "../assets/x.png"
 import Chat from "../assets/Chat.svg"
-
+import leftArrow from "../assets/rewind-button.png"
 const FlashcardPage = () => {
   const {theme} = useTheme();
   const backendUrl = "http://localhost:5000"
@@ -175,7 +175,7 @@ const FlashcardPage = () => {
         "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          "question": flashcardContent[currentIndex].question,
+          "question": flashcardContent[currentIndex].question || flashcardContent[currentIndex].front,
           "chatlog": log
         })
       }
@@ -219,20 +219,23 @@ const FlashcardPage = () => {
           }}
           className='FlashcardArea'
         >
-            <div className="ScoreSection">
-            {isTrackingProgress ? (
-              <>
-                <h3 className="ScoreCorrect">Correct {correct}</h3>
-                <div className="flashcard-title">{title}</div>
-                <h3 className="ScoreIncorrect">Incorrect {incorrect}</h3>
-              </>
-            ) : (
-              <>
-                <div />
-                <div className="flashcard-title">{title}</div>
-                <div /> 
-              </>
-            )}
+            <div className="title-container">
+              <div className="flashcard-title">{title}</div>
+              <div className="ScoreSection">
+              {isTrackingProgress ? (
+                  <>
+                    <h3 className="ScoreCorrect">Correct {correct}</h3>
+                    <h3 className="ScoreIncorrect">Incorrect {incorrect}</h3>
+                  </>
+
+              ) : (
+                <>
+                  <div></div>
+                  <div></div>
+                </>
+              )}
+            </div>
+
           </div>
           {/* Use of AI, mainly for syntax for ternary operator */}
           {typeof data === 'undefined' ? (
@@ -240,7 +243,7 @@ const FlashcardPage = () => {
           ) : (
             <div className='flashcardSection'>
               <button className='ButtonArrow' onClick={prevCard} disabled={currentIndex === 0}>
-                {'<'}
+                <img className="left-arrow-flashcard" src={leftArrow}></img>
               </button>
               <div className="flashcard-container">
                 {flashcardType === "question" && getLength() > 0 && (
@@ -279,7 +282,9 @@ const FlashcardPage = () => {
                 )}
               </div>
               <button className='ButtonArrow' onClick={nextCard} disabled={currentIndex === getLength() - 1}>
-                {'>'}
+                {/* {'>'} */}
+                <img className="right-arrow-flashcard" src={leftArrow}></img>
+
               </button>
             </div>
           )}
