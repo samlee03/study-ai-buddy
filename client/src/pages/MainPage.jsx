@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header'
 import NewUpload from '../components/NewUpload'; 
-import RecentUpload from '../components/RecentUpload'; 
+import RecentUpload from '../components/RecentUpload';
+import RecentUploadHZ from '../components/RecentUploadHZ'; 
 import '../styles/MainPage.css';
 import { useTheme } from '../components/ThemeContext';
 import logo from "../assets/RobotHead.svg"
@@ -27,6 +28,7 @@ const MainPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [displayRecent, setDisplayRecent] = useState(true);
     const [filterFlashcard, setFilterFlashcard] = useState("All")
+    const [recentLayout, setRecentLayout] = useState('List')
     
     const typeOptions = ['All', 'Flashcard', 'Multiple Choice', 'Short Response'];
     const typeMapping = {
@@ -126,24 +128,52 @@ const MainPage = () => {
                       >
                         {filterFlashcard}
                       </button>
+                      <button 
+                        className='FilterButton'
+                        onClick={() => {
+                          setRecentLayout(recentLayout === 'List' ? 'Grid' : 'List')
+                        }}
+                      >
+                        {recentLayout}
+                      </button>
                     </div>
-                  <div className='RecentUploadContainer'>
-                    {displayedUploads?.length > 0 ? (
-                      displayedUploads.map((upload, index) => (
-                        <RecentUpload
-                          key={index}
-                          id={upload.id}
-                          title={upload.title}
-                          subtitle={upload.subtitle}
-                          image={imageMap[upload.type]}
-                          type={upload.type}
-                          content={upload.content}
-                        />
-                      ))
-                    ) : (
-                      <p>No uploads found.</p>
-                    )}
-                  </div>
+                  {recentLayout === 'Grid' ? (
+                    <div className='RecentUploadContainer'>
+                      {displayedUploads?.length > 0 ? (
+                        displayedUploads.map((upload, index) => (
+                          <RecentUpload
+                            key={index}
+                            id={upload.id}
+                            title={upload.title}
+                            subtitle={upload.subtitle}
+                            image={imageMap[upload.type]}
+                            type={upload.type}
+                            content={upload.content}
+                          />
+                        ))
+                      ) : (
+                        <p>No uploads found.</p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className='RecentUploadContainerHZ'>
+                      {displayedUploads?.length > 0 ? (
+                        displayedUploads.map((upload, index) => (
+                          <RecentUploadHZ
+                            key={index}
+                            id={upload.id}
+                            title={upload.title}
+                            subtitle={upload.subtitle}
+                            image={imageMap[upload.type]}
+                            type={upload.type}
+                            content={upload.content}
+                          />
+                        ))
+                      ) : (
+                        <p>No uploads found.</p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
