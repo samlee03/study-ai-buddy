@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import '../styles/RecentUpload.css';
 import { useTheme } from './ThemeContext';
 
-const RecentUpload = ({id, title, subtitle, image, type, content}) => {
+const RecentUpload = ({id, title, subtitle, image, type, content, last_updated}) => {
     const { theme} = useTheme();
     const navigate = useNavigate();
 
@@ -11,6 +11,14 @@ const RecentUpload = ({id, title, subtitle, image, type, content}) => {
         navigate('/FlashcardsView', { state: { id, title, subtitle, type, content } });
     };
 
+    const convertPythonTime = (t) => {
+        const date = new Date(t * 1000);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
     return (
         <button
         type="button"
@@ -52,10 +60,10 @@ const RecentUpload = ({id, title, subtitle, image, type, content}) => {
                         </p>
                     )}
                     <div>
-                        Card Amount
+                        {(content?.length ?? 0)} Cards
                     </div>
                     <div>
-                        Time
+                        {last_updated && convertPythonTime(last_updated)}
                     </div>
                 </div>
             </div>

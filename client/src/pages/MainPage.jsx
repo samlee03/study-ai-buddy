@@ -24,13 +24,30 @@ const MainPage = () => {
     
     const { theme} = useTheme();
     const backendUrl = "http://localhost:5000"
-    const [uploadTypes, setUploadTypes] = useState([]);
     const [recentUploads, setRecentUploads] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [displayRecent, setDisplayRecent] = useState(true);
     const [filterFlashcard, setFilterFlashcard] = useState("All")
     const [recentLayout, setRecentLayout] = useState('List')
     
+    const uploadTypes = [
+      {
+          "title" : "Flashcards",
+          "type" : "normal",
+          "subtitle" : "Great for memorization and self-testing in subjects like vocabulary, definitions, and key concepts.",
+      },
+      {
+          "title" : "Multiple Choice Questions",
+          "type" : "question",
+          "subtitle" : "A multiple-choice flashcard presents a question along with several answer options. Useful for quizzes, practice tests, and self-assessment in areas where recognition-based learning is effective."
+      },
+      {
+          "title" : "Short Responses",
+          "type" : "shortResponse",
+          "subtitle" : "A short response flashcard requires the user to type out their answer in a text box before submitting it. This format is ideal for critical thinking, recall-based learning, and open-ended questions where written responses are necessary."
+      }
+    ]
+
     const typeOptions = ['All', 'Flashcard', 'Multiple Choice', 'Short Response'];
     const typeMapping = {
       All : "All",
@@ -49,10 +66,6 @@ const MainPage = () => {
     useEffect(() => {
       // Fetch upload types
       if (isLoggedIn){
-        fetch(`${backendUrl}/api/uploadType`)
-          .then(response => response.json())
-          .then(data => setUploadTypes(data.UploadTypes))
-          .catch(error => console.error("Error fetching upload types:", error));
         // Fetch recent uploads
         fetch(`${backendUrl}/db/get_saved_uploads`, {
             method: 'GET',
@@ -150,6 +163,7 @@ const MainPage = () => {
                             image={imageMap[upload.type]}
                             type={upload.type}
                             content={upload.content}
+                            last_updated={upload.last_updated}
                           />
                         ))
                       ) : (
@@ -168,6 +182,7 @@ const MainPage = () => {
                             image={imageMap[upload.type]}
                             type={upload.type}
                             content={upload.content}
+                            last_updated={upload.last_updated}
                           />
                         ))
                       ) : (

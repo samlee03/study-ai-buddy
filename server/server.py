@@ -60,28 +60,6 @@ def token_required(function):
 def home():
     return "Welcome to the Flask API!"
 
-@app.route("/api/uploadType")
-def uploadType():
-    return {
-        "UploadTypes" : [
-            {
-                "title" : "Flashcards",
-                "type" : "normal",
-                "subtitle" : "Great for memorization and self-testing in subjects like vocabulary, definitions, and key concepts.",
-            },
-            {
-                "title" : "Multiple Choice Questions",
-                "type" : "question",
-                "subtitle" : "A multiple-choice flashcard presents a question along with several answer options. Useful for quizzes, practice tests, and self-assessment in areas where recognition-based learning is effective."
-            },
-            {
-                "title" : "Short Responses",
-                "type" : "shortResponse",
-                "subtitle" : "A short response flashcard requires the user to type out their answer in a text box before submitting it. This format is ideal for critical thinking, recall-based learning, and open-ended questions where written responses are necessary."
-            }
-        ]
-    }
-
 @app.route("/api/tempUploads")
 def tempUploads():
     return {
