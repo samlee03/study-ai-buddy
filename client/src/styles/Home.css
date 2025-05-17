@@ -1,32 +1,36 @@
 * {
-    font-size:18px;
+    /* font-size:18px; */
     font-family: Gill Sans, sans-serif;
 }
 
 .Page-container-Home{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: calc(100vh - 95px);
-    text-align: left;
+    height: 100vh;
     background: linear-gradient(
         135deg,
         var(--background2) 0%,
         var(--background2) 50%,
         var(--background) 100%
     );
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.HomeBG {
+    flex: 1;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .Home-block{
     display:flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     border-radius: 10px;
     height: 90%;
-    width: 600px;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 40px;
+    width: 90%;
+    margin: auto;
     background-color: var(--primary);
     border: 1px solid var(--border);
 }

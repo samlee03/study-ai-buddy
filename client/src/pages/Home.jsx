@@ -34,19 +34,18 @@ const Home = () => {
                 '--buttonHover' : theme.buttonHover,
                 '--buttonText' : theme.buttonText,
             }}
+            className="Page-container-Home"
         >
             <Header />
-            <div>
-                <div className="Page-container-Home">
-                    <div className="Home-block">
-                        <div className="Home-content">
-                            <h1 className="Home-title">Study Buddy</h1>
-                            <p className="Home-subtitle">An AI-Powered Study Tool</p>
-                            <button className="Home-tryit-button" onClick={handleTryItClick}>
-                                <img src={RobotHead} alt="Try It" className="button-image" />
-                                Try It Now!
-                            </button>
-                        </div>
+            <div className='HomeBG'>
+                <div className="Home-block">
+                    <div className="Home-content">
+                        <h1 className="Home-title">Study Buddy</h1>
+                        <p className="Home-subtitle">An AI-Powered Study Tool</p>
+                        <button className="Home-tryit-button" onClick={handleTryItClick}>
+                            <img src={RobotHead} alt="Try It" className="button-image" />
+                            Try It Now!
+                        </button>
                     </div>
                     <div className="Home-image">
                         <img 
@@ -58,7 +57,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

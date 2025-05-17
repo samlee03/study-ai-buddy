@@ -5,7 +5,8 @@ const ThemeContext = createContext();
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState({
+    // Bluish
+    const [theme] = useState({
       primary: "#ffffff",
       secondary: "#004981",
       background: "#dcecf3",
@@ -21,6 +22,24 @@ export const ThemeProvider = ({ children }) => {
       border : "#000000",
       boxShadow : "#000000",
     });
+
+    //Grayscale
+    // const [theme] = useState({
+    //   primary: "#ffffff",
+    //   secondary: "#4d4d4d",
+    //   background: "#f2f2f2",
+    //   background2: "#d9d9d9",
+    //   title: "#1a1a1a",
+    //   subtitle: "#808080",
+    //   textColor: "#1a1a1a",
+    //   headerBackground: "#ffffff",
+    //   buttonBackground: "#bfbfbf",
+    //   buttonHover: "#d9d9d9",
+    //   buttonText: "#000000",
+    //   buttonDisable: "#999999",
+    //   border: "#000000",
+    //   boxShadow: "#000000"
+    // });
 
   return (
     <ThemeContext.Provider value={{ theme }}>
