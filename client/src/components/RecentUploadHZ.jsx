@@ -46,7 +46,7 @@ const RecentUpload = ({id, title, subtitle, image, type, content, last_updated})
                 justifyContent: 'flex-start'
             }}>
                 <div className='UploadTitle-RecentHZ'>
-                    {title}
+                    {title?.trim() ? title : 'Untitled'}
                 </div>
                 <div style={{
                     display: 'flex',
@@ -63,7 +63,7 @@ const RecentUpload = ({id, title, subtitle, image, type, content, last_updated})
                         {(content?.length ?? 0)} Cards
                     </div>
                     <div>
-                        {last_updated && convertPythonTime(last_updated)}
+                        {convertPythonTime(last_updated)}
                     </div>
                 </div>
             </div>

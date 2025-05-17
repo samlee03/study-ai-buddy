@@ -5,6 +5,7 @@ import RecentUpload from '../components/RecentUpload';
 import RecentUploadHZ from '../components/RecentUploadHZ'; 
 import '../styles/MainPage.css';
 import { useTheme } from '../components/ThemeContext';
+import { isToday, isYesterday, isThisWeek } from 'date-fns';
 import logo from "../assets/RobotHead.svg"
 import CheckAuth from '../components/CheckAuth';
 import flashcard from "../assets/Flashcard.png"
@@ -63,6 +64,31 @@ const MainPage = () => {
 
     const displayedUploads = displayRecent && filteredUploads?.length > 0 ? filteredUploads.slice().reverse() : filteredUploads;
 
+    const groupUploadsByDate = (uploads) => {
+      const groups = {
+        Today: [],
+        Yesterday: [],
+        'Within Week': [],
+        Earlier: [],
+      };
+
+      uploads.forEach(upload => {
+        const date = new Date(upload.last_updated * 1000); 
+
+        if (isToday(date)) {
+          groups.Today.push(upload);
+        } else if (isYesterday(date)) {
+          groups.Yesterday.push(upload);
+        } else if (isThisWeek(date, { weekStartsOn: 1 })) {
+          groups['Within Week'].push(upload);
+        } else {
+          groups.Earlier.push(upload);
+        }
+      });
+
+      return groups;
+    }
+
     useEffect(() => {
       // Fetch upload types
       if (isLoggedIn){
@@ -104,19 +130,20 @@ const MainPage = () => {
             <Header />
           <div className="Page-container-Main">
               <div className='Upload-page'>
-                <h2>New Upload</h2>
+                <h2>Create New</h2>
                 <div className='NewUploadContainer'>
                     {uploadTypes.map((type, index) => (
                         <NewUpload 
                             key={index}
                             title={type.title}
+                            subtitle={type.subtitle}
                             image={imageMap[type.type]}
                             type={type.type}
                         />
                     ))}
                 </div>
                 <hr className="divider" />
-                <h2>Recent Uploads</h2>
+                <h2>Latest Activity</h2>
                 <div>
                     <div className= 'RecentUploadFilter'>
                       <input
@@ -171,23 +198,27 @@ const MainPage = () => {
                       )}
                     </div>
                   ) : (
-                    <div className='RecentUploadContainerHZ'>
-                      {displayedUploads?.length > 0 ? (
-                        displayedUploads.map((upload, index) => (
-                          <RecentUploadHZ
-                            key={index}
-                            id={upload.id}
-                            title={upload.title}
-                            subtitle={upload.subtitle}
-                            image={imageMap[upload.type]}
-                            type={upload.type}
-                            content={upload.content}
-                            last_updated={upload.last_updated}
-                          />
-                        ))
-                      ) : (
-                        <p>No uploads found.</p>
+                    <div className="RecentUploadContainerHZ">
+                      {Object.entries(groupUploadsByDate(displayedUploads || [])).map(([label, uploads]) =>
+                        uploads.length > 0 ? (
+                          <div key={label} className='SeparateByTime'>
+                            <h3>{label}</h3>
+                            {uploads.map((upload, index) => (
+                              <RecentUploadHZ
+                                key={upload.id || index}
+                                id={upload.id}
+                                title={upload.title}
+                                subtitle={upload.subtitle}
+                                image={imageMap[upload.type]}
+                                type={upload.type}
+                                content={upload.content}
+                                last_updated={upload.last_updated}
+                              />
+                            ))}
+                          </div>
+                        ) : null
                       )}
+                      {displayedUploads?.length === 0 && <p>No uploads found.</p>}
                     </div>
                   )}
                 </div>
