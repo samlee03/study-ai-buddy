@@ -6,29 +6,29 @@ input[value="Sign In"] {
     padding: 8px 10px 8px 10px;
     margin-top: 20px;
     margin-bottom: 15px;
-    font-size: 16px;
+    font-size: 20pt;
 }
 
 input[value="Sign In"]:Hover {
     background: var(--buttonHover);
 }
 
-    label {
-        margin-bottom: 5px;
-        font-size: 18px;
-    }
+label {
+    margin-bottom: 5px;
+    font-size: 18pt;
+ }
 
 input[type="text"]
 {
-    font-size:16px;
+    font-size:20pt;
     margin-bottom:5px;
 }
 input[type="password"]
 {
-    font-size: 16px;
+    font-size: 20pt;
 }
 input[type="email"] {
-    font-size: 16px;
+    font-size: 20pt;
     margin-bottom: 5px;
 }
 
@@ -46,15 +46,29 @@ input[type="email"] {
     display: flex;
     background-color: white;
     border-radius: 20px;
-    height: 450px;
-    width: 375px;
+    height: 750px;
+    width: 80%;
 }
 
 .Form-container {
     margin: auto;
+    flex:50%;
 }
 
 .sign-in-status{
     color: red;
     font-size: .5rem;
+}
+
+.Login-image{
+    flex:50%;
+}
+
+.Login-image-file{
+    height:650px;
+    padding-top:50px;
+}
+.Login-header{
+    font-size:36pt;
+    padding-bottom:25px;
 }

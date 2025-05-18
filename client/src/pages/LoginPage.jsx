@@ -4,6 +4,7 @@ import "../styles/LoginPage.css"
 import { useTheme } from '../components/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import CheckAuth from '../components/CheckAuth';
+import RobotHome from "../assets/RobotHome.svg";
 
 const LoginPage = () => {
     const { isLoggedIn } = CheckAuth();
@@ -67,12 +68,14 @@ const LoginPage = () => {
             <Header />
             <div className="Page-container">
                 <div className="Form-block">
-                    <div className="Form-container" onSubmit={(e) =>{e.preventDefault();  handleSubmit()}}>
+                    <div className="Login-image"><img className="Login-image-file" src={RobotHome}></img></div>
+                    <div className="Form-container" onSubmit={(e) => { e.preventDefault(); handleSubmit() }}>
+                        <h1 className="Login-header">Sign In</h1><br></br>
                         <form>
                             <label htmlFor="username">Username:</label><br></br>
-                            <input type="text" value={username} onChange={(e) => {setUsername(e.target.value)}}></input><br></br>
+                            <input type="text" placeholder="Username" value={username} onChange={(e) => {setUsername(e.target.value)}}></input><br></br>
                             <label htmlFor="password">Password:</label><br></br>
-                            <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
+                            <input type="password" placeholder="Password" value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
                             {message ? <p className="sign-in-status">{message}<br></br></p> : <><br></br></>}
                             <br></br>
                             <input type="submit" value="Sign In" ></input>

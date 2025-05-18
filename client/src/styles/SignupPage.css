@@ -1,17 +1,17 @@
 label {
 	display: inline-block;
-	padding: 10px 0px 10px 0px;
+	padding: 20px 0px 20px 0px;
 }
 
 input[value="Sign Up"] {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: 15px;
 	border-radius: 10px;
 	cursor: pointer;
 	background-color: var(--buttonBackground);
 	color: var(--buttonText);
 	padding: 8px 10px 8px 10px;
-	font-size: 16px;
+	font-size: 20pt;
 }
 
 input[value="Sign Up"]:Hover {
