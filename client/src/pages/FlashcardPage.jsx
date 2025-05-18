@@ -291,12 +291,15 @@ const FlashcardPage = () => {
           <div className='bottomControls'>
             <div className="navigation">
               {flashcardType !== "normal" && (
-                <button className='imgOption' style={{ visibility: 'hidden' }}>
+                <button className='imgOption tooltip' style={{ visibility: 'hidden' }}>
                   <img src={Regenerate} alt="regenerate"/>
+                  <span class="tooltip-text">Regenerate cards based on wrong answers</span> 
                 </button>
               )}
-              <button className='imgOption' onClick={toggleProgressTracking}>
+              <button className='imgOption tooltip' onClick={toggleProgressTracking}>
                 {isTrackingProgress ? 'Stop Tracking' : 'Start Tracking'}
+                <span class="tooltip-text">Track number of incorrect and correct answers for this flashcard set</span> 
+
               </button>
               {flashcardType === "normal" && isTrackingProgress && (
                 <button className='imgOption' onClick={handleCorrectClick}>
@@ -312,11 +315,15 @@ const FlashcardPage = () => {
                 </button>
               )}
               <button className='imgOption' onClick={shuffleCards}>
-                <img src={Shuffle} alt="shuffle"/>
+                <div className='tooltip'>
+                  <img src={Shuffle} alt="shuffle"/>
+                   <span class="tooltip-text">Shuffle Cards</span> 
+                </div>
               </button>
               {flashcardType !== "normal" && (
-                <button className='imgOption' onClick={regenerateCards}>
+                <button className='imgOption tooltip' onClick={regenerateCards}>
                   <img src={Regenerate} alt="regenerate"/>
+                  <span className="tooltip-text">Regenerate flashcards based on incorrect answers</span>
                 </button>
               )}
             </div>
@@ -340,7 +347,7 @@ const FlashcardPage = () => {
           <div className="chat-panel">
             <div className="chat-container">
               <div className='chatUpper'>
-                <div className='chatTitle'>Chatbot</div>
+                <div className='chatTitle'>Study Buddy AI</div>
                 <button className="closeChatBot" onClick={() => setIsChatOpen(false)}>
                   <img src={Xmark} alt="closeChatBot"/>
                 </button>

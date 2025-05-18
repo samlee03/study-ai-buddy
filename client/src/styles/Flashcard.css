@@ -65,13 +65,27 @@
   margin-top: 10px;
 }
 
+.mc-question {
+  margin: 16px;
+  font-weight: bolder;
+}
 .mc-option {
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 5px;
+  /* padding: 5px; */
+  padding:  20px 15px;
   border-radius: 5px;
   font-size: 1.5rem;
+  background-color: hsl(0, 0%, 97.5%);
+  width: 100%;
+  margin-right: 200px;
+}
+.mc-option input[type="radio"] {
+  margin-right: 16px;
+}
+.mc-option:hover {
+  background-color: hsl(0, 0%, 95.5%);
 }
 
 .mc-option.correct {

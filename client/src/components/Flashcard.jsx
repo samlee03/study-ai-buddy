@@ -110,7 +110,7 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
           <>
             {!isFlipped ? (
               <div className="flashcard-front">
-                <p>{question}</p>
+                <p className="mc-question">{question}</p>
                 <div className="options">
                   {options.map((option, index) => (
                     <label key={index} className="mc-option">
@@ -129,7 +129,7 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
                   onClick={handleCheckAnswer}
                   disabled={!selectedOption}
                 >
-                  Check
+                  Check Answer
                 </button>
               </div>
             ) : (
