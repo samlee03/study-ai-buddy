@@ -83,6 +83,16 @@ h2 {
     margin-bottom: 40px;
 }
 
+.SeparateByTime {
+    display: grid; 
+    gap: 20px; 
+    width: 100%;
+    justify-items: start; 
+    align-items: start; 
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
 .FilterButton {
     transition: transform 0.2s ease;
 }
