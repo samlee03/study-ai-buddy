@@ -101,7 +101,9 @@
 input[type="radio"] {
   transform: scale(1.2); 
 }
-
+.shortResponse-question {
+  font-weight: bolder;
+}
 .check-button {
   flex: 0 0 auto;
   width: auto; 
@@ -129,13 +131,18 @@ input[type="radio"] {
   height: 70%;
   margin-top: auto;
   margin-bottom: auto;
-  font-size: 1.1rem;  
+  /* font-size: 1.1rem;   */
+  font-size: 1.5rem;  
   padding: 10px;       
-  border: 2px solid var(--border);
+  /* border: 2px solid var(--border); */
+  outline: none;
+  border: none;
+  background-color: #ededed;
   border-radius: 5px;
   resize: none;        
   line-height: 1.5;    
   overflow-y: auto;    
+  color: var(--text)
 }
 
 p {

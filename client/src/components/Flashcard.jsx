@@ -160,7 +160,7 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
            <>
              {!isFlipped ? (
                <div className="flashcard-front">
-                 <p>{question}</p>
+                 <p className="shortResponse-question">{question}</p>
                  <textarea
                    value={userInput}
                    onChange={(e) => setUserInput(e.target.value)}
