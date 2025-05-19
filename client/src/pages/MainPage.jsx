@@ -27,7 +27,6 @@ const MainPage = () => {
     const backendUrl = "http://localhost:5000"
     const [recentUploads, setRecentUploads] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [displayRecent, setDisplayRecent] = useState(true);
     const [filterFlashcard, setFilterFlashcard] = useState("All")
     const [recentLayout, setRecentLayout] = useState('List')
     
@@ -62,7 +61,7 @@ const MainPage = () => {
       (filterFlashcard === 'All' || typeMapping[upload.type] === filterFlashcard)
     );
 
-    const displayedUploads = displayRecent && filteredUploads?.length > 0 ? filteredUploads.slice().reverse() : filteredUploads;
+    const displayedUploads = filteredUploads?.length > 0 ? filteredUploads.slice().reverse() : filteredUploads;
 
     const groupUploadsByDate = (uploads) => {
       const groups = {
@@ -86,6 +85,10 @@ const MainPage = () => {
         } else {
           groups.Earlier.push(upload);
         }
+      });
+
+      Object.keys(groups).forEach(group => {
+        groups[group].sort((a, b) => b.last_updated - a.last_updated);
       });
 
       return groups;
@@ -155,12 +158,6 @@ const MainPage = () => {
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                       />
-                      <button
-                        className='FilterButton' 
-                        onClick={() => setDisplayRecent(prev => !prev)}
-                      >
-                      {displayRecent ? 'Newest' : 'Oldest'}
-                      </button>
                       <button
                         className='FilterButton' 
                         onClick={() => {
