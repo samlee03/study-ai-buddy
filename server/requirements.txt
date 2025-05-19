@@ -11,3 +11,4 @@ pymongo
 pdfplumber
 bcrypt
 pyjwt
+gunicorn
