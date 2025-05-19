@@ -558,6 +558,22 @@ def save_card():
 
 
         return jsonify({"status": "new card set and saved"})
+@app.route('/api/update-last-viewed', methods=["POST"])
+def last_viewed():
+    id = request.json.get('id')
+    database = client.get_database("users-db")
+    users = database.get_collection("users")
+    token = request.cookies.get('token')
+    payload = jwt.decode(token, os.getenv("JWT_SECRET_KEY"), algorithms="HS256")
+    username = payload.get("username")
+    query = {"username": username}
+    array_filters = [{"card.id": id}]
+    users.update_one(query, {
+        "$set": {
+            "saved_uploads.$[card].last_updated": time.time(),
+        }
+    }, array_filters=array_filters)
+    return {"message": "updated"}
 
 @app.route('/api/clear-cookie')
 def clear_cookie():

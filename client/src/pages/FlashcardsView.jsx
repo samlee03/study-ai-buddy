@@ -129,7 +129,19 @@ const FlashcardsView = () => {
         handleSaveShortResponse(flashcards.length, question, answer);
         setIsAddingCard(false);
     }
-    const handleViewClick = () => {
+    const handleViewClick = async () => {
+        const response = await fetch(`${backendUrl}/api/update-last-viewed`, 
+            {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                credentials: "include",
+                body: JSON.stringify({
+                    "id": card_id,
+                })
+            }
+        )
+        const data = await response.json()
+        console.log("MESSAGE: ", data.message);
         navigate('/FlashcardPage', { state: { title, flashcardType, flashcards, card_id } });
     };
 
