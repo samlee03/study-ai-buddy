@@ -637,7 +637,7 @@ def get_reply(question, previousChatLog):
     # reply = model.generate_content(question)
     genclient = genai.Client(api_key=os.getenv("API_KEY"))
     # print("this ran")
-    instructions = f"Without giving the user the direct answer of the question, '{question}',can you lead the user towards the right answer. Make sure user is on track. Return a short response no more than 20 words in plain text in a friendly manner? The previous chat history is this: '{previousChatLog}' and is asking '{previousChatLog[-1] if previousChatLog else "no comment made yet"}'"
+    instructions = f"Without giving the user the direct answer of the question, '{question}',can you lead the user towards the right answer. Make sure user is on track. Return a short response no more than 20 words in plain text in a friendly manner? The previous chat history is this: '{previousChatLog}' and is asking '{previousChatLog[-1] if previousChatLog else 'no comment made yet'}'"
 
     response = genclient.models.generate_content(
         model="gemini-2.0-flash", contents=(instructions)
