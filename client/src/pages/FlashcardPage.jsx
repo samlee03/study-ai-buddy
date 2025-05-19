@@ -36,6 +36,7 @@ const FlashcardPage = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [awaitAI, setAwaitAI] = useState(false)
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -159,7 +160,7 @@ const FlashcardPage = () => {
 
   const handleUserSend = async () => {
     if (!input.trim()) return;
-
+    setAwaitAI(true)
     const newMessages = [...messages, { sender: 'user', text: input }];
     let log = []
     newMessages.forEach((e) => log.push(e.text))
@@ -180,11 +181,13 @@ const FlashcardPage = () => {
         })
       }
     )
+    
     const data = await response.json();
     console.log(data.response)
 
     const botReply = { sender: 'ai', text: data.response };
     setMessages((prev) => [...prev, botReply]);
+    setAwaitAI(false)
     // handleAIResponse(input);
   };
 
@@ -362,6 +365,11 @@ const FlashcardPage = () => {
                       {msg.text}
                     </div>
                   ))}
+                  {awaitAI && (
+                    <div className='chat-message bot'>
+                      ...
+                    </div>
+                  )}
                   <div ref={messagesEndRef} />
                 </div>
               </div>
