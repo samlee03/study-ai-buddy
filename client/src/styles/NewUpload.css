@@ -1,8 +1,11 @@
 .NewUploadMain {
-    position: relative;
-    display: inline-block;
+    /* position: relative;
+    display: inline-block; */
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    height: auto; 
+    height: auto;
+    gap: 20px; 
     border-radius: 5px;
     border: 1px solid var(--border);
     padding: 15px;
@@ -10,7 +13,10 @@
     background-color: var(--primary);
     transition: transform 0.2s ease;
 }
+
+
 .Upload-New {
+    flex: 1;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -44,6 +50,15 @@
 }
 
 .UploadSubtitle-New {
+    flex: 1;
+    margin-top: auto;
+    font-size: 1rem;
+    color: var(--subtitle);
+    padding: 8px;
+    text-align: center;
+}
+
+/* .UploadSubtitle-New {
     position: absolute;
     top: 100%;
     bottom: 0; 
@@ -55,7 +70,7 @@
     text-align: center;
     z-index: 10;
     pointer-events: none; 
-}
+} */
 
 .Upload-button-New {
     padding: 8px 12px;

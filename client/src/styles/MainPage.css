@@ -104,5 +104,9 @@ h2 {
 hr.divider {
     border: 0;
     border-top: 1px solid #ddd; 
-    margin: 15px 0; 
+    margin: 5px 0; 
+}
+
+.RecentUploadFilter{
+    margin-bottom: 10px;
 }
