@@ -5,7 +5,7 @@ import RecentUpload from '../components/RecentUpload';
 import RecentUploadHZ from '../components/RecentUploadHZ'; 
 import '../styles/MainPage.css';
 import { useTheme } from '../components/ThemeContext';
-import { isToday, isYesterday, isThisWeek } from 'date-fns';
+import { isToday, isYesterday, differenceInCalendarDays  } from 'date-fns';
 import logo from "../assets/RobotHead.svg"
 import CheckAuth from '../components/CheckAuth';
 import flashcard from "../assets/Flashcard.png"
@@ -68,19 +68,21 @@ const MainPage = () => {
       const groups = {
         Today: [],
         Yesterday: [],
-        'Within Week': [],
+        'Last 7 Days': [],
         Earlier: [],
       };
 
       uploads.forEach(upload => {
         const date = new Date(upload.last_updated * 1000); 
 
+        const diffDays = differenceInCalendarDays(new Date(), date);
+
         if (isToday(date)) {
           groups.Today.push(upload);
         } else if (isYesterday(date)) {
           groups.Yesterday.push(upload);
-        } else if (isThisWeek(date, { weekStartsOn: 1 })) {
-          groups['Within Week'].push(upload);
+        } else if (diffDays <= 7) {
+          groups['Last 7 Days'].push(upload);
         } else {
           groups.Earlier.push(upload);
         }
