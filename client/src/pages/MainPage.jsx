@@ -5,7 +5,7 @@ import RecentUpload from '../components/RecentUpload';
 import RecentUploadHZ from '../components/RecentUploadHZ'; 
 import '../styles/MainPage.css';
 import { useTheme } from '../components/ThemeContext';
-import { isToday, isYesterday, isThisWeek } from 'date-fns';
+import { isToday, isYesterday, differenceInCalendarDays  } from 'date-fns';
 import logo from "../assets/RobotHead.svg"
 import CheckAuth from '../components/CheckAuth';
 import flashcard from "../assets/Flashcard.png"
@@ -27,7 +27,6 @@ const MainPage = () => {
     const backendUrl = "http://localhost:5000"
     const [recentUploads, setRecentUploads] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [displayRecent, setDisplayRecent] = useState(true);
     const [filterFlashcard, setFilterFlashcard] = useState("All")
     const [recentLayout, setRecentLayout] = useState('List')
     
@@ -62,28 +61,34 @@ const MainPage = () => {
       (filterFlashcard === 'All' || typeMapping[upload.type] === filterFlashcard)
     );
 
-    const displayedUploads = displayRecent && filteredUploads?.length > 0 ? filteredUploads.slice().reverse() : filteredUploads;
+    const displayedUploads = filteredUploads?.length > 0 ? filteredUploads.slice().reverse() : filteredUploads;
 
     const groupUploadsByDate = (uploads) => {
       const groups = {
         Today: [],
         Yesterday: [],
-        'Within Week': [],
+        'Last 7 Days': [],
         Earlier: [],
       };
 
       uploads.forEach(upload => {
         const date = new Date(upload.last_updated * 1000); 
 
+        const diffDays = differenceInCalendarDays(new Date(), date);
+
         if (isToday(date)) {
           groups.Today.push(upload);
         } else if (isYesterday(date)) {
           groups.Yesterday.push(upload);
-        } else if (isThisWeek(date, { weekStartsOn: 1 })) {
-          groups['Within Week'].push(upload);
+        } else if (diffDays <= 7) {
+          groups['Last 7 Days'].push(upload);
         } else {
           groups.Earlier.push(upload);
         }
+      });
+
+      Object.keys(groups).forEach(group => {
+        groups[group].sort((a, b) => b.last_updated - a.last_updated);
       });
 
       return groups;
@@ -153,12 +158,6 @@ const MainPage = () => {
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                       />
-                      <button
-                        className='FilterButton' 
-                        onClick={() => setDisplayRecent(prev => !prev)}
-                      >
-                      {displayRecent ? 'Newest' : 'Oldest'}
-                      </button>
                       <button
                         className='FilterButton' 
                         onClick={() => {
