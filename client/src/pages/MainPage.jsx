@@ -68,6 +68,7 @@ const MainPage = () => {
         Today: [],
         Yesterday: [],
         'Last 7 Days': [],
+        'Last 30 Days' : [],
         Earlier: [],
       };
 
@@ -82,6 +83,8 @@ const MainPage = () => {
           groups.Yesterday.push(upload);
         } else if (diffDays <= 7) {
           groups['Last 7 Days'].push(upload);
+        } else if (diffDays <= 30) {
+          groups['Last 30 Days'].push(upload);
         } else {
           groups.Earlier.push(upload);
         }

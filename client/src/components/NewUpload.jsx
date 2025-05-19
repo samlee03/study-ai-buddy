@@ -62,13 +62,13 @@ const NewUpload = ({title, subtitle, image, type}) => {
                             <Link to={`/upload/` + type} className="Upload-button-New" onClick={handleClick}>
                                 <img src={Upload} alt="Upload" className="Upload-icon" />
                             </Link>
-                            <div className="UploadButtonLabel">Upload New</div>
+                            {isHovered && <div className="UploadButtonLabel">Upload New</div>}
                         </div>
                         <div className="UploadButtonWrapper">
                             <button className="Upload-button-New" onClick={handleAddClick}>
                                 +
                             </button>
-                            <div className="UploadButtonLabel">Create Blank</div>
+                            {isHovered && <div className="UploadButtonLabel">Create Blank</div>}
                         </div>
                     </div>
                 </div>

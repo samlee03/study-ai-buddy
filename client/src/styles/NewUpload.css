@@ -56,6 +56,7 @@
     color: var(--subtitle);
     padding: 8px;
     text-align: center;
+    pointer-events: none; 
 }
 
 /* .UploadSubtitle-New {
