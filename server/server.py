@@ -668,8 +668,10 @@ def chatbot():
 def check_cookie():
     token = request.cookies.get('token')
     if token:
+        print("user is logged in")
         return jsonify({"loggedIn": True, "token": token})
     else:
+        print("User is not logged in")
         return jsonify({"loggedIn": False})
 if __name__ == "__main__":
     app.run()
