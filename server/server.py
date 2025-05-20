@@ -21,7 +21,7 @@ import smtplib
 import time
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, origins=["https://study-ai-buddy.onrender.com"])
 
 # MongoDB Client
 uri = os.getenv("MONGO_URI")
