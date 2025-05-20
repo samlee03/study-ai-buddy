@@ -672,4 +672,4 @@ def check_cookie():
     else:
         return jsonify({"loggedIn": False})
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
