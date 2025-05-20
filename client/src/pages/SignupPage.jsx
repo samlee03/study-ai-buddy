@@ -10,7 +10,9 @@ import silhouette from "../assets/Silhouette.jpg"
 
 const SignupPage = () => {
     const { theme} = useTheme();
-    const backendUrl = "http://localhost:5000"
+    // const backendUrl = "http://localhost:5000"
+    const backendUrl = "https://study-ai-buddy-backend.onrender.com"
+
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")

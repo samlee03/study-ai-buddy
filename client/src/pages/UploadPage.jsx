@@ -52,7 +52,7 @@ const UploadPage = () => {
         formData.append('comments', comments) 
         if (type == "normal"){
           try {
-            const response = await fetch('/api/get_flashcard', {
+            const response = await fetch('https://study-ai-buddy-backend.onrender.com/api/get_flashcard', {
               method: 'POST',
               body: formData,
             });
@@ -67,7 +67,7 @@ const UploadPage = () => {
         }
         else if(type == "shortResponse") {
           try {
-            const response = await fetch('/api/get_short_response', {
+            const response = await fetch('https://study-ai-buddy-backend.onrender.com/api/get_short_response', {
               method: 'POST',
               body: formData,
             });
@@ -84,7 +84,7 @@ const UploadPage = () => {
     
           
           try {
-            const response = await fetch('/api/get_questions', {
+            const response = await fetch('https://study-ai-buddy-backend.onrender.com/api/get_questions', {
               method: 'POST',
               body: formData,
             });

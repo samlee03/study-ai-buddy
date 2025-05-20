@@ -21,7 +21,7 @@ import smtplib
 import time
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, origins=["https://study-ai-buddy.onrender.com"])
 
 # MongoDB Client
 uri = os.getenv("MONGO_URI")
@@ -275,7 +275,9 @@ def login():
             token,
             httponly = True,
             max_age = 600,
-            path='/'
+            path='/',
+            secure=True,
+            samesite="None"
         )
         return response
     else:
@@ -578,7 +580,12 @@ def last_viewed():
 @app.route('/api/clear-cookie')
 def clear_cookie():
     response = make_response(jsonify({"status": "cleared cookie"}))
-    response.delete_cookie('token')
+    response.delete_cookie(
+        "token",
+        path="/",
+        secure=True,
+        samesite="None"
+    )
     return response
 
 
@@ -668,8 +675,10 @@ def chatbot():
 def check_cookie():
     token = request.cookies.get('token')
     if token:
+        print("user is logged in")
         return jsonify({"loggedIn": True, "token": token})
     else:
+        print("User is not logged in")
         return jsonify({"loggedIn": False})
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)

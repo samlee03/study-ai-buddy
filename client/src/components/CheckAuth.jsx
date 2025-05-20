@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom"
 // CheckAuth Component is created with ChatGPT, to allow easier cookie-checking, instead of calling endpoint in every Frontend Component
 // When this component is used, it calls to check whether the cookie (containing jwt) exists, redirects to LoginPage if cookie does not exist
 function CheckAuth() {
-    const backendUrl = "http://localhost:5000"
+    // const backendUrl = "http://localhost:5000"
+    const backendUrl = "https://study-ai-buddy-backend.onrender.com"
+
+
     const [isLoggedIn, setIsLoggedIn] = useState(null);
     const navigate = useNavigate();
 
@@ -16,6 +19,7 @@ function CheckAuth() {
                 credentials: "include"
             })
             const data = await response.json();
+            console.log(data.loggedIn);
             setIsLoggedIn(data.loggedIn);
         }
         checkCookie();

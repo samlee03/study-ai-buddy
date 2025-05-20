@@ -12,7 +12,9 @@ import Chat from "../assets/Chat.svg"
 import leftArrow from "../assets/rewind-button.png"
 const FlashcardPage = () => {
   const {theme} = useTheme();
-  const backendUrl = "http://localhost:5000"
+  // const backendUrl = "http://localhost:5000"
+  const backendUrl = "https://study-ai-buddy-backend.onrender.com"
+
 
   const location = useLocation(); 
 
