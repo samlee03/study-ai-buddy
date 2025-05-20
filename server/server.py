@@ -275,7 +275,9 @@ def login():
             token,
             httponly = True,
             max_age = 600,
-            path='/'
+            path='/',
+            secure=True,
+            samesite="None"
         )
         return response
     else:
@@ -674,4 +676,4 @@ def check_cookie():
         print("User is not logged in")
         return jsonify({"loggedIn": False})
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(debug=True)
