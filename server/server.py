@@ -674,4 +674,4 @@ def check_cookie():
         print("User is not logged in")
         return jsonify({"loggedIn": False})
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', debug=True)
