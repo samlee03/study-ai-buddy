@@ -79,9 +79,9 @@ const LoginPage = () => {
                         </div>
                         <img className="Login-image-file" src={Login}></img>
                     </div>
-                    <div className="Form-container" onSubmit={(e) => { e.preventDefault(); handleSubmit() }}>
+                    <div className="Form-container">
                         <h1 className="Login-header">Sign In</h1><br></br>
-                        <form>
+                        <form onSubmit={(e) => { e.preventDefault(); handleSubmit() }}>
                             <div className="input-container">
                                 <img src={Email} alt="Email Icon" className="input-icon" />
                                 <input
