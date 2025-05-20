@@ -21,6 +21,7 @@ const ForgotPassword = () => {
             '--buttonDisable' : theme.buttonDisable,
             '--boxShadow': theme.boxShadow
           }}
+          className='AccountPage-Main'
         >
             <Header />
             <div className="Page-container">

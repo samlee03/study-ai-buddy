@@ -3,7 +3,10 @@ import Header from '../components/Header'
 import "../styles/SignupPage.css"
 import { useTheme } from '../components/ThemeContext';
 import { useNavigate } from 'react-router-dom';
-import RobotHome from "../assets/RobotHome.svg";
+import Login from "../assets/Login.svg";
+import Email from "../assets/email.png";
+import Key from "../assets/key.png";
+import silhouette from "../assets/Silhouette.jpg"
 
 const SignupPage = () => {
     const { theme} = useTheme();
@@ -56,22 +59,50 @@ const SignupPage = () => {
             '--buttonDisable' : theme.buttonDisable,
             '--boxShadow': theme.boxShadow
           }}
+          className='AccountPage-Main'
         >
             <Header />
             <div className="Page-container">
                 <div className="Form-block">
-                    <div className="Login-image"><img className="Login-image-file" src={RobotHome}></img></div>
+                    <div className="Login-image">
+                        <div>
+                            WELCOME!
+                        </div>
+                        <img className="Login-image-file" src={Login}></img>
+                    </div>
                     <div className="Form-container">
                         <h1 className="Login-header">Sign Up</h1>
-                <form onSubmit={(e) => {e.preventDefault(); handleSubmit()}}>
-                    <label htmlFor="new-username">Username:</label><br></br>
-                    <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}></input><br></br>
-                    <label htmlFor="email">Email:</label><br></br>
-                    <input type="email" placeholder="E-mail address" value={email} onChange={(e) => setEmail(e.target.value)}></input><br></br>
-                    <label htmlFor="new-password">Password:</label><br></br>
-                    <input type="password" value={password} placeholder="New password" onChange={(e) => setPassword(e.target.value)}></input><br></br>
-                    <input type="submit" value="Sign Up"></input>
+                        <form onSubmit={(e) => {e.preventDefault(); handleSubmit()}}>
+                            <div className="input-container">
+                                <img src={silhouette} alt="Email Icon" className="input-icon" />
+                                <input
+                                    type="text"
+                                    placeholder="Username"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                            </div>
+                            <div className="input-container">
+                                <img src={Email} alt="Email Icon" className="input-icon" />
+                                <input
+                                    type="email"
+                                    placeholder="E-mail address"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                            <div className="input-container">
+                                <img src={Key} alt="Password Icon" className="input-icon" />
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </div>
+                            <input type="submit" value="Sign Up"></input>
                         </form>
+                        <a className="Signup-link" href="./login">{"Already have an account? Sign in"}</a><br></br><br></br>
                     </div>
                 </div>
             </div>

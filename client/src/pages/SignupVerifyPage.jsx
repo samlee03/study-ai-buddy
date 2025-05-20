@@ -46,7 +46,9 @@ function SignupVerifyPage() {
     '--buttonText' : theme.buttonText,
     '--buttonDisable' : theme.buttonDisable,
     '--boxShadow': theme.boxShadow
-    }}>
+    }}
+    className='AccountPage-Main'
+    >
         <Header />
         <div className="Page-container">
             <div className="Form-block">

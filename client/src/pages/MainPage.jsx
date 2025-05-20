@@ -156,7 +156,6 @@ const MainPage = () => {
                     <div className= 'RecentUploadFilter'>
                       <input
                         className ='searchBox'
-                        type="text"
                         placeholder="Search..."
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}

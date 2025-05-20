@@ -18,7 +18,8 @@ input[value="Sign Up"]:Hover {
 	background: var(--buttonHover);
 }
 
-.Page-container {
+.AccountPage-Main {
+	height: 100vh;
 	background: linear-gradient(
         to bottom,
         var(--background) 0%,
@@ -26,14 +27,26 @@ input[value="Sign Up"]:Hover {
         var(--background) 90%,
         white 100%
     );
+	overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.Page-container {
+	flex: 1;
 	display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 90px);
     text-align: center;
 }
 
 .Form-block {
+	height: 90%;
+	margin-top: auto;
+	margin-bottom: auto;
 	background-color: var(--primary);
 	border: 1px solid var(--border);
+	display: flex;
+	flex-direction: row;
+	padding: 1px;
 }

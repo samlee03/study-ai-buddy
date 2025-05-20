@@ -20,16 +20,26 @@ label {
 
 input[type="text"]
 {
-    font-size:20pt;
-    margin-bottom:5px;
+    font-size: 18pt;
+    flex: 1; 
+    border: none;
+    outline: none;
+    background: transparent;
 }
 input[type="password"]
 {
-    font-size: 20pt;
+    font-size: 18pt;
+    flex: 1; 
+    border: none;
+    outline: none;
+    background: transparent;
 }
 input[type="email"] {
-    font-size: 20pt;
-    margin-bottom: 5px;
+    font-size: 18pt;
+    flex: 1; 
+    border: none;
+    outline: none;
+    background: transparent;
 }
 
 .Signup-link {
@@ -61,14 +71,51 @@ input[type="email"] {
 }
 
 .Login-image{
-    flex:50%;
+    flex:60%;
+    align-self: center;
+    font-size: 2rem;
+    color: var(--title);
+    height: 100%;
+    padding: 50px;
+    background: linear-gradient(
+        to right,
+        var(--background) 0%,
+        var(--background) 80%,
+        white 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
 }
 
 .Login-image-file{
-    height:650px;
+    height:300px;
     padding-top:50px;
 }
 .Login-header{
     font-size:36pt;
     padding-bottom:25px;
 }
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+    margin: 10px auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.input-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    opacity: 0.8;
+}
+

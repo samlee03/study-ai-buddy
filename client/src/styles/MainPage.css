@@ -46,6 +46,7 @@ h2 {
 }
 
 .searchBox {
+    font-size: 18pt;
     border-radius: 5px;
     border: 1px solid var(--buttonBackground);
     padding: 8px;   
