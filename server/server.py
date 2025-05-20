@@ -580,7 +580,12 @@ def last_viewed():
 @app.route('/api/clear-cookie')
 def clear_cookie():
     response = make_response(jsonify({"status": "cleared cookie"}))
-    response.delete_cookie('token')
+    response.delete_cookie(
+        "token",
+        path="/",
+        secure=True,
+        samesite="None"
+    )
     return response
 
 
