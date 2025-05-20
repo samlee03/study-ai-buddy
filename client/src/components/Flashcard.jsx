@@ -4,7 +4,9 @@ import { useTheme } from '../components/ThemeContext';
 
 const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipSignal, onIncorrect, onCorrect }) => {
   const { theme} = useTheme();
-  const backendUrl = "http://localhost:5000"
+  // const backendUrl = "http://localhost:5000"
+  const backendUrl = "https://study-ai-buddy-backend.onrender.com"
+
   const [isFlipped, setIsFlipped] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);

@@ -8,7 +8,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function SignupVerifyPage() {
     const { theme } = useTheme();
     const location = useLocation();
-    const backendUrl = "http://localhost:5000"
+    // const backendUrl = "http://localhost:5000"
+    const backendUrl = "https://study-ai-buddy-backend.onrender.com"
+
     const navigate = useNavigate();
     const { email, user, pw } = location.state
     const [input, setInput] = useState('')

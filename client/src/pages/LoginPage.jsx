@@ -9,7 +9,8 @@ import RobotHome from "../assets/RobotHome.svg";
 const LoginPage = () => {
     const { isLoggedIn } = CheckAuth();
     const {theme} = useTheme();
-    const backendUrl = "http://localhost:5000"
+    // const backendUrl = "http://localhost:5000"
+    const backendUrl = "https://study-ai-buddy-backend.onrender.com"
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");

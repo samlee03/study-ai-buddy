@@ -11,7 +11,9 @@ import '../styles/FlashcardsView.css';
 const FlashcardsView = () => {
     const { theme} = useTheme();
     const navigate = useNavigate();
-    const backendUrl = "http://localhost:5000"
+    // const backendUrl = "http://localhost:5000"
+    const backendUrl = "https://study-ai-buddy-backend.onrender.com"
+
     const location = useLocation(); 
     const [title, setTitle] = useState(location.state?.title || '');
     const [subtTitle, setSubtTitle] = useState(location.state?.subtTitle || '');
