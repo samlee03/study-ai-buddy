@@ -83,7 +83,7 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
       )}
 
       <div className="EditFlashcardRow">
-        <label className="EditFlashcardLabel">Correct Answer</label>
+        <label className="EditFlashcardLabel">Answer</label>
         <select
           value={correctAnswer}
           onChange={(e) => {setCorrectAnswer(e.target.value);console.log("CORRECT: ", correctAnswer)}}

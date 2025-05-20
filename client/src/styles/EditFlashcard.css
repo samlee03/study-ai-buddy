@@ -29,10 +29,12 @@
 }
 
 .EditFlashcardRow {
+    width: 100%;
     display: flex;
     gap: 20px;
     flex-direction: row;
     margin-bottom: 15px; 
+    align-items: center;
 }
 
 .EditFlashcardLabel {
