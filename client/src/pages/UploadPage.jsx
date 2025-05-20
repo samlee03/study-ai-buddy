@@ -55,6 +55,7 @@ const UploadPage = () => {
             const response = await fetch('https://study-ai-buddy-backend.onrender.com/api/get_flashcard', {
               method: 'POST',
               body: formData,
+              credentials: 'include'
             });
     
             if (!response.ok) throw new Error('Failed to extract text');
@@ -70,6 +71,7 @@ const UploadPage = () => {
             const response = await fetch('https://study-ai-buddy-backend.onrender.com/api/get_short_response', {
               method: 'POST',
               body: formData,
+              credentials: 'include'
             });
     
             if (!response.ok) throw new Error('Failed to extract text');
@@ -87,6 +89,7 @@ const UploadPage = () => {
             const response = await fetch('https://study-ai-buddy-backend.onrender.com/api/get_questions', {
               method: 'POST',
               body: formData,
+              credentials: 'include'
             });
     
             if (!response.ok) throw new Error('Failed to extract text');
