@@ -24,7 +24,10 @@ const MainPage = () => {
     // const isLoggedIn = true; // If you want to grant permission always for testing
     
     const { theme} = useTheme();
-    const backendUrl = "http://localhost:5000"
+    // const backendUrl = "http://localhost:5000"
+    const backendUrl = "https://study-ai-buddy-backend.onrender.com"
+
+
     const [recentUploads, setRecentUploads] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterFlashcard, setFilterFlashcard] = useState("All")
