@@ -104,7 +104,7 @@ const LoginPage = () => {
                             <input type="submit" value="Sign In" ></input>
                         </form>
                         <a className="Signup-link" href="./signup">{"Don't have an account?"}</a><br></br><br></br>
-                        <a className="Forgot-link" href="./forgot">{"Forgot your password?"}</a>
+                        {/* <a className="Forgot-link" href="./forgot">{"Forgot your password?"}</a> */}
                     </div>
                 </div>
             </div>
