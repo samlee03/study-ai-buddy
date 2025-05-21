@@ -52,7 +52,7 @@ function SignupVerifyPage() {
     className='AccountPage-Main'
     >
         <Header />
-        <div className="Page-container">
+        {/* <div className="Page-container">
             <div className="Form-block">
                 <div className="Form-container">
                     <p>Enter code from email</p>
@@ -60,7 +60,27 @@ function SignupVerifyPage() {
                     <button onClick={handleVerify}>Verify</button>
                 </div>
             </div>
-        </div>
+        </div> */}
+        <div className="Page-container">
+                <div className="Form-block">
+                    <div className="Login-image">
+                        {/* <div>
+                            WELCOME!
+                        </div> */}
+                        <img className="Login-image-file" src={Login}></img>
+                    </div>
+                    <div className="Form-container">
+                        <h1 className="Login-header">Check Email to Verify</h1>
+                        <form onSubmit={(e) => {e.preventDefault(); handleVerify()}}>
+                            <div className="input-container">
+                                <img src={silhouette} alt="Email Icon" className="input-icon" />
+                                <input type='text' value={input} onChange={e => setInput(e.target.value)}></input>
+                            </div>
+                            <input type="submit" value="Verify"></input>
+                        </form>
+                    </div>
+                </div>
+            </div>
     </div>
   )
 }
