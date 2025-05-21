@@ -4,7 +4,7 @@ import "../styles/SignupPage.css"
 import { useTheme } from '../components/ThemeContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Login from "../assets/Login.svg";
-import silhouette from "../assets/Silhouette.jpg"
+import Email from "../assets/email.png";
 
 
 
@@ -76,8 +76,8 @@ function SignupVerifyPage() {
                         <h1 className="Login-header">Check Email to Verify</h1>
                         <form onSubmit={(e) => {e.preventDefault(); handleVerify()}}>
                             <div className="input-container">
-                                <img src={silhouette} alt="Email Icon" className="input-icon" />
-                                <input type='text' value={input} onChange={e => setInput(e.target.value)}></input>
+                                <img src={Email} alt="Email Icon" className="input-icon" />
+                                <input type='text' value={input} onChange={e => setInput(e.target.value)} placeholder="Enter Code.."></input>
                             </div>
                             <input type="submit" value="Verify"></input>
                         </form>
