@@ -4,6 +4,8 @@ import "../styles/SignupPage.css"
 import { useTheme } from '../components/ThemeContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Login from "../assets/Login.svg";
+import silhouette from "../assets/Silhouette.jpg"
+
 
 
 function SignupVerifyPage() {
