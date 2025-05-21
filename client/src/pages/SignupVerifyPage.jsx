@@ -73,7 +73,7 @@ function SignupVerifyPage() {
                         <img className="Login-image-file" src={Login}></img>
                     </div>
                     <div className="Form-container">
-                        <h1 className="Login-header">Check Email to Verify</h1>
+                        <h1 className="Login-header">Verify Email</h1>
                         <form onSubmit={(e) => {e.preventDefault(); handleVerify()}}>
                             <div className="input-container">
                                 <img src={Email} alt="Email Icon" className="input-icon" />

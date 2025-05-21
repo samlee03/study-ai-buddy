@@ -3,7 +3,7 @@ label {
 	padding: 20px 0px 20px 0px;
 }
 
-input[value="Sign Up"] {
+input[value="Sign Up"], input[value="Verify"] {
 	margin-top: 30px;
 	margin-bottom: 15px;
 	border-radius: 10px;
@@ -14,7 +14,7 @@ input[value="Sign Up"] {
 	font-size: 20pt;
 }
 
-input[value="Sign Up"]:Hover {
+input[value="Sign Up"]:Hover, input[value="Verify"]:hover {
 	background: var(--buttonHover);
 }
 
