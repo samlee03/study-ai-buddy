@@ -105,31 +105,34 @@ const FlashcardPage = () => {
   };
 
   const regenerateCards = async () => {
-    const response = await fetch(`${backendUrl}/api/regenerate-flashcard`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id: card_id,
-        incorrect: incorrectQuestions,
-        type: flashcardType
+    if (incorrectQuestions.length > 0) {
+
+      const response = await fetch(`${backendUrl}/api/regenerate-flashcard`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: card_id,
+          incorrect: incorrectQuestions,
+          type: flashcardType
+        })
       })
-    })
-    if (response.ok){
-      // Reset after regeneration
-      console.log(flashcardType)
-      console.log("DATA RECEIVED")
-      const data = await response.json();
-      setFlashcardContent(data["new-questions"])
-      setCurrentIndex(0);
-      setIsShuffled(false);
-      setAnsweredIndexes([]);
-      setIncorrectQuestions([]);
-      setCorrect(0);
-      setIncorrect(0);
-      setResetFlipSignal(prev => prev + 1);
+      if (response.ok){
+        // Reset after regeneration
+        console.log(flashcardType)
+        console.log("DATA RECEIVED")
+        const data = await response.json();
+        setFlashcardContent(data["new-questions"])
+        setCurrentIndex(0);
+        setIsShuffled(false);
+        setAnsweredIndexes([]);
+        setIncorrectQuestions([]);
+        setCorrect(0);
+        setIncorrect(0);
+        setResetFlipSignal(prev => prev + 1);
+      }
     }
   };
   
