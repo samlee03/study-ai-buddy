@@ -84,7 +84,7 @@ const FlashcardPage = () => {
   };
 
   const nextCard = () => {
-    if (data && currentIndex < getLength() - 1) {
+    if (currentIndex < getLength() - 1) {
       setCurrentIndex(currentIndex + 1);
     }
   };
