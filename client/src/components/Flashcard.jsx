@@ -4,7 +4,6 @@ import { useTheme } from '../components/ThemeContext';
 
 const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipSignal, onIncorrect, onCorrect }) => {
   const { theme} = useTheme();
-  // const backendUrl = "http://localhost:5000"
   const backendUrl = "https://study-ai-buddy-backend.onrender.com"
 
   const [isFlipped, setIsFlipped] = useState(false);
@@ -30,12 +29,6 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
   };
 
   const handleCheckAnswer = async (event) => {
-    // if (selectedOption) {
-    //   setIsCorrect(selectedOption === answer);
-    // }
-    // else if (userInput) {
-    //   setIsCorrect(userInput.trim().toLowerCase() === answer.toLowerCase());
-    // }
     if (type == "mc"){
       const correctAnswer = selectedOption === answer;
       if (correctAnswer) {
@@ -59,9 +52,7 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
         console.log(data);
         setFeedback(data.response);
         if (data.isCorrect !== "YES"){
-          // setIncorrectQuestions(prev => [...prev, question]);
           onIncorrect(question);
-          // console.log(incorrectQuestions);
         } else {
           onCorrect()
         }
@@ -69,9 +60,6 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
         throw error;
       }
     }
-
-    // const data = await response.json();
-    // console.log(data.response)
     setIsFlipped(true); 
   };
 
@@ -176,15 +164,6 @@ const Flashcard = ({ type = "normal", question, answer, options = [], resetFlipS
              ) : (
                <div className="flashcard-back">
                  <p>{question}</p><br></br>
-                 {/* {isCorrect ? (
-                  <p>{`Correct! The answer is:`}<br /> {answer}</p>
-                 ) : (
-                  <p>
-                    {`Incorrect! The answer is:`}<br /> {answer}  
-                    <br />
-                    {`Your reponse is:`}<br /> {userInput}
-                  </p>
-                 )} */}
                  <p>Your response: {userInput} </p><br></br>
                  <p>Feedback: {feedback && feedback} </p>
                </div>

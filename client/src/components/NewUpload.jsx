@@ -6,7 +6,6 @@ import Upload from "../assets/upload.png"
 import { v4 as uuidv4 } from 'uuid';
 import { sub } from 'date-fns';
 
-
 const NewUpload = ({title, subtitle, image, type}) => {
     const { theme} = useTheme();
     const [isHovered, setIsHovered] = useState(false);

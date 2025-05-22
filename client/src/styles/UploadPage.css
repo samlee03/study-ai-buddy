@@ -25,7 +25,6 @@
     border: 2px solid;
     border-image: repeating-linear-gradient(45deg, rgb(150, 150, 150) 0%, rgb(150, 150, 150) 10px, transparent 3px, transparent 12px) 1; /* Modified style created by ChatGPT for dashed effect */
     display: flex;
-    /* justify-content: center; */
     align-items: center;
     font-size: 18px;
     cursor: pointer;
@@ -39,7 +38,6 @@
     width: 27.5vw;
 }
 .files-text-section > * {
-    /* padding-bottom: 16px; */
     padding: 8px 0;
 }
 

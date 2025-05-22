@@ -12,7 +12,6 @@ import Key from "../assets/key.png";
 const LoginPage = () => {
     const { isLoggedIn } = CheckAuth();
     const {theme} = useTheme();
-    // const backendUrl = "http://localhost:5000"
     const backendUrl = "https://study-ai-buddy-backend.onrender.com"
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
@@ -34,10 +33,8 @@ const LoginPage = () => {
             if (!response.ok) throw new Error('Login Error');
             const data = await response.json()
             if (data.status){
-                // console.log(data.status);
                 setMessage("Username or password was incorrect");
             } else {
-                // console.log(data.token)
                 navigate('/main')
                 setMessage("Signed in. Redirect user to main page.")
             }
@@ -104,7 +101,6 @@ const LoginPage = () => {
                             <input type="submit" value="Sign In" ></input>
                         </form>
                         <a className="Signup-link" href="./signup">{"Don't have an account?"}</a><br></br><br></br>
-                        {/* <a className="Forgot-link" href="./forgot">{"Forgot your password?"}</a> */}
                     </div>
                 </div>
             </div>

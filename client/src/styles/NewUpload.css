@@ -1,6 +1,4 @@
 .NewUploadMain {
-    /* position: relative;
-    display: inline-block; */
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -58,20 +56,6 @@
     text-align: center;
     pointer-events: none; 
 }
-
-/* .UploadSubtitle-New {
-    position: absolute;
-    top: 100%;
-    bottom: 0; 
-    left: 0;
-    right: 0;
-    padding: 8px;
-    font-size: 1rem;
-    color: var(--subtitle);
-    text-align: center;
-    z-index: 10;
-    pointer-events: none; 
-} */
 
 .Upload-button-New {
     padding: 8px 12px;

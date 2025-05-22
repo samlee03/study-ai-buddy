@@ -11,9 +11,7 @@ const Header = () => {
     const { theme } = useTheme();
     const location = useLocation();
     let navigate = useNavigate();
-    // const backendUrl = "http://localhost:5000"
     const backendUrl = "https://study-ai-buddy-backend.onrender.com"
-
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 

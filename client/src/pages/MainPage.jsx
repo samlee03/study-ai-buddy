@@ -20,13 +20,9 @@ const imageMap = {
   };
 
 const MainPage = () => {
-    const { isLoggedIn } = CheckAuth()
-    // const isLoggedIn = true; // If you want to grant permission always for testing
-    
+    const { isLoggedIn } = CheckAuth()    
     const { theme} = useTheme();
-    // const backendUrl = "http://localhost:5000"
     const backendUrl = "https://study-ai-buddy-backend.onrender.com"
-
 
     const [recentUploads, setRecentUploads] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');

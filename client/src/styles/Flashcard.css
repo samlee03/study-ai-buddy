@@ -1,10 +1,8 @@
 /* Use of AI in some styling such as justify-content, align-items, and flex-direction */
 .flashcard {
-  /* width: 900px; */
   width: 52.5vw;
   margin-left: auto;
   margin-right: auto;
-  /* height: 500px; */
   height: 60vh;
   perspective: 1000px;
   display: inline-block;
@@ -38,11 +36,9 @@
   transform-origin: center;
   backface-visibility: hidden;
   color: var(--text);
-  /* color: rgb(23, 103, 243); */
 }
 
 .flashcard-front {
-  /* background-color: var(--primary); */
   background-color: white;
   border: none;
 }
@@ -73,7 +69,6 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  /* padding: 5px; */
   padding:  20px 15px;
   border-radius: 5px;
   font-size: 1.5rem;
@@ -131,10 +126,8 @@ input[type="radio"] {
   height: 70%;
   margin-top: auto;
   margin-bottom: auto;
-  /* font-size: 1.1rem;   */
   font-size: 1.5rem;  
   padding: 10px;       
-  /* border: 2px solid var(--border); */
   outline: none;
   border: none;
   background-color: #ededed;

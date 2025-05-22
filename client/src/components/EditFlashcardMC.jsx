@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/EditFlashcard.css';
 import Trashcan from "../assets/Trashcan.png"
 import Add from "../assets/Add2.png"
@@ -56,7 +56,6 @@ const EditFlashcardMC = ({ question: initialQuestion, options: initialOptions, a
         />
       </div>
 
-      {/* {(options.length || 1) && options.map((option, index) => ( */}
       {(options?.length > 0) && options?.map((option, index) => (
           <div className="EditFlashcardRow" key={index}>
               <label className="EditFlashcardLabel">Option {index + 1}</label>

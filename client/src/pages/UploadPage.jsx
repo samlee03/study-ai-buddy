@@ -12,15 +12,7 @@ const UploadPage = () => {
     const [title, setTitle] = useState('')
     const [subtitle, setSubtitle] = useState('')
     const [comments, setComments] = useState('')
-    // const handleFileAdd = () => {
-    //     document.getElementById("FileList").innerHTML = '';
-    //     for (let i = 0; i < document.getElementById("FileDrop").files.length; i++) {
-    //         const newFile = document.createElement("li");
-    //         const fName = document.createTextNode("Document "+ (i+1) + ": "+ document.getElementById("FileDrop").files[i].name);
-    //         newFile.appendChild(fName);
-    //         document.getElementById("FileList").appendChild(newFile);
-    //     }
-    // };
+
     const { theme } = useTheme();
 
     const handleTitle = (e) => {
@@ -121,18 +113,6 @@ const UploadPage = () => {
             <Header />
             <div className="Page-container-Main">
                 <div className='upload-container-main'>
-                    {/* <div className="Upload-container">
-                        <form>
-                            <label htmlFor="FileDrop">Drag and Drop Files Here:</label>
-                            <input type="file" id="FileDrop" accept=".pdf" className="FileDrop" onInputCapture={handleFileAdd} multiple>
-                            </input>
-                            <label htmlFor="Upload-name">Upload Name:</label>
-                            <input type="text"></input>
-                            <input type="submit" value="Upload Files"></input>
-                        </form>
-                        <ul id="FileList">
-                        </ul>
-                    </div> */}
                     {/* Src: template from react-dropzone documentation */}
                     <section className="upload-file-container">
                         <div className='file-content'>

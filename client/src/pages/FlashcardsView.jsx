@@ -8,10 +8,10 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import '../styles/FlashcardsView.css';
 
+// Edit Page For Editing Flashcards
 const FlashcardsView = () => {
     const { theme} = useTheme();
     const navigate = useNavigate();
-    // const backendUrl = "http://localhost:5000"
     const backendUrl = "https://study-ai-buddy-backend.onrender.com"
 
     const location = useLocation(); 

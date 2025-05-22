@@ -11,7 +11,6 @@ import Email from "../assets/email.png";
 function SignupVerifyPage() {
     const { theme } = useTheme();
     const location = useLocation();
-    // const backendUrl = "http://localhost:5000"
     const backendUrl = "https://study-ai-buddy-backend.onrender.com"
 
     const navigate = useNavigate();
@@ -55,21 +54,10 @@ function SignupVerifyPage() {
     className='AccountPage-Main'
     >
         <Header />
-        {/* <div className="Page-container">
-            <div className="Form-block">
-                <div className="Form-container">
-                    <p>Enter code from email</p>
-                    <input type='text' value={input} onChange={e => setInput(e.target.value)}></input>
-                    <button onClick={handleVerify}>Verify</button>
-                </div>
-            </div>
-        </div> */}
+
         <div className="Page-container">
                 <div className="Form-block">
                     <div className="Login-image">
-                        {/* <div>
-                            WELCOME!
-                        </div> */}
                         <img className="Login-image-file" src={Login}></img>
                     </div>
                     <div className="Form-container">

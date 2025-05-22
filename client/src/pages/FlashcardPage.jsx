@@ -10,9 +10,10 @@ import Checkmark from "../assets/checkmark.png"
 import Xmark from "../assets/x.png"
 import Chat from "../assets/Chat.svg"
 import leftArrow from "../assets/rewind-button.png"
+
+// This page contains Flashcards as well as its navigation and features
 const FlashcardPage = () => {
   const {theme} = useTheme();
-  // const backendUrl = "http://localhost:5000"
   const backendUrl = "https://study-ai-buddy-backend.onrender.com"
 
 
@@ -22,7 +23,6 @@ const FlashcardPage = () => {
   const flashcardType = location.state?.flashcardType || 'normal';
   const [flashcardContent, setFlashcardContent] = useState(location.state?.flashcards || [])
   const card_id = location.state?.card_id
-  // const [data, setData] = useState();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [shuffledContent, setShuffledContent] = useState([]);
@@ -41,21 +41,6 @@ const FlashcardPage = () => {
   const [awaitAI, setAwaitAI] = useState(false)
   const messagesEndRef = useRef(null);
 
-  // useEffect(() => {
-  //   let apiUrl = `${backendUrl}/api/flashcards`; // Default API
-
-  //   if (flashcardType === "question") {
-  //     apiUrl = `${backendUrl}/api/questions`;
-  //   } else if (flashcardType === "short-answer") {
-  //     apiUrl = `${backendUrl}/api/short-answer-flashcards`;
-  //   }
-
-  //   fetch(apiUrl)
-  //     .then((response) => response.json())
-  //     .then((data) => setData(data))
-  //     .catch((error) => console.error("Error fetching data:", error));
-    
-  // }, [flashcardType]);
 
   useEffect(() => {
     console.log(incorrectQuestions)
@@ -65,17 +50,11 @@ const FlashcardPage = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // if (!data) {
-  //   return <p>Loading...</p>; 
-  // }
-
   const getLength = () => {
     if (flashcardType === "question") {
       return flashcardContent.length;
-    // } else if (flashcardType === "normal" && data?.flashcards) {
     } else if (flashcardType === "normal") {
       return flashcardContent.length;
-    // } else if (flashcardType === "shortResponse" && data?.flashcards){
     } else if (flashcardType === "shortResponse"){
       return flashcardContent.length;
     } else {
@@ -195,13 +174,8 @@ const FlashcardPage = () => {
     const botReply = { sender: 'ai', text: data.response };
     setMessages((prev) => [...prev, botReply]);
     setAwaitAI(false)
-    // handleAIResponse(input);
   };
 
-  const handleAIResponse = (userInput) => {
-    const botReply = { sender: 'ai', text: `Some Ai response` };
-    setMessages((prev) => [...prev, botReply]);
-  };
 
   return (
     <div 
@@ -290,7 +264,6 @@ const FlashcardPage = () => {
                 )}
               </div>
               <button className='ButtonArrow' onClick={nextCard} disabled={currentIndex === getLength() - 1}>
-                {/* {'>'} */}
                 <img className="right-arrow-flashcard" src={leftArrow}></img>
 
               </button>
