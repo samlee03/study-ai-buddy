@@ -41,21 +41,21 @@ const FlashcardPage = () => {
   const [awaitAI, setAwaitAI] = useState(false)
   const messagesEndRef = useRef(null);
 
-  useEffect(() => {
-    let apiUrl = `${backendUrl}/api/flashcards`; // Default API
+  // useEffect(() => {
+  //   let apiUrl = `${backendUrl}/api/flashcards`; // Default API
 
-    if (flashcardType === "question") {
-      apiUrl = `${backendUrl}/api/questions`;
-    } else if (flashcardType === "short-answer") {
-      apiUrl = `${backendUrl}/api/short-answer-flashcards`;
-    }
+  //   if (flashcardType === "question") {
+  //     apiUrl = `${backendUrl}/api/questions`;
+  //   } else if (flashcardType === "short-answer") {
+  //     apiUrl = `${backendUrl}/api/short-answer-flashcards`;
+  //   }
 
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error("Error fetching data:", error));
+  //   fetch(apiUrl)
+  //     .then((response) => response.json())
+  //     .then((data) => setData(data))
+  //     .catch((error) => console.error("Error fetching data:", error));
     
-  }, [flashcardType]);
+  // }, [flashcardType]);
 
   useEffect(() => {
     console.log(incorrectQuestions)
@@ -72,9 +72,11 @@ const FlashcardPage = () => {
   const getLength = () => {
     if (flashcardType === "question") {
       return flashcardContent.length;
-    } else if (flashcardType === "normal" && data?.flashcards) {
+    // } else if (flashcardType === "normal" && data?.flashcards) {
+    } else if (flashcardType === "normal") {
       return flashcardContent.length;
-    } else if (flashcardType === "shortResponse" && data?.flashcards){
+    // } else if (flashcardType === "shortResponse" && data?.flashcards){
+    } else if (flashcardType === "shortResponse"){
       return flashcardContent.length;
     } else {
       return 0;
