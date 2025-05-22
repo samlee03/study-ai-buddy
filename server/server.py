@@ -198,7 +198,7 @@ def check_cookie():
         return jsonify({"loggedIn": False})
 
 # Clear Cookie for Logout
-app.route('/api/clear-cookie')
+@app.route('/api/clear-cookie')
 def clear_cookie():
     response = make_response(jsonify({"status": "cleared cookie"}))
     response.delete_cookie(

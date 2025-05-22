@@ -248,9 +248,7 @@ const FlashcardPage = () => {
 
           </div>
           {/* Use of AI, mainly for syntax for ternary operator */}
-          {typeof data === 'undefined' ? (
-            <p>Loading...</p> 
-          ) : (
+          
             <div className='flashcardSection'>
               <button className='ButtonArrow' onClick={prevCard} disabled={currentIndex === 0}>
                 <img className="left-arrow-flashcard" src={leftArrow}></img>
@@ -297,7 +295,7 @@ const FlashcardPage = () => {
 
               </button>
             </div>
-          )}
+          
           <div className='bottomControls'>
             <div className="navigation">
               {flashcardType !== "normal" && (
