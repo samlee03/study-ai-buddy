@@ -104,7 +104,7 @@ def user():
                         "Subject: Your Verification Code\n\n"
                         f"Your code is: {code}"
                     )
-                server.sendmail(os.environ['EMAIL_USER'], email, message)
+                    server.sendmail(os.environ['EMAIL_USER'], email, message)
 
                 # Store in the DB
                 database["email-verification"].update_one(
