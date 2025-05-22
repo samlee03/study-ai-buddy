@@ -22,7 +22,7 @@ const FlashcardPage = () => {
   const flashcardType = location.state?.flashcardType || 'normal';
   const [flashcardContent, setFlashcardContent] = useState(location.state?.flashcards || [])
   const card_id = location.state?.card_id
-  const [data, setData] = useState();
+  // const [data, setData] = useState();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [shuffledContent, setShuffledContent] = useState([]);
@@ -65,9 +65,9 @@ const FlashcardPage = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  if (!data) {
-    return <p>Loading...</p>; 
-  }
+  // if (!data) {
+  //   return <p>Loading...</p>; 
+  // }
 
   const getLength = () => {
     if (flashcardType === "question") {
